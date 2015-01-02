@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Windows.Controls;
 using ZonePlayer;
+using System.IO;
 
 namespace ZonePlayerWpf
 {
@@ -26,7 +27,8 @@ namespace ZonePlayerWpf
         public DefaultPlaylists(string settings, ListBox listBox, ListBox playlistBox)
         {
             Dictionary<string, string> playlists = JsonConvert.DeserializeObject<Dictionary<string, string>>(settings);
-            this.PlayLists = playlists.Select(list => PlaylistManager.Create(new Uri(list.Value), true, list.Key)).ToList();
+            playlists = this.AbsolutePaths(playlists);
+            this.PlayLists = playlists.Select(list => PlaylistManager.Create(new Uri(list.Value, UriKind.RelativeOrAbsolute), true, list.Key)).ToList();
             this.InitListBoxes(listBox, playlistBox);
         }
 
@@ -125,6 +127,31 @@ namespace ZonePlayerWpf
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Convert relative paths into absolute paths for the playlists
+        /// </summary>
+        /// <param name="playlists">Paths to playlists</param>
+        /// <returns></returns>
+        private Dictionary<string, string> AbsolutePaths(Dictionary<string, string> playlists)
+        {
+            string outPath = Directory.GetCurrentDirectory();
+            Dictionary<string, string> converted = new Dictionary<string, string>();
+            foreach (var item in playlists)
+            {
+                string path = item.Value.Trim();
+                if (path.StartsWith(".\\"))
+                {
+                    converted.Add(item.Key, outPath + path.Substring(1));
+                }
+                else
+                {
+                    converted.Add(item.Key, item.Value);
+                }
+            }
+
+            return converted;
         }
 
         /// <summary>

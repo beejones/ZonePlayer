@@ -49,9 +49,8 @@ namespace ZonePlayerWpf.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("{\"Satellite\":\"C:\\\\Users\\\\ronnybj\\\\OneDrive\\\\Playlists\\\\satellite.asx\",\"Internet\":" +
-            "\"C:\\\\Users\\\\ronnybj\\\\OneDrive\\\\Playlists\\\\internet.asx\",\"Playlists\":\"C:\\\\Users\\\\" +
-            "ronnybj\\\\OneDrive\\\\Playlists\\\\playlists.asx\"}")]
+        [global::System.Configuration.DefaultSettingValueAttribute("{\"Internet\":\".\\\\SamplePlaylists\\\\internet.asx\",\"Playlists\":\".\\\\SamplePlaylists\\\\i" +
+            "nternet.asx\"}")]
         public string DefaultPlaylists {
             get {
                 return ((string)(this["DefaultPlaylists"]));

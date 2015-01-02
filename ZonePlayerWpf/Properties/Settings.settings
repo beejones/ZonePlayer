@@ -9,7 +9,7 @@
       <Value Profile="(Default)">["Device1", "Device2", "Device3"]</Value>
     </Setting>
     <Setting Name="DefaultPlaylists" Type="System.String" Scope="User">
-      <Value Profile="(Default)">{"Satellite":"C:\\Users\\ronnybj\\OneDrive\\Playlists\\satellite.asx","Internet":"C:\\Users\\ronnybj\\OneDrive\\Playlists\\internet.asx","Playlists":"C:\\Users\\ronnybj\\OneDrive\\Playlists\\playlists.asx"}</Value>
+      <Value Profile="(Default)">{"Internet":".\\SamplePlaylists\\internet.asx","Playlists":".\\SamplePlaylists\\internet.asx"}</Value>
     </Setting>
     <Setting Name="ZoneNames" Type="System.String" Scope="User">
       <Value Profile="(Default)"> ["Zone1", "Zone2", "Zone3"]</Value>
