@@ -63,20 +63,6 @@ namespace ZonePlayerWpf.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("{\"Satellite\":\"C:\\\\Users\\\\ronnybj\\\\OneDrive\\\\Playlists\\\\satellite.asx\",\"Internet\":" +
-            "\"C:\\\\Users\\\\ronnybj\\\\OneDrive\\\\Playlists\\\\internet.asx\",\"Playlists\":\"C:\\\\Users\\\\" +
-            "ronnybj\\\\OneDrive\\\\Playlists\\\\playlists.asx\"}")]
-        public string MasterPlaylists {
-            get {
-                return ((string)(this["MasterPlaylists"]));
-            }
-            set {
-                this["MasterPlaylists"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(" [\"Zone1\", \"Zone2\", \"Zone3\"]")]
         public string ZoneNames {
             get {

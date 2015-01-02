@@ -11,9 +11,6 @@
     <Setting Name="DefaultPlaylists" Type="System.String" Scope="User">
       <Value Profile="(Default)">{"Satellite":"C:\\Users\\ronnybj\\OneDrive\\Playlists\\satellite.asx","Internet":"C:\\Users\\ronnybj\\OneDrive\\Playlists\\internet.asx","Playlists":"C:\\Users\\ronnybj\\OneDrive\\Playlists\\playlists.asx"}</Value>
     </Setting>
-    <Setting Name="MasterPlaylists" Type="System.String" Scope="User">
-      <Value Profile="(Default)">{"Satellite":"C:\\Users\\ronnybj\\OneDrive\\Playlists\\satellite.asx","Internet":"C:\\Users\\ronnybj\\OneDrive\\Playlists\\internet.asx","Playlists":"C:\\Users\\ronnybj\\OneDrive\\Playlists\\playlists.asx"}</Value>
-    </Setting>
     <Setting Name="ZoneNames" Type="System.String" Scope="User">
       <Value Profile="(Default)"> ["Zone1", "Zone2", "Zone3"]</Value>
     </Setting>
