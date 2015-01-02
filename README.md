@@ -17,3 +17,5 @@ ZonePlayer / ZonePlayerWpf / Properties / Settings.settings
  <Value Profile="(Default)">{"Internet":".\\SamplePlaylists\\internet.asx","Playlists":".\\SamplePlaylists\\internet.asx"}</Value> 
 </Setting> 
 
+
+ZonePlayerWpf is a sample application using WPF to illustrate how to use ZonePlayer. 
