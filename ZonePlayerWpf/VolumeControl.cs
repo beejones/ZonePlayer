@@ -48,7 +48,7 @@ namespace ZonePlayerWpf
         public static string SerializeVolumeSettings(List<VolumeControl> volCollection)
         {
             // Give each item a unique identifier so it is easy to update collection
-            for (int inx = 0 ; inx < volCollection.Count ; inx++)
+            for (int inx = 0; inx < volCollection.Count; inx++)
             {
                 volCollection[inx].Index = inx;
             }
@@ -66,6 +66,11 @@ namespace ZonePlayerWpf
         /// <returns>Index of found volume control element</returns>
         public static int GetVolumeSetting(List<VolumeControl> volCollection, string playlistName, string playlistItemName)
         {
+            if (volCollection == null)
+            {
+                return -1;
+            }
+
             // Get existing volume control
             VolumeControl existingControl = volCollection.Where(col => string.Compare(col.PlaylistName, playlistName) == 0 && string.Compare(col.PlaylistItemName, playlistItemName) == 0).FirstOrDefault();
 

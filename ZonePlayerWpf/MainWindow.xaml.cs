@@ -87,7 +87,7 @@ namespace ZonePlayerWpf
         /// Set the different music zones
         /// </summary>
         private void InitizalizeMusicZones()
-        {            
+        {
             bool showvideo = Properties.Settings.Default.ShowVideo;
             this.Players = new List<MusicZone>();
             for (int inx = 0; inx < this.NumberOfPlayers; inx++)
@@ -110,7 +110,7 @@ namespace ZonePlayerWpf
         {
             this.AudioDevices = HardwareDevices.AudioDevices;
             this.AddioDeviceCounters = new List<int>();
-            for (int inx = 0 ; inx < this.AudioDevices.Count ; inx ++)
+            for (int inx = 0; inx < this.AudioDevices.Count; inx++)
             {
                 this.AddioDeviceCounters.Add(0);
             }
@@ -142,6 +142,10 @@ namespace ZonePlayerWpf
             try
             {
                 this.PlayingItemsVolume = VolumeControl.DeserializeVolumeSettings(volControl);
+                if (this.PlayingItemsVolume == null)
+                {
+                    this.PlayingItemsVolume = new List<VolumeControl>();
+                }
             }
             catch (JsonSerializationException)
             {
@@ -207,7 +211,7 @@ namespace ZonePlayerWpf
         {
             string currentListName = this.Players[playerIndex].CurrentPlaylistName;
             string currentItemName = this.Players[playerIndex].CurrentPlayingItem.ItemName;
-            string fullName = (stopped) ? "Stopped: " + currentItemName??currentListName : currentItemName??currentListName;
+            string fullName = (stopped) ? "Stopped: " + currentItemName ?? currentListName : currentItemName ?? currentListName;
             (this.GetControl(playerIndex, ZonePlayingName) as Label).Content = fullName;
             (this.GetControl(playerIndex, ZonePlayingUri) as TextBlock).Text = this.Players[playerIndex].CurrentPlayingItem.ItemUri.ToString();
             this.RetrieveAndShowVolumeForPlayingItem(playerIndex);
@@ -260,7 +264,7 @@ namespace ZonePlayerWpf
         private void defaultPlaylists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.DefaultPlaylists.ChangeDefaultPlaylist((string)e.AddedItems[0]);
-            
+
             // Load new default playlist in different zones
             this.LoadDefaultPlaylist();
         }
