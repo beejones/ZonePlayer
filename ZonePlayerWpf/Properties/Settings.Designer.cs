@@ -37,7 +37,8 @@ namespace ZonePlayerWpf.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("[\"Device1\", \"Device2\", \"Device3\"]")]
+        [global::System.Configuration.DefaultSettingValueAttribute("[\"Device1\", \"Device2\", \"Device3\", \"Device4\", \"Device5\", \"Device6\", \"Device7\", \"De" +
+            "vice8\"]")]
         public string AudioDevices {
             get {
                 return ((string)(this["AudioDevices"]));
@@ -62,7 +63,7 @@ namespace ZonePlayerWpf.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(" [\"Zone1\", \"Zone2\", \"Zone3\"]")]
+        [global::System.Configuration.DefaultSettingValueAttribute(" [\"Zone1\", \"Zone2\", \"Zone3\", \"Zone4\", \"Zone5\", \"Zone6\", \"Zone7\", \"Zone8\"]")]
         public string ZoneNames {
             get {
                 return ((string)(this["ZoneNames"]));
@@ -107,18 +108,6 @@ namespace ZonePlayerWpf.Properties {
             }
             set {
                 this["ShowVideo"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
-        public int NumberOfPlayers {
-            get {
-                return ((int)(this["NumberOfPlayers"]));
-            }
-            set {
-                this["NumberOfPlayers"] = value;
             }
         }
     }

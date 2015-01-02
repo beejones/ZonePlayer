@@ -6,13 +6,13 @@
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="AudioDevices" Type="System.String" Scope="User">
-      <Value Profile="(Default)">["Device1", "Device2", "Device3"]</Value>
+      <Value Profile="(Default)">["Device1", "Device2", "Device3", "Device4", "Device5", "Device6", "Device7", "Device8"]</Value>
     </Setting>
     <Setting Name="DefaultPlaylists" Type="System.String" Scope="User">
       <Value Profile="(Default)">{"Internet":".\\SamplePlaylists\\internet.asx","Playlists":".\\SamplePlaylists\\internet.asx"}</Value>
     </Setting>
     <Setting Name="ZoneNames" Type="System.String" Scope="User">
-      <Value Profile="(Default)"> ["Zone1", "Zone2", "Zone3"]</Value>
+      <Value Profile="(Default)"> ["Zone1", "Zone2", "Zone3", "Zone4", "Zone5", "Zone6", "Zone7", "Zone8"]</Value>
     </Setting>
     <Setting Name="VlcSettings" Type="System.String" Scope="User">
       <Value Profile="(Default)">{"DllPath":"C:\\Program Files (x86)\\VideoLAN\\VLC","PluginPath":"C:\\Program Files (x86)\\VideoLAN\\VLC\\plugins","StartupIgnoreConfig":"true","StartupLogInFile":"true","StartupShowLoggerConsole":"true","StartupVerbosity":"2"}</Value>
@@ -22,9 +22,6 @@
     </Setting>
     <Setting Name="ShowVideo" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="NumberOfPlayers" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
     </Setting>
   </Settings>
 </SettingsFile>

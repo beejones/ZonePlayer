@@ -67,7 +67,7 @@ namespace ZonePlayerWpf
         private void InitializeZones()
         {
             this.NumberOfZones = Properties.Settings.Default.NumberOfZones;
-            this.NumberOfPlayers = Properties.Settings.Default.NumberOfPlayers;
+            this.NumberOfPlayers = InitializeNumberOfPlayers();
             this.ZoneNames = JsonConvert.DeserializeObject<List<string>>(Properties.Settings.Default.ZoneNames);
             this.InitizalizeAudioDevices();
             this.InitizalizeZoneNamesOnGui();
@@ -101,6 +101,26 @@ namespace ZonePlayerWpf
             }
 
             this.InitizalizeDefaultPlaylists();
+        }
+
+        /// <summary>
+        /// Check the number of players on the main panel and return the amount
+        /// </summary>
+        /// <returns>The number of players on the main panel</returns>
+        private int InitializeNumberOfPlayers()
+        {
+            int inx; 
+            for (inx = 0; inx < 8 ; inx ++)
+            {
+                // Test whether variable exists
+                FrameworkElement element = GetControl(inx, ZoneName);
+                if (element == null)
+                {
+                    break;
+                }
+            }
+
+            return inx;
         }
 
         /// <summary>
