@@ -16,15 +16,15 @@ namespace ZonePlayerInterface
     /// <summary>
     /// Implementation of <see cref="IZonePlayerInterface"/> for interfacing the zone player
     /// </summary>
-    public static sealed class WebInterface : IZonePlayerInterface
+    public static class WcfInterface : IZonePlayerInterface
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WebInterface"/> class.
+        /// Initializes a new instance of the <see cref="WcfInterface"/> class.
         /// </summary>
-        public WebInterface()
+        public WcfInterface()
         {
         }
-
+/*
         public IZonePlayerInterface GetCommand()
         {
             WebClient.
@@ -32,9 +32,10 @@ namespace ZonePlayerInterface
                 {
                     using (WebClient client = new WebClient())
                     {
-                        client.
+                        //client.
                     }
                 });
         }
+ */
     }
 }

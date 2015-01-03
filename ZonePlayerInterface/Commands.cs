@@ -12,27 +12,27 @@ namespace ZonePlayerInterface
         /// <summary>
         /// Start playing
         /// </summary>
-			Play=1,
+        Play = 1,
         /// <summary>
         /// Play default item
         /// </summary>
-			PlayDefault,
+        PlayDefault,
         /// <summary>
         /// Stop playing
         /// </summary>
-			Stop,
+        Stop,
         /// <summary>
         /// Ring doorbel
         /// </summary>
-			DoorBel,
+        DoorBel,
         /// <summary>
         /// Play next item
         /// </summary>
-			Next,
+        Next,
         /// <summary>
         /// Play first item
         /// </summary>
-			First,
+        First,
         /// <summary>
         /// Increase volume
         /// </summary>
@@ -40,26 +40,30 @@ namespace ZonePlayerInterface
         /// <summary>
         /// Decrease volume
         /// </summary>
-            VolDown,
+        VolDown,
         /// <summary>
         /// Set volume
         /// </summary>
-            VolSet,
+        VolSet,
         /// <summary>
         /// Get volume
         /// </summary>
-            VolGet,
+        VolGet,
         /// <summary>
         /// Get player status
         /// </summary>
-            PlayerStatus
-/*
-            SelectChannel,
-            Test,
-            FetchChannels,
-            IsPlayingItem,
-            PlayUrl,
-            None
- */ 
+        PlayerStatus,
+        /// <summary>
+        /// Command not available
+        /// </summary>
+        None
+        /*
+                            SelectChannel,
+                            Test,
+                            FetchChannels,
+                            IsPlayingItem,
+                            PlayUrl,
+                            None
+                 */
     }
 }

@@ -25,18 +25,6 @@ namespace ZonePlayerWpf.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
-        public int NumberOfZones {
-            get {
-                return ((int)(this["NumberOfZones"]));
-            }
-            set {
-                this["NumberOfZones"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("[\"Device1\", \"Device2\", \"Device3\", \"Device4\", \"Device5\", \"Device6\", \"Device7\", \"De" +
             "vice8\"]")]
         public string AudioDevices {
@@ -108,6 +96,30 @@ namespace ZonePlayerWpf.Properties {
             }
             set {
                 this["ShowVideo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8087/remote")]
+        public string RemoteAddress {
+            get {
+                return ((string)(this["RemoteAddress"]));
+            }
+            set {
+                this["RemoteAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int VolumeDelta {
+            get {
+                return ((int)(this["VolumeDelta"]));
+            }
+            set {
+                this["VolumeDelta"] = value;
             }
         }
     }

@@ -44,21 +44,7 @@
             <WindowsFormsHost Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="100" >
                 <panel:PlayerPanel x:Name="zonePlayer0"/>
             </WindowsFormsHost>
-            <!--
-            <Grid.Style>
-                <Style TargetType="{x:Type Grid}">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="Black" />
-                            <Setter Property="Opacity" Value=".5" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Style>
--->
         </Grid>
-<!--
--->
         <Grid Background="Red" Grid.Row="1"  Margin="0,1,0,1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100*"/>

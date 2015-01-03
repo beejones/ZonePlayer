@@ -16,7 +16,7 @@ namespace ZonePlayerWpf
     public sealed class HardwareDevices
     {
         /// <summary>
-        /// 
+        /// Gets the list of audio devices on the current machine
         /// </summary>
         public static List<string> AudioDevices 
         {

@@ -16,11 +16,21 @@ namespace ZonePlayerInterface
         /// <summary>
         /// Gets the commands
         /// </summary>
-        Commands Command { get; }
+        Commands Command { get; set; }
 
         /// <summary>
-        /// Gets the commands
+        /// Gets or sets the name of the zone
         /// </summary>
-        Dictionary<string, string> parameters { get; }
+        string ZoneName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the item to play
+        /// </summary>
+        string Item { get; set; }
+
+        /// <summary>
+        /// Gets or sets the response
+        /// </summary>
+        string Response { get; set; }
     }
 }

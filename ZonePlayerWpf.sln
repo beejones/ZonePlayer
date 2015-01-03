@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nVLC.LibVlcWrapper", "Exter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{2D0F171C-EA86-4A97-BE56-1956D256336A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZonePlayerInterface", "ZonePlayerInterface\ZonePlayerInterface.csproj", "{BE63EA80-97E8-4653-938D-486CBAD47FBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,18 @@ Global
 		{2D0F171C-EA86-4A97-BE56-1956D256336A}.Release|x64.Build.0 = Release|x64
 		{2D0F171C-EA86-4A97-BE56-1956D256336A}.Release|x86.ActiveCfg = Release|x86
 		{2D0F171C-EA86-4A97-BE56-1956D256336A}.Release|x86.Build.0 = Release|x86
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Release|x64.ActiveCfg = Release|Any CPU
+		{BE63EA80-97E8-4653-938D-486CBAD47FBB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ZonePlayerWpf.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="NumberOfZones" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
-    </Setting>
     <Setting Name="AudioDevices" Type="System.String" Scope="User">
       <Value Profile="(Default)">["Device1", "Device2", "Device3", "Device4", "Device5", "Device6", "Device7", "Device8"]</Value>
     </Setting>
@@ -22,6 +19,12 @@
     </Setting>
     <Setting Name="ShowVideo" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="RemoteAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:8087/remote</Value>
+    </Setting>
+    <Setting Name="VolumeDelta" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
     </Setting>
   </Settings>
 </SettingsFile>

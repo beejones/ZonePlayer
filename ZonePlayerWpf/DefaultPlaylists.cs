@@ -114,7 +114,7 @@ namespace ZonePlayerWpf
         /// <summary>
         /// Gets the gui element for the default playlists
         /// </summary>
-        private ListBox GuiDefaultPlayLists
+        public ListBox GuiDefaultPlayLists
         {
             get;
             set;
@@ -123,7 +123,7 @@ namespace ZonePlayerWpf
         /// <summary>
         /// Gets the gui element for the playlist content
         /// </summary>
-        private ListBox GuZonePlaylistContent
+        public ListBox GuZonePlaylistContent
         {
             get;
             set;

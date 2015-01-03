@@ -11,13 +11,15 @@ namespace Diagnostics
     /// </summary>
     public sealed class Log
     {
-
-        private const string Logger = "Beejones";
-
         /// <summary>
         /// Name of the log
         /// </summary>
         public static string LogName = Logger;
+
+        /// <summary>
+        /// Name for logger
+        /// </summary>
+        private const string Logger = "Beejones";
 
         /// <summary>
         /// Log an item to the windows event logger
