@@ -19,3 +19,10 @@ ZonePlayer / ZonePlayerWpf / Properties / Settings.settings
 
 
 ZonePlayerWpf is a sample application using WPF to illustrate how to use ZonePlayer. 
+
+Main features:
+Different audio channel that can play in parallel
+Support for different playlists (m3u, asx)
+Play audio from files and streams.
+Play video files and streams.
+Remote control by means of WCF interface.
