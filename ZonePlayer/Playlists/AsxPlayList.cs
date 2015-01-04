@@ -156,7 +156,9 @@ namespace ZonePlayer
                      select new KeyValuePair<string, string>(refXml.Attribute("NAME").Value, refXml.Attribute("VALUE").Value))
                      .ToDictionary(x => x.Key, x => x.Value);
 
-                AsxItem item = new AsxItem(title, new Uri(reference), PlayListType.asx, (banner != null) ? new Uri(banner) : null, param);
+                Uri refTag = new Uri(ZonePlaylist.AbsolutePaths(reference));
+                Uri image = (string.IsNullOrEmpty(banner)) ? null : new Uri(ZonePlaylist.AbsolutePaths(banner));
+                AsxItem item = new AsxItem(title, refTag, PlayListType.asx, image, param);
                 list.Add(item);
             }
 

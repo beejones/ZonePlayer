@@ -3,6 +3,7 @@
 //---------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -47,6 +48,25 @@ namespace ZonePlayer
             this.ListName = listName;
             this.ListUri = listUri;
             this.Randomized = randomize;
+        }
+
+        /// <summary>
+        /// Convert relative paths into absolute paths for the playlists
+        /// </summary>
+        /// <param name="playlist">Paths to playlist</param>
+        /// <returns></returns>
+        public static string AbsolutePaths(string playlist)
+        {
+            string outPath = Directory.GetCurrentDirectory();
+            string path = playlist.Trim();
+            if (path.StartsWith(".\\"))
+            {
+                return outPath + path.Substring(1);
+            }
+            else
+            {
+                return path;
+            }
         }
 
         /// <summary>

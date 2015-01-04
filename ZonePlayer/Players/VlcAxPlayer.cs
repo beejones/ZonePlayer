@@ -149,7 +149,7 @@ namespace ZonePlayer
         /// </summary>
         public void Stop()
         {
-           // this.Player.Stop();
+           this.Player.playlist.stop();
         }
 
         /// <summary>

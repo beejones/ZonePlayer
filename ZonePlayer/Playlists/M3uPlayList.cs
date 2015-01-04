@@ -153,6 +153,8 @@ namespace ZonePlayer
                     if (data.Contains("#EXT"))
                         continue;
 
+                    data = ZonePlaylist.AbsolutePaths(data);
+
                     m3uData.Add((IPlaylistItem)new M3uItem(
                             null,
                             new Uri(data),                            
