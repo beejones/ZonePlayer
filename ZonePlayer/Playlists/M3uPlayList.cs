@@ -156,7 +156,8 @@ namespace ZonePlayer
                     m3uData.Add((IPlaylistItem)new M3uItem(
                             null,
                             new Uri(data),                            
-                            PlayListType.m3u));
+                            PlayListType.m3u,
+                            null));
                     listToRandomize.Add(cnt++);
                 }
              

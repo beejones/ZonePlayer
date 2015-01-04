@@ -16,7 +16,7 @@ using WMPLib;
 namespace ZonePlayer
 {
     /// <summary>
-    /// Implementation of <see cref="ZonePlaylist"/> for reading m3u items
+    /// Implementation of <see cref="WmpPlayer"/> 
     /// </summary>
     public sealed class WmpPlayer : FrameworkElement, IPlayer
     {

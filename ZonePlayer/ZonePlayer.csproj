@@ -92,25 +92,35 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Playlists\AsxItem.cs" />
-    <Compile Include="Playlists\AsxPlayList.cs" />
+    <Compile Include="Players\WmpAxPlayer.cs" />
     <Compile Include="MusicZone.cs" />
     <Compile Include="MusicZoneAudioChannel.cs" />
     <Compile Include="Players\IPlayer.cs" />
+    <Compile Include="Players\LibVlcPlayer.cs" />
+    <Compile Include="Players\VlcAxPlayer.cs" />
+    <Compile Include="Players\Wmpplayer.cs" />
+    <Compile Include="Players\PlayerType.cs" />
+    <Compile Include="Playlists\AsxItem.cs" />
+    <Compile Include="Playlists\AsxPlayList.cs" />
     <Compile Include="Playlists\IPlayListItem.cs" />
     <Compile Include="Playlists\ItemPlaylist.cs" />
     <Compile Include="Playlists\M3uItem.cs" />
     <Compile Include="Playlists\M3uPlayList.cs" />
-    <Compile Include="Players\LibVlcPlayer.cs" />
-    <Compile Include="Players\Wmpplayer.cs" />
-    <Compile Include="Players\PlayerType.cs" />
-    <Compile Include="Playlists\PlaylistNotFoundException.cs" />
     <Compile Include="Playlists\PlaylistManager.cs" />
+    <Compile Include="Playlists\PlaylistNotFoundException.cs" />
     <Compile Include="Playlists\PlayListType.cs" />
     <Compile Include="Playlists\ZonePlaylist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AxVlcPanel\AxVlcPanel.csproj">
+      <Project>{57d1c962-4d06-41b8-88cb-6bd75dc63baf}</Project>
+      <Name>AxVlcPanel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AxWmpPanel\AxWmpPanel.csproj">
+      <Project>{042da724-20fd-43ce-850e-ef51532c4bef}</Project>
+      <Name>AxWmpPanel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Diagnostics\Diagnostics.csproj">
       <Project>{7a732387-f7cf-447f-9a07-d4c3d6110d6b}</Project>
       <Name>Diagnostics</Name>
@@ -127,8 +137,37 @@
       <Project>{57f08087-b175-4c96-be36-83fbc4a21065}</Project>
       <Name>nVLC.LibVlcWrapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WindowPanel\WindowPanel.csproj">
+      <Project>{195534b8-3ea8-4e96-b7cc-c9e371acd2f5}</Project>
+      <Name>WindowPanel</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="AxAXVLC">
+      <Guid>{DF2BBE39-40A8-433B-A279-073F48DA94B6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="AXVLC">
+      <Guid>{DF2BBE39-40A8-433B-A279-073F48DA94B6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
     <COMReference Include="MediaPlayer">
       <Guid>{22D6F304-B0F6-11D0-94AB-0080C74C7E95}</Guid>
       <VersionMajor>1</VersionMajor>

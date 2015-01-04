@@ -20,8 +20,18 @@ namespace ZonePlayer
         wmp,
 
         /// <summary>
+        /// wmp player activeX control
+        /// </summary>
+        axWmp,
+
+        /// <summary>
         /// vlc player
         /// </summary>
-        vlc
+        vlc,
+
+        /// <summary>
+        /// vlc player activeX control
+        /// </summary>
+        axVlc
     }
 }

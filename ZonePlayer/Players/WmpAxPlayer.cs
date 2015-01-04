@@ -11,34 +11,24 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using Diagnostics;
-using Newtonsoft.Json;
-using AxVlcPanel;
+using WMPLib;
+using AxWmpPanel;
 
 namespace ZonePlayer
 {
     /// <summary>
-    /// Implementation of <see cref="VlcAxPlayer"/> for rendering via the  vlc activeX control
+    /// Implementation of <see cref="WmpAxPlayer"/>
     /// </summary>
-    public sealed class VlcAxPlayer : FrameworkElement, IPlayer
+    public sealed class WmpAxPlayer : FrameworkElement, IPlayer
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="VlcAxPlayer"/> class.
+        /// Initializes a new instance of the <see cref="WmpAxPlayer"/> class.
         /// </summary>
-        public VlcAxPlayer()
+        public WmpAxPlayer()
         {
-            this.Player = new AxVlcPanel.AxVlcPlayer().axVLCPlugin21;
+            this.Player = new AxWmpPanel.AxWmpPlayer().axWindowsMediaPlayer1;
         }
 
-
-        /// <summary>
-        /// Gets or sets the audio device for the player
-        /// </summary>
-        /// <param name="device">Audio device</param>
-        public string AudioDevice
-        {
-            get;
-            set;
-        }
 
         /// <summary>
         /// Gets or sets the playlist for the player and loads it
@@ -57,23 +47,13 @@ namespace ZonePlayer
         }
 
         /// <summary>
-        /// Gets the type of the player
+        /// Gets or sets the audio device for the player
         /// </summary>
-        public PlayerType PlayerType
-        {
-            get
-            {
-                return PlayerType.vlc;
-            }
-        }
-
-        /// <summary>
-        /// Gets a reference to the player object
-        /// </summary>
-        public AxAXVLC.AxVLCPlugin2 Player
+        /// <param name="device">Audio device</param>
+        public string AudioDevice
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -88,16 +68,28 @@ namespace ZonePlayer
             }
             set
             {
-                this.Player.Volume = this.CurrentVolume = value;
+                this.Player.settings.volume = this.CurrentVolume = value;
             }
         }
 
         /// <summary>
-        /// Initialize the player context
+        /// Gets the type of the player
         /// </summary>
-        /// <param name="settings">Dictionary of settings for the player</param>
-        public static void InitializePlayer(string settings)
+        public PlayerType PlayerType
         {
+            get
+            {
+                return PlayerType.axWmp;
+            }
+        }
+
+        /// <summary>
+        /// Gets a reference to the player object
+        /// </summary>
+        public AxWMPLib.AxWindowsMediaPlayer Player
+        {
+            get;
+            private set;
         }
 
         /// <summary>
@@ -113,13 +105,11 @@ namespace ZonePlayer
         /// <summary>
         /// Play the current item in the playlist
         /// </summary>
-        public void Play()  
+        public void Play()
         {
-            Checks.NotNull<ZonePlaylist>("CurrentPlayList", this.CurrentPlayList);
-            IPlaylistItem item = Checks.NotNull<IPlaylistItem>("CurrentItem", this.CurrentPlayList.CurrentItem);
-            Log.Item(EventLogEntryType.Information, "Play: {0}", this.CurrentPlayList.CurrentItem);
-            this.Player.playlist.add(item.ItemUri.ToString(), item.ItemName);
-            this.Player.playlist.play();
+            IPlaylistItem item = this.CurrentPlayList.CurrentItem;
+            this.Player.URL = item.ItemUri.ToString();
+            this.Player.Ctlcontrols.play();
         }
 
         /// <summary>
@@ -131,12 +121,12 @@ namespace ZonePlayer
         /// <returns>The load playlist</returns>
         public ZonePlaylist LoadPlayList(Uri listUri, string listName = null, bool randomize = true)
         {
-            if (IsM3u(listUri))
+            if (PlaylistManager.IsM3u(listUri))
             {
                 this.CurrentPlayList = new M3uPlayList().Read(listUri, listName, randomize);
             }
 
-            if (IsAsx(listUri))
+            if (PlaylistManager.IsAsx(listUri))
             {
                 this.CurrentPlayList = new AsxPlayList().Read(listUri, listName, randomize);
             }
@@ -149,7 +139,7 @@ namespace ZonePlayer
         /// </summary>
         public void Stop()
         {
-           // this.Player.Stop();
+            this.Player.Ctlcontrols.stop();
         }
 
         /// <summary>
@@ -168,28 +158,6 @@ namespace ZonePlayer
         {
             get;
             set;
-        }
-
-        /// <summary>
-        /// Check whether file  is m3u file
-        /// </summary>
-        /// <param name="list"></param>
-        /// <returns></returns>
-        private bool IsM3u(Uri list)
-        {
-            // Only supported format
-            return list.AbsolutePath.ToLower().EndsWith("m3u");
-        }
-
-        /// <summary>
-        /// Check whether file  is asx file
-        /// </summary>
-        /// <param name="list"></param>
-        /// <returns></returns>
-        private bool IsAsx(Uri list)
-        {
-            // Only supported format
-            return list.AbsolutePath.ToLower().EndsWith("asx");
         }
 
         /// <summary>

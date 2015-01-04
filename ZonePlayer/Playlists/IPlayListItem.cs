@@ -25,6 +25,16 @@ namespace ZonePlayer
         Uri ItemUri { get; }
 
         /// <summary>
+        /// Gets the the <see cref=" Uri"/> to the banner/>
+        /// </summary>
+        Uri BannerUri { get; }
+
+        /// <summary>
+        /// Gets the the <see cref=" Dictionary"/> to the parameter set (PARAM)/>
+        /// </summary>
+        Dictionary<string, string> Param { get; }
+
+        /// <summary>
         /// Gets the playlist type to which the item belongs/>
         /// </summary>
         PlayListType ItemBelongsToPlaylist { get; }

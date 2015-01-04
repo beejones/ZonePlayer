@@ -1,20 +1,18 @@
 # Compiled source #
 
 ###################
-packages
-bin
-obj
 *.suo
 *.user
 *.com
-
 *.dll
-
 *.exe
 *.pdb
 *.cache
-
- 
+packages
+bin
+obj
+debug
+**/bin/**
 
 # Packages #
 

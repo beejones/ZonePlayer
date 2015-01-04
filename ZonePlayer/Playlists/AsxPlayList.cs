@@ -142,12 +142,21 @@ namespace ZonePlayer
                 string title = 
                     (from titleXml in entry.Descendants("TITLE")
                     select titleXml.Value).FirstOrDefault();
-                
-                string reference = 
+
+                string reference =
                     (from refXml in entry.Descendants("REF")
                      select refXml.Attribute("HREF").Value).FirstOrDefault();
 
-                AsxItem item = new AsxItem(title, new Uri(reference), PlayListType.asx);
+                string banner =
+                    (from refXml in entry.Descendants("BANNER")
+                     select refXml.Attribute("HREF").Value).FirstOrDefault();
+
+                Dictionary<string, string> param =
+                    (from refXml in entry.Descendants("PARAM")
+                     select new KeyValuePair<string, string>(refXml.Attribute("NAME").Value, refXml.Attribute("VALUE").Value))
+                     .ToDictionary(x => x.Key, x => x.Value);
+
+                AsxItem item = new AsxItem(title, new Uri(reference), PlayListType.asx, (banner != null) ? new Uri(banner) : null, param);
                 list.Add(item);
             }
 

@@ -113,7 +113,7 @@ namespace ZonePlayer
         public override ZonePlaylist Read(Uri listUri, string listName, bool randomize)
         {
             this.ListUri = Checks.NotNull<Uri>("ListUri", listUri);
-            List<IPlaylistItem> playList = new List<IPlaylistItem>() {  new AsxItem(listName, listUri, PlayListType.None) };
+            List<IPlaylistItem> playList = new List<IPlaylistItem>() {  new AsxItem(listName, listUri, PlayListType.None, null) };
             return (ZonePlaylist)new ItemPlaylist(playList, listName);
         }
     }
