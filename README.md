@@ -19,6 +19,8 @@ ZonePlayer / ZonePlayerWpf / Properties / Settings.settings
 
 
 ZonePlayerWpf is a sample application using WPF to illustrate how to use ZonePlayer. 
+Check out my application based on ZonePlayer called AIOPlayer (All in One Player). It is designed for people who want to use their computers or AIO's to view TV (or other streaming) and control their home automation (or other browser tasks).
+AIOPlayer can be found here: https://github.com/beejones/AIOPlayer
 
 Main features:
 Different audio channel that can play in parallel
