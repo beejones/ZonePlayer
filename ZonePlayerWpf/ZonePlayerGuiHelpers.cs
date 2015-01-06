@@ -144,7 +144,7 @@ namespace ZonePlayerWpf
                 this.Players.Add(
                     new MusicZone(
                         this.ZoneNames[inx],
-                        new LibVlcPlayer(device))
+                        PlayerType.vlc)
                     );
             }
 

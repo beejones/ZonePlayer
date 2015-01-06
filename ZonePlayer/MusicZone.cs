@@ -17,19 +17,12 @@ namespace ZonePlayer
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicZone"/> class.
         /// </summary>
-        public MusicZone()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MusicZone"/> class.
-        /// </summary>
         /// <param name="zoneName">Set name for the zone/></param>
-        /// <param name="player">Set player <see cref="IPlayer" for this instance/></param>
-        public MusicZone(string zoneName, IPlayer player)
+        /// <param name="playerType">Set player <see cref="IPlayer" for this instance/></param>
+        public MusicZone(string zoneName, PlayerType playerType) 
         {
             this.ZoneName = zoneName;
-            DefaultPlayer = this.CurrentPlayer = player;
+            DefaultPlayer = this.CurrentPlayer = PlayerManager.Create(playerType);
             this.CurrentPlaylistItem = 0;
         }
 

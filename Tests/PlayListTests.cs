@@ -30,15 +30,13 @@ namespace Tests
         {
             // Setup
             ZonePlaylist playlist = LoadPlaylist(SamplePlaylist, true, "Test", false);
-            IPlayer player = new WmpPlayer();
 
             // Act
-            MusicZone musicZone = new MusicZone("MyZone", player);
+            MusicZone musicZone = new MusicZone("MyZone", PlayerType.wmp);
             musicZone.LoadPlayList(playlist.ListUri, "Test", true);
             musicZone.Play();
 
             // Asserts
-            Assert.AreEqual<IPlayer>(musicZone.CurrentPlayer, player);
             Assert.IsTrue(musicZone.CurrentPlayer.IsPlaying);
             musicZone.Stop();
             Assert.IsFalse(musicZone.CurrentPlayer.IsPlaying);
