@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Diagnostics;
+using System.IO;
 
 namespace ZonePlayer
 {
@@ -14,6 +15,20 @@ namespace ZonePlayer
     /// </summary>    
     public static class PlaylistManager
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ZonePlaylist"/> class.
+        /// </summary>
+        /// <param name="list">Path to the item</param>
+        /// <param name="isAlwaysPlaylist">True if the item needs to be a playlist</param>
+        /// <param name="listName">Name of the playlist item</param>
+        /// <param name="randomize">True when playlist needs to be randomized</param>
+        /// <returns></returns>
+        public static ZonePlaylist Create(string list, bool isAlwaysPlaylist, string name = null, bool randomize = false)
+        {
+            Checks.IsNullOrWhiteSpace("list", list);
+            return Create(new Uri(AbsolutePaths(list)), isAlwaysPlaylist, name, randomize);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ZonePlaylist"/> class.
         /// </summary>
@@ -41,6 +56,25 @@ namespace ZonePlayer
 
                 default:
                     throw new PlaylistNotFoundException(string.Format("Playlist {0} not recognized", listUri.ToString()));
+            }
+        }
+
+        /// <summary>
+        /// Convert relative paths into absolute paths for the playlists
+        /// </summary>
+        /// <param name="playlist">Paths to playlist</param>
+        /// <returns></returns>
+        public static string AbsolutePaths(string playlist)
+        {
+            string outPath = Directory.GetCurrentDirectory();
+            string path = playlist.Trim();
+            if (path.StartsWith(".\\"))
+            {
+                return outPath + path.Substring(1);
+            }
+            else
+            {
+                return path;
             }
         }
 

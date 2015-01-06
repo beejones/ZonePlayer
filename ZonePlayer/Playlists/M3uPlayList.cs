@@ -153,7 +153,7 @@ namespace ZonePlayer
                     if (data.Contains("#EXT"))
                         continue;
 
-                    data = ZonePlaylist.AbsolutePaths(data);
+                    data = PlaylistManager.AbsolutePaths(data);
 
                     m3uData.Add((IPlaylistItem)new M3uItem(
                             null,
@@ -191,7 +191,7 @@ namespace ZonePlayer
         private TextReader OpenPlayList(Uri resource)
         {
             Checks.NotNull<Uri>("resource", resource);
-            Log.Item(EventLogEntryType.Information, "Open item: ", resource.ToString());
+            Log.Item(EventLogEntryType.Information, "Open item: {0}", resource.ToString());
 
             // Open a connection
             using (WebClient client = new WebClient())

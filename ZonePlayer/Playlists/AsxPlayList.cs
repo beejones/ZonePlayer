@@ -156,8 +156,8 @@ namespace ZonePlayer
                      select new KeyValuePair<string, string>(refXml.Attribute("NAME").Value, refXml.Attribute("VALUE").Value))
                      .ToDictionary(x => x.Key, x => x.Value);
 
-                Uri refTag = new Uri(ZonePlaylist.AbsolutePaths(reference));
-                Uri image = (string.IsNullOrEmpty(banner)) ? null : new Uri(ZonePlaylist.AbsolutePaths(banner));
+                Uri refTag = new Uri(PlaylistManager.AbsolutePaths(reference));
+                Uri image = (string.IsNullOrEmpty(banner)) ? null : new Uri(PlaylistManager.AbsolutePaths(banner));
                 AsxItem item = new AsxItem(title, refTag, PlayListType.asx, image, param);
                 list.Add(item);
             }
@@ -173,7 +173,7 @@ namespace ZonePlayer
         private XDocument OpenPlayList(Uri resource)
         {
             Checks.NotNull<Uri>("resource", resource);
-            Log.Item(EventLogEntryType.Information, "Open item: ", resource.ToString());
+            Log.Item(EventLogEntryType.Information, "Open item: {0}", resource.ToString());
 
             XDocument doc = XDocument.Load(resource.ToString(), LoadOptions.None);
             return doc;

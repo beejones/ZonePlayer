@@ -22,14 +22,17 @@ namespace ZonePlayer
         /// <summary>
         /// Gets or sets the audio device for the player
         /// </summary>
-        /// <param name="device">Audio device</param>
         string AudioDevice { get; set; }
 
         /// <summary>
         /// Gets or sets the audio volume for the player
         /// </summary>
-        /// <param name="device">Audio device</param>
         int Volume { get; set; }
+
+        /// <summary>
+        /// Gets the playing status of the player
+        /// </summary>
+        bool IsPlaying { get; }
 
         /// <summary>
         /// Load the playlist

@@ -13,35 +13,49 @@ namespace Tests
     [TestClass]
     public class PlayListTests
     {
+        /// <summary>
+        /// Reference playlist for tests
+        /// </summary>
+        private const string SamplePlaylist = @".\SamplePlaylists\internet.asx";
+
         [TestMethod]
-        [DeploymentItem(@"TestFiles\Test1.m3u", ".")]
         public void Player_OK_LoadPlayList()
         {
-            Uri path = new Uri(@"C:\Users\ronnybj\OneDrive\dev\Git\ZonePlayerWpf\Tests\bin\Debug\TestFiles\Test1.m3u", UriKind.Absolute);
-            List<IPlaylistItem> items = LoadPlaylist(path, "Test", true);
-            Assert.AreEqual<int>(items.Count, 5);
+            ZonePlaylist playlist = LoadPlaylist(SamplePlaylist,true, "Test", false);
+            Assert.AreEqual<int>(playlist.PlayList.Count, 3);
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestFiles\Test1.m3u", ".")]
         public void Player_OK_Play()
         {
-            Uri path = new Uri(@"C:\Users\ronnybj\OneDrive\dev\Git\ZonePlayerWpf\Tests\bin\Debug\TestFiles\Test1.m3u", UriKind.Absolute);
-            WmpPlayer player = new WmpPlayer();
-            player.LoadPlayList(path, "Test", true);
-            player.Play();
+            // Setup
+            ZonePlaylist playlist = LoadPlaylist(SamplePlaylist, true, "Test", false);
+            IPlayer player = new WmpPlayer();
+
+            // Act
+            MusicZone musicZone = new MusicZone("MyZone", player);
+            musicZone.LoadPlayList(playlist.ListUri, "Test", true);
+            musicZone.Play();
+
+            // Asserts
+            Assert.AreEqual<IPlayer>(musicZone.CurrentPlayer, player);
+            Assert.IsTrue(musicZone.CurrentPlayer.IsPlaying);
+            musicZone.Stop();
+            Assert.IsFalse(musicZone.CurrentPlayer.IsPlaying);
         }
 
-        private List<IPlaylistItem> LoadPlaylist(Uri list, string name, bool randomize)
+        /// <summary>
+        /// Load reference playlists
+        /// </summary>
+        /// <param name="list">Uri to playlist</param>
+        /// <param name="isAlwaysPlaylist">True if playlist can only be a playlist and not a single item</param>
+        /// <param name="name">Name of playlist</param>
+        /// <param name="randomize">True if playlist needs to be randomized</param>
+        /// <returns></returns>
+        private ZonePlaylist LoadPlaylist(string list, bool isAlwaysPlaylist, string name, bool randomize)
         {
-            ZonePlaylist playlist = new M3uPlayList().Read(list, name, randomize);
-            return playlist.PlayList;
-        }
-
-        private static string GetPath(string relativeFileName)
-        {
-            var resources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            return resources.FirstOrDefault(x => x.EndsWith(relativeFileName));
+            ZonePlaylist playlist = PlaylistManager.Create(list, isAlwaysPlaylist, name, randomize);
+            return playlist;
         }
     }
 }

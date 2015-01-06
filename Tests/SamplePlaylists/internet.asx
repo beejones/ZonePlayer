@@ -1,0 +1,17 @@
+<ASX version = "3.0">
+   <ABSTRACT>Internet playlist</ABSTRACT>
+   <TITLE>Internet playlist</TITLE>
+   <AUTHOR>beejones</AUTHOR>
+   <ENTRY>
+      <TITLE>Radio1</TITLE>
+      <REF HREF = "http://mp3.streampower.be/radio1-mid" />
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Radio2</TITLE>
+      <REF HREF = "http://mp3.streampower.be/ra2vlb-mid" />
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Nostalgie</TITLE>
+      <REF HREF = "http://www.nostalgie.eu/content/assets/player/wmp.wax" />
+   </ENTRY>
+</ASX>

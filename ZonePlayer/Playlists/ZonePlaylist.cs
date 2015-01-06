@@ -51,25 +51,6 @@ namespace ZonePlayer
         }
 
         /// <summary>
-        /// Convert relative paths into absolute paths for the playlists
-        /// </summary>
-        /// <param name="playlist">Paths to playlist</param>
-        /// <returns></returns>
-        public static string AbsolutePaths(string playlist)
-        {
-            string outPath = Directory.GetCurrentDirectory();
-            string path = playlist.Trim();
-            if (path.StartsWith(".\\"))
-            {
-                return outPath + path.Substring(1);
-            }
-            else
-            {
-                return path;
-            }
-        }
-
-        /// <summary>
         /// Gets whether the playlist is randomized
         /// </summary>
         public abstract bool Randomized

@@ -79,7 +79,6 @@ namespace ZonePlayer
         /// <summary>
         /// Gets or sets the audio volume for the player
         /// </summary>
-        /// <param name="device">Audio device</param>
         public int Volume
         {
             get
@@ -89,6 +88,17 @@ namespace ZonePlayer
             set
             {
                 this.Player.Volume = this.CurrentVolume = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the playing status of the player
+        /// </summary>
+        public bool IsPlaying
+        {
+            get
+            {
+                return this.Player.playlist.isPlaying;
             }
         }
 
@@ -115,9 +125,16 @@ namespace ZonePlayer
         /// </summary>
         public void Play()  
         {
-            Checks.NotNull<ZonePlaylist>("CurrentPlayList", this.CurrentPlayList);
-            IPlaylistItem item = Checks.NotNull<IPlaylistItem>("CurrentItem", this.CurrentPlayList.CurrentItem);
-            Log.Item(EventLogEntryType.Information, "Play: {0}", this.CurrentPlayList.CurrentItem);
+            Checks.NotNull<ZonePlaylist>("CurrentPlayList", CurrentPlayList);
+            IPlaylistItem item = null;
+
+            if (this.CurrentPlayList.CurrentItem == null)
+            {
+                item = this.CurrentPlayList.PlayList.First();
+            }
+
+            item = Checks.NotNull<IPlaylistItem>("CurrentItem", this.CurrentPlayList.CurrentItem);
+            Log.Item(EventLogEntryType.Information, "Play: {0}", this.CurrentPlayList.CurrentItem.ItemUri);
             this.Player.playlist.add(item.ItemUri.ToString(), item.ItemName);
             this.Player.playlist.play();
         }

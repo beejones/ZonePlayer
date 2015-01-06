@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Linq;
 using Declarations.Media;
 using Declarations.Players;
 using Diagnostics;
@@ -89,7 +90,6 @@ namespace ZonePlayer
         /// <summary>
         /// Gets or sets the audio volume for the player
         /// </summary>
-        /// <param name="device">Audio device</param>
         public int Volume
         {
             get
@@ -101,6 +101,17 @@ namespace ZonePlayer
                 this.CurrentVolume = value;
                 this.Player.Volume = value;
                 Log.Item(EventLogEntryType.Information, "Set volume libvlc player: {0}", value);
+            }
+        }
+
+        /// <summary>
+        /// Gets the playing status of the player
+        /// </summary>
+        public bool IsPlaying
+        {
+            get
+            {
+                return this.Player.IsPlaying;
             }
         }
 
@@ -127,7 +138,15 @@ namespace ZonePlayer
         public void Play()
         {
             Checks.NotNull<ZonePlaylist>("CurrentPlayList", this.CurrentPlayList);
-            IPlaylistItem item = Checks.NotNull<IPlaylistItem>("CurrentItem", this.CurrentPlayList.CurrentItem);
+            IPlaylistItem item = null;
+
+            if (this.CurrentPlayList.CurrentItem == null)
+            {
+                item = this.CurrentPlayList.PlayList.First();
+            }
+
+
+            item = Checks.NotNull<IPlaylistItem>("CurrentItem", this.CurrentPlayList.CurrentItem);
             Log.Item(EventLogEntryType.Information, "Play: {0}", this.CurrentPlayList.CurrentItem.ItemUri);
             IMedia media = this.MediaFactory.CreateMedia<IMedia>(item.ItemUri.ToString());
             this.Player = this.MediaFactory.CreatePlayer<IVideoPlayer>();

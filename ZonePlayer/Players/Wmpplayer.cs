@@ -48,7 +48,6 @@ namespace ZonePlayer
         /// <summary>
         /// Gets or sets the audio device for the player
         /// </summary>
-        /// <param name="device">Audio device</param>
         public string AudioDevice
         {
             get;
@@ -58,7 +57,6 @@ namespace ZonePlayer
         /// <summary>
         /// Gets or sets the audio volume for the player
         /// </summary>
-        /// <param name="device">Audio device</param>
         public int Volume
         {
             get
@@ -69,6 +67,18 @@ namespace ZonePlayer
             {
                 this.CurrentVolume = value;
 //                this.Player..Volume = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the playing status of the player
+        /// </summary>
+        public bool IsPlaying 
+        {
+            get
+            {
+                var state = this.Player.playState; 
+                return state == WMPPlayState.wmppsPlaying || state == WMPPlayState.wmppsTransitioning;
             }
         }
 
@@ -107,7 +117,16 @@ namespace ZonePlayer
         /// </summary>
         public void Play()
         {
-            IPlaylistItem item = this.CurrentPlayList.CurrentItem;
+            Checks.NotNull<ZonePlaylist>("CurrentPlayList", CurrentPlayList);
+            IPlaylistItem item = null;
+
+            if (this.CurrentPlayList.CurrentItem == null)
+            {
+                item = this.CurrentPlayList.PlayList.First();
+            }
+
+            item = Checks.NotNull<IPlaylistItem>("CurrentItem", this.CurrentPlayList.CurrentItem);
+            Log.Item(EventLogEntryType.Information, "Play: {0}", this.CurrentPlayList.CurrentItem.ItemUri);
             this.Player.URL = item.ItemUri.ToString();
             this.Player.controls.play();
         }

@@ -13,6 +13,8 @@ bin
 obj
 debug
 **/bin/**
+External/nVlc/Declarations/bin/*
+TestResults
 
 # Packages #
 

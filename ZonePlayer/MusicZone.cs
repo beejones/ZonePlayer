@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Diagnostics;
 
 namespace ZonePlayer
 {
@@ -28,7 +29,7 @@ namespace ZonePlayer
         public MusicZone(string zoneName, IPlayer player)
         {
             this.ZoneName = zoneName;
-            this.CurrentPlayer = player;
+            DefaultPlayer = this.CurrentPlayer = player;
             this.CurrentPlaylistItem = 0;
         }
 
@@ -36,6 +37,15 @@ namespace ZonePlayer
         /// Gets or sets the current player for this music zone
         /// </summary>
         public IPlayer CurrentPlayer
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the default player for this music zone
+        /// </summary>
+        public IPlayer DefaultPlayer
         {
             get;
             set;
@@ -129,8 +139,12 @@ namespace ZonePlayer
         /// </summary>
         public void Play()
         {
-            this.Stop();
-            this.CurrentPlayer.Play();
+            Checks.NotNull<IPlayer>("CurrentPlayer", this.CurrentPlayer);
+            if (this.CurrentPlaylist != null)
+            {
+                this.Stop();
+                this.CurrentPlayer.Play(this.CurrentPlaylist.CurrentItem);
+            }
         }
 
         /// <summary>

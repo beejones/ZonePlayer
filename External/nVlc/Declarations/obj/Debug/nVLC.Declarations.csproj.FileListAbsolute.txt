@@ -4,3 +4,8 @@ C:\dev\ronny\nvlc-libvlc wrapper Sources\Sources\Declarations\bin\Debug\nVLC.Dec
 C:\dev\ronny\nvlc-libvlc wrapper Sources\Sources\Declarations\obj\Debug\nVLC.Declarations.csprojResolveAssemblyReference.cache
 C:\dev\ronny\nvlc-libvlc wrapper Sources\Sources\Declarations\obj\Debug\nVLC.Declarations.dll
 C:\dev\ronny\nvlc-libvlc wrapper Sources\Sources\Declarations\obj\Debug\nVLC.Declarations.pdb
+C:\Users\ronnybj\OneDrive\dev\Git\ZonePlayer\External\nVlc\Declarations\bin\Debug\nVLC.Declarations.xml
+C:\Users\ronnybj\OneDrive\dev\Git\ZonePlayer\External\nVlc\Declarations\bin\Debug\nVLC.Declarations.dll
+C:\Users\ronnybj\OneDrive\dev\Git\ZonePlayer\External\nVlc\Declarations\bin\Debug\nVLC.Declarations.pdb
+C:\Users\ronnybj\OneDrive\dev\Git\ZonePlayer\External\nVlc\Declarations\obj\Debug\nVLC.Declarations.dll
+C:\Users\ronnybj\OneDrive\dev\Git\ZonePlayer\External\nVlc\Declarations\obj\Debug\nVLC.Declarations.pdb
