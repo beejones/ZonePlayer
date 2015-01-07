@@ -53,7 +53,7 @@ namespace ZonePlayer
         /// <summary>
         /// Gets whether the playlist is randomized
         /// </summary>
-        public abstract bool Randomized
+        public bool Randomized
         {
             get;
             set;
@@ -62,7 +62,7 @@ namespace ZonePlayer
         /// <summary>
         /// Gets the name of the playlist
         /// </summary>
-        public abstract string ListName
+        public string ListName
         {
             get;
             set;
@@ -71,7 +71,7 @@ namespace ZonePlayer
         /// <summary>
         /// Gets the <see cref="Uri"/> of the playlist
         /// </summary>
-        public abstract Uri ListUri
+        public Uri ListUri
         {
             get;
             set;
@@ -81,7 +81,7 @@ namespace ZonePlayer
         /// Gets the <see cref="PlayerType"/> of the playlist
         /// The player type defines the component that will be used to render the item
         /// </summary>
-        public abstract PlayerType PlayerType
+        public PlayerType PlayerType
         {
             get;
             set;
@@ -125,7 +125,7 @@ namespace ZonePlayer
         /// <summary>
         /// Gets the playlist list
         /// </summary>
-        public abstract List<ZonePlaylistItem> PlayList
+        public List<ZonePlaylistItem> PlayList
         {
             get;
             set;

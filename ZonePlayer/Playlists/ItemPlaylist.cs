@@ -58,52 +58,6 @@ namespace ZonePlayer
         }
 
         /// <summary>
-        /// Gets whether the playlist is randomized
-        /// </summary>
-        public override bool Randomized
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets the name of the playlist
-        /// </summary>
-        public override string ListName
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets the <see cref="Uri"/> of the playlist
-        /// </summary>
-        public override Uri ListUri
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets the <see cref="PlayerType"/> of the playlist
-        /// The player type defines the component that will be used to render the item
-        /// </summary>
-        public override PlayerType PlayerType
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets the playlist list
-        /// </summary>
-        public override List<ZonePlaylistItem> PlayList
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets the <see cref="ZonePlaylistItem"/> to populate the playlist
         /// </summary>
         /// <param name="listUri">Uri to the item</param>
