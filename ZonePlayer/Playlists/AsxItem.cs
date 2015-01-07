@@ -8,71 +8,28 @@ using System.Runtime.Serialization;
 namespace ZonePlayer
 {
     /// <summary>
-    /// Implementation of <see cref="IPlaylistItem"/> for reading Asx items
+    /// Implementation of <see cref="ZonePlaylistItem"/> for reading Asx items
     /// </summary>
     [DataContract]
-    public class AsxItem : IPlaylistItem
+    public sealed class AsxItem : ZonePlaylistItem
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AsxItem"/> class.
+        /// Initializes a new instance of the <see cref="ZonePlaylistItem"/> class.
         /// </summary>
         /// <param name="itemName">Name of the playlist item</param>
         /// <param name="itemUri">Uri to the item</param>
         /// <param name="playlistType">Type of playlist to which the item belongs</param>
         /// <param name="bannerUri">Uri to the banner</param>
+        /// <param name="playerType">Type of player that needs to render this item. Null for default</param>
         /// <param name="param">Dictionary of optional parameters</param>
-        public AsxItem(string itemName, Uri itemUri, PlayListType playlistType, Uri bannerUri, Dictionary<string, string> param = null)
+        public AsxItem(string itemName, Uri itemUri, PlayListType playlistType, Uri bannerUri, PlayerType? playerType = null, Dictionary<string, string> param = null)
         {
             this.ItemName = itemName;
             this.ItemUri = itemUri;
             this.ItemBelongsToPlaylist = playlistType;
             this.BannerUri = bannerUri;
+            this.PlayerType = playerType;
             this.Param = (param == null) ? new Dictionary<string, string>() : param;
-        }
-
-        /// <summary>
-        /// Gets the name of the item in the playlist
-        /// </summary>
-        public string ItemName
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Gets the the <see cref=" Uri"/> to the <see cref="AsxItem"/>
-        /// </summary>
-        public Uri ItemUri 
-        { 
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Gets the the <see cref=" Uri"/> to the banner/>
-        /// </summary>
-        public Uri BannerUri 
-        { 
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Gets the the <see cref=" Dictionary"/> to the parameter set (PARAM)/>
-        /// </summary>
-        public Dictionary<string, string> Param 
-        { 
-            get; 
-            private set;
-        }
-
-        /// <summary>
-        /// Gets the playlist type to which the item belongs/>
-        /// </summary>
-        public PlayListType ItemBelongsToPlaylist
-        {
-            get;
-            private set;
         }
     }
 }

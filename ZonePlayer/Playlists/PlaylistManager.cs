@@ -16,6 +16,11 @@ namespace ZonePlayer
     public static class PlaylistManager
     {
         /// <summary>
+        /// Parameter name in asx playlist to define a different player
+        /// </summary>
+        public const string PlayListItemPlayerNameType = "Player";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ZonePlaylist"/> class.
         /// </summary>
         /// <param name="list">Path to the item</param>

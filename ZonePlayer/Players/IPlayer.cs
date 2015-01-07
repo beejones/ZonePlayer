@@ -45,13 +45,8 @@ namespace ZonePlayer
         /// <summary>
         /// Start playing
         /// </summary>
-        void Play();
-
-        /// <summary>
-        /// Start playing
-        /// </summary>
         /// <param name="item">Item to play</param>
-        void Play(IPlaylistItem item);
+        void Play(ZonePlaylistItem item);
 
         /// <summary>
         /// Stop playing

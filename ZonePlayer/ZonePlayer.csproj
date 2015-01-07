@@ -103,7 +103,7 @@
     <Compile Include="Players\PlayerType.cs" />
     <Compile Include="Playlists\AsxItem.cs" />
     <Compile Include="Playlists\AsxPlayList.cs" />
-    <Compile Include="Playlists\IPlayListItem.cs" />
+    <Compile Include="Playlists\ZonePlayListItem.cs" />
     <Compile Include="Playlists\ItemPlaylist.cs" />
     <Compile Include="Playlists\M3uItem.cs" />
     <Compile Include="Playlists\M3uPlayList.cs" />

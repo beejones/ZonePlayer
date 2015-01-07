@@ -28,10 +28,10 @@ namespace ZonePlayer
         /// </summary>
         /// <param name="list">List of playlist items</param>
         /// <param name="listName">Name of the playlist item</param>
-        public ZonePlaylist(List<IPlaylistItem> list, string listName = null)
+        public ZonePlaylist(List<ZonePlaylistItem> list, string listName = null)
             : this()
         {
-            this.PlayList = (List<IPlaylistItem>)list;
+            this.PlayList = (List<ZonePlaylistItem>)list;
             this.ListName = listName;
         }
 
@@ -88,9 +88,9 @@ namespace ZonePlayer
         }
 
         /// <summary>
-        /// Gets the  current <see cref="IPlaylistItem"/> of the playlist
+        /// Gets the  current <see cref="ZonePlaylistItem"/> of the playlist
         /// </summary>
-        public IPlaylistItem CurrentItem
+        public ZonePlaylistItem CurrentItem
         {
             get
             {
@@ -99,7 +99,7 @@ namespace ZonePlayer
         }
 
         /// <summary>
-        /// Gets the  next <see cref="IPlaylistItem"/> of the playlist
+        /// Gets the  next <see cref="ZonePlaylistItem"/> of the playlist
         /// </summary>
         public void NextItem()
         {
@@ -111,7 +111,7 @@ namespace ZonePlayer
         }
 
         /// <summary>
-        /// Gets an item <see cref="IPlaylistItem"/> of the playlist
+        /// Gets an item <see cref="ZonePlaylistItem"/> of the playlist
         /// </summary>
         /// <param name="index">Index in playlist of selected item</param>
         public void SetItem(int index)
@@ -125,19 +125,19 @@ namespace ZonePlayer
         /// <summary>
         /// Gets the playlist list
         /// </summary>
-        public abstract List<IPlaylistItem> PlayList
+        public abstract List<ZonePlaylistItem> PlayList
         {
             get;
             set;
         }
 
         /// <summary>
-        /// Gets the <see cref="IPlaylistItem"/> to populate the playlist
+        /// Gets the <see cref="ZonePlaylistItem"/> to populate the playlist
         /// </summary>
         /// <param name="listUri">Uri to the item</param>
         /// <param name="listName">Name of the playlist item</param>
         /// <param name="randomize">True when playlist needs to be randomized</param>
-        /// <returns>List of <see cref="IPlaylistItem"/> </returns>
+        /// <returns>List of <see cref="ZonePlaylistItem"/> </returns>
         public abstract ZonePlaylist Read(Uri listUri, string listName, bool randomize);
 
         /// <summary>

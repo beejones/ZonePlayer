@@ -35,10 +35,10 @@ namespace ZonePlayer
         /// </summary>
         /// <param name="list">List of playlist items</param>
         /// <param name="listName">Name of the playlist item</param>
-        public AsxPlayList(List<IPlaylistItem> list, string listName = null)
+        public AsxPlayList(List<ZonePlaylistItem> list, string listName = null)
             : this()
         {
-            this.PlayList = (List<IPlaylistItem>)list;
+            this.PlayList = (List<ZonePlaylistItem>)list;
             this.ListName = listName;
         }
 
@@ -96,23 +96,23 @@ namespace ZonePlayer
         /// <summary>
         /// Gets the playlist list
         /// </summary>
-        public override List<IPlaylistItem> PlayList
+        public override List<ZonePlaylistItem> PlayList
         {
             get;
             set;
         }
         
         /// <summary>
-        /// Gets the <see cref="IPlaylistItem"/> to populate the playlist
+        /// Gets the <see cref="ZonePlaylistItem"/> to populate the playlist
         /// </summary>
         /// <param name="listUri">Uri to the item</param>
         /// <param name="listName">Name of the playlist item</param>
         /// <param name="randomize">True when playlist needs to be randomized</param>
-        /// <returns>List of <see cref="IPlaylistItem"/> </returns>
+        /// <returns>List of <see cref="ZonePlaylistItem"/> </returns>
         public override ZonePlaylist Read(Uri listUri, string listName, bool randomize)
         {
             this.ListUri = Checks.NotNull<Uri>("ListUri", listUri);
-            List<IPlaylistItem> playList = (List<IPlaylistItem>)ReadPlayList(this.ListUri, randomize);
+            List<ZonePlaylistItem> playList = (List<ZonePlaylistItem>)ReadPlayList(this.ListUri, randomize);
             return (ZonePlaylist)new AsxPlayList(playList, listName);
         }
 
@@ -122,7 +122,7 @@ namespace ZonePlayer
         /// <param name="resource">The <see cref="Uri" to the resource/></param>
         /// <param name="randomize">True if the items in the playlist needs to be randomized</param>
         /// <returns></returns>
-        private List<IPlaylistItem> ReadPlayList(Uri resource, bool randomize)
+        private List<ZonePlaylistItem> ReadPlayList(Uri resource, bool randomize)
         {
             XDocument asx = OpenPlayList(resource);
 
@@ -136,7 +136,7 @@ namespace ZonePlayer
                 from record in asx.Descendants("ENTRY")
                 select record;
 
-            List<IPlaylistItem> list = new List<IPlaylistItem>();
+            List<ZonePlaylistItem> list = new List<ZonePlaylistItem>();
             foreach(var entry in xmlEntry)
             {
                 string title = 
@@ -156,9 +156,29 @@ namespace ZonePlayer
                      select new KeyValuePair<string, string>(refXml.Attribute("NAME").Value, refXml.Attribute("VALUE").Value))
                      .ToDictionary(x => x.Key, x => x.Value);
 
+                // Get optional player type from playlist
+                PlayerType? playerType = null;
+                string key = PlaylistManager.PlayListItemPlayerNameType.ToUpper();
+                if (param.ContainsKey(key))
+                {
+                    playerType = PlayerTypeHelper.GetType(param[key]);
+                }
+
+                key = PlaylistManager.PlayListItemPlayerNameType.ToLower();
+                if (param.ContainsKey(key))
+                {
+                    playerType = PlayerTypeHelper.GetType(param[key]);
+                }
+
+                key = PlaylistManager.PlayListItemPlayerNameType;
+                if (param.ContainsKey(key))
+                {
+                    playerType = PlayerTypeHelper.GetType(param[key]);
+                }
+
                 Uri refTag = new Uri(PlaylistManager.AbsolutePaths(reference));
                 Uri image = (string.IsNullOrEmpty(banner)) ? null : new Uri(PlaylistManager.AbsolutePaths(banner));
-                AsxItem item = new AsxItem(title, refTag, PlayListType.asx, image, param);
+                AsxItem item = new AsxItem(title, refTag, PlayListType.asx, image, playerType, param);
                 list.Add(item);
             }
 

@@ -105,9 +105,9 @@ namespace ZonePlayer
         /// <summary>
         /// Play the current item in the playlist
         /// </summary>
-        public void Play(IPlaylistItem item)
+        public void Play(ZonePlaylistItem item)
         {
-            Checks.NotNull<IPlaylistItem>("item", item);
+            Checks.NotNull<ZonePlaylistItem>("item", item);
             this.CurrentPlayList = PlaylistManager.Create(item.ItemUri, false);
             this.Play();
         }
@@ -118,14 +118,14 @@ namespace ZonePlayer
         public void Play()
         {
             Checks.NotNull<ZonePlaylist>("CurrentPlayList", CurrentPlayList);
-            IPlaylistItem item = null;
+            ZonePlaylistItem item = null;
 
             if (this.CurrentPlayList.CurrentItem == null)
             {
                 item = this.CurrentPlayList.PlayList.First();
             }
 
-            item = Checks.NotNull<IPlaylistItem>("CurrentItem", this.CurrentPlayList.CurrentItem);
+            item = Checks.NotNull<ZonePlaylistItem>("CurrentItem", this.CurrentPlayList.CurrentItem);
             Log.Item(EventLogEntryType.Information, "Play: {0}", this.CurrentPlayList.CurrentItem.ItemUri);
             this.Player.URL = item.ItemUri.ToString();
             this.Player.controls.play();

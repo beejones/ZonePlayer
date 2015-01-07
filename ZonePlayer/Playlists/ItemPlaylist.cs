@@ -35,10 +35,10 @@ namespace ZonePlayer
         /// </summary>
         /// <param name="list">List of playlist items</param>
         /// <param name="listName">Name of the playlist item</param>
-        public ItemPlaylist(List<IPlaylistItem> list, string listName = null)
+        public ItemPlaylist(List<ZonePlaylistItem> list, string listName = null)
             : this()
         {
-            this.PlayList = (List<IPlaylistItem>)list;
+            this.PlayList = (List<ZonePlaylistItem>)list;
             this.ListName = listName;
         }
 
@@ -97,23 +97,23 @@ namespace ZonePlayer
         /// <summary>
         /// Gets the playlist list
         /// </summary>
-        public override List<IPlaylistItem> PlayList
+        public override List<ZonePlaylistItem> PlayList
         {
             get;
             set;
         }
 
         /// <summary>
-        /// Gets the <see cref="IPlaylistItem"/> to populate the playlist
+        /// Gets the <see cref="ZonePlaylistItem"/> to populate the playlist
         /// </summary>
         /// <param name="listUri">Uri to the item</param>
         /// <param name="listName">Name of the playlist item</param>
         /// <param name="randomize">True when playlist needs to be randomized</param>
-        /// <returns>List of <see cref="IPlaylistItem"/> </returns>
+        /// <returns>List of <see cref="ZonePlaylistItem"/> </returns>
         public override ZonePlaylist Read(Uri listUri, string listName, bool randomize)
         {
             this.ListUri = Checks.NotNull<Uri>("ListUri", listUri);
-            List<IPlaylistItem> playList = new List<IPlaylistItem>() {  new AsxItem(listName, listUri, PlayListType.None, null) };
+            List<ZonePlaylistItem> playList = new List<ZonePlaylistItem>() {  new AsxItem(listName, listUri, PlayListType.None, null) };
             return (ZonePlaylist)new ItemPlaylist(playList, listName);
         }
     }

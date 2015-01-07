@@ -34,10 +34,10 @@ namespace ZonePlayer
         /// </summary>
         /// <param name="list">List of playlist items</param>
         /// <param name="listName">Name of the playlist item</param>
-        public M3uPlayList(List<IPlaylistItem> list, string listName = null)
+        public M3uPlayList(List<ZonePlaylistItem> list, string listName = null)
             : this()
         {
-            this.PlayList = (List<IPlaylistItem>)list;
+            this.PlayList = (List<ZonePlaylistItem>)list;
             this.ListName = listName;
         }
 
@@ -96,7 +96,7 @@ namespace ZonePlayer
         /// <summary>
         /// Gets the playlist list
         /// </summary>
-        public override List<IPlaylistItem> PlayList
+        public override List<ZonePlaylistItem> PlayList
         {
             get;
             set;
@@ -104,9 +104,9 @@ namespace ZonePlayer
         
         /*
                 /// <summary>
-                /// Gets the  current <see cref="IPlaylistItem"/> of the playlist
+                /// Gets the  current <see cref="ZonePlaylistItem"/> of the playlist
                 /// </summary>
-                public override IPlaylistItem CurrentItem
+                public override ZonePlaylistItem CurrentItem
                 {
                     get
                     {
@@ -115,17 +115,17 @@ namespace ZonePlayer
                 }
         */
         /// <summary>
-        /// Gets the <see cref="IPlaylistItem"/> to populate the playlist
+        /// Gets the <see cref="ZonePlaylistItem"/> to populate the playlist
         /// </summary>
         /// <param name="listUri">Uri to the item</param>
         /// <param name="listName">Name of the playlist item</param>
         /// <param name="randomize">True when playlist needs to be randomized</param>
-        /// <returns>List of <see cref="IPlaylistItem"/> </returns>
+        /// <returns>List of <see cref="ZonePlaylistItem"/> </returns>
         public override ZonePlaylist Read(Uri listUri, string listName, bool randomize)
         {
             this.ListUri = Checks.NotNull<Uri>("ListUri", listUri);
             this.ListName = listName;
-            List<IPlaylistItem> playList = (List<IPlaylistItem>)ReadPlayList(this.ListUri, randomize);
+            List<ZonePlaylistItem> playList = (List<ZonePlaylistItem>)ReadPlayList(this.ListUri, randomize);
             return (ZonePlaylist)new M3uPlayList(playList, listName);
         }
 
@@ -135,14 +135,14 @@ namespace ZonePlayer
         /// <param name="resource">The <see cref="Uri" to the resource/></param>
         /// <param name="randomize">True if the items in the playlist needs to be randomized</param>
         /// <returns></returns>
-        private List<IPlaylistItem> ReadPlayList(Uri resource, bool randomize)
+        private List<ZonePlaylistItem> ReadPlayList(Uri resource, bool randomize)
         {
             using (TextReader tr = OpenPlayList(resource))
             {
 
                 // read a line of text
                 string data;
-                List<IPlaylistItem> m3uData = new List<IPlaylistItem>();
+                List<ZonePlaylistItem> m3uData = new List<ZonePlaylistItem>();
                 List<int> listToRandomize = new List<int>();
                 int cnt = 0;
                 while ((data = tr.ReadLine()) != null)
@@ -155,7 +155,7 @@ namespace ZonePlayer
 
                     data = PlaylistManager.AbsolutePaths(data);
 
-                    m3uData.Add((IPlaylistItem)new M3uItem(
+                    m3uData.Add((ZonePlaylistItem)new M3uItem(
                             null,
                             new Uri(data),                            
                             PlayListType.m3u,
@@ -166,11 +166,11 @@ namespace ZonePlayer
                 // close the stream
                 tr.Close();
 
-                List<IPlaylistItem> result;
+                List<ZonePlaylistItem> result;
                 if (randomize && listToRandomize.Count > 1)
                 {
                     var shuffledcards = listToRandomize.OrderBy(a => Guid.NewGuid());
-                    result = new List<IPlaylistItem>();
+                    result = new List<ZonePlaylistItem>();
                     foreach (int i in shuffledcards)
                     {
                         result.Add(m3uData[i]);
@@ -179,7 +179,7 @@ namespace ZonePlayer
                 else
                     result = m3uData;
 
-                return (List<IPlaylistItem>)result;
+                return (List<ZonePlaylistItem>)result;
             }
         }
 

@@ -123,7 +123,7 @@ namespace ZonePlayer
 
             // Get the item from the current playlist
             this.CurrentPlaylistItem = index;
-            IPlaylistItem item = this.CurrentPlaylist.PlayList[index];
+            ZonePlaylistItem item = this.CurrentPlaylist.PlayList[index];
             this.CurrentPlayer.Play(item);
         }
 
@@ -200,7 +200,7 @@ namespace ZonePlayer
         /// <summary>
         /// Gets the current playing item
         /// </summary>
-        public IPlaylistItem CurrentPlayingItem
+        public ZonePlaylistItem CurrentPlayingItem
         {
             get
             {
