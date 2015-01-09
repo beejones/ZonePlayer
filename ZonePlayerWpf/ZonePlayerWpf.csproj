@@ -167,9 +167,9 @@
       <Project>{7a732387-f7cf-447f-9a07-d4c3d6110d6b}</Project>
       <Name>Diagnostics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowPanel\WindowPanel.csproj">
-      <Project>{195534b8-3ea8-4e96-b7cc-c9e371acd2f5}</Project>
-      <Name>WindowPanel</Name>
+    <ProjectReference Include="..\WpfPanel\WpfPanel.csproj">
+      <Project>{6fe22ffc-167f-4916-a661-35e6ff644d0e}</Project>
+      <Name>WpfPanel</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZonePlayerInterface\ZonePlayerInterface.csproj">
       <Project>{be63ea80-97e8-4653-938d-486cbad47fbb}</Project>

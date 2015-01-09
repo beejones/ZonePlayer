@@ -92,6 +92,12 @@
       <DependentUpon>AxWmpPlayer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AxVlcPanel\AxVlcPanel.csproj">
+      <Project>{f4a76387-9f87-4eb8-8aeb-5032d57262ac}</Project>
+      <Name>AxVlcPanel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

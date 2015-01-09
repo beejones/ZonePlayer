@@ -115,7 +115,7 @@ namespace Implementation.Players
 
         #endregion
 
-        #region IPlayer Members
+        #region Player Members
 
         public void Play()
         {
@@ -228,9 +228,9 @@ namespace Implementation.Players
 
         #endregion
 
-        #region IEqualityComparer<IPlayer> Members
+        #region IEqualityComparer<Player> Members
 
-        public bool Equals(IPlayer x, IPlayer y)
+        public bool Equals(Player x, Player y)
         {
             INativePointer x1 = (INativePointer)x;
             INativePointer y1 = (INativePointer)y;
@@ -238,7 +238,7 @@ namespace Implementation.Players
             return x1.Pointer == y1.Pointer;
         }
 
-        public int GetHashCode(IPlayer obj)
+        public int GetHashCode(Player obj)
         {
             return ((INativePointer)obj).Pointer.GetHashCode();
         }

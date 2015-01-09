@@ -97,18 +97,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="PlayerTests.cs" />
     <Compile Include="PlayListTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestReferences.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SamplePlaylists\internet.asx">
+    <Content Include="SamplePlaylists\internet.m3u">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SamplePlaylists\TestVideo.m3u">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SamplePlaylists\Test1.m3u">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="SamplePlaylists\internet.asx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

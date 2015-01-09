@@ -16,18 +16,8 @@ namespace ZonePlayer
     /// Implementation of <see cref="LibVlcPlayer"/> for rendering media by means of Libvlc.
     /// This class makes use of the nVlc project, a libvlc wrapper. See http://www.codeproject.com/Articles/109639/nVLC
     /// </summary>
-    public sealed class LibVlcPlayer : FrameworkElement, IPlayer
+    public sealed class LibVlcPlayer : ZonePlayer
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LibVlcPlayer"/> class.
-        /// </summary>
-        /// <param name="handle">Handle to rendering panel</param>
-        /// <param name="audioDevice">Audio device for the player</param>
-        public LibVlcPlayer(IntPtr handle, string audioDevice) : this(audioDevice)
-        {
-            this.Player.WindowHandle = handle;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="LibVlcPlayer"/> class.
         /// </summary>
@@ -36,41 +26,14 @@ namespace ZonePlayer
         public LibVlcPlayer(string audioDevice)
         {
             Log.Item(EventLogEntryType.Information, "Initialize libvlc player for device: {0}", audioDevice);
+            SetNativePlayer();
             this.AudioDevice = audioDevice ?? "a";
-            this.MediaFactory = new MediaPlayerFactory(this.AudioDevice, false);
-            this.Player = this.MediaFactory.CreatePlayer<IVideoPlayer>();
-        }
-
-        /// <summary>
-        /// Gets or sets the audio device for the player
-        /// </summary>
-        /// <param name="device">Audio device</param>
-        public string AudioDevice
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the playlist for the player and loads it
-        /// </summary>
-        public string PlayListUrl
-        {
-            get
-            {
-                return this.CurrentPlayList.ListUri.ToString();
-            }
-            set
-            {
-                Uri list = new Uri(value);
-                this.LoadPlayList(list);
-            }
         }
 
         /// <summary>
         /// Gets the type of the player
         /// </summary>
-        public PlayerType PlayerType
+        public override PlayerType PlayerType
         {
             get
             {
@@ -79,18 +42,9 @@ namespace ZonePlayer
         }
 
         /// <summary>
-        /// Gets a reference to the player object
-        /// </summary>
-        public IVideoPlayer Player
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// Gets or sets the audio volume for the player
         /// </summary>
-        public int Volume
+        public override int Volume
         {
             get
             {
@@ -99,7 +53,7 @@ namespace ZonePlayer
             set
             {
                 this.CurrentVolume = value;
-                this.Player.Volume = value;
+                this.NativePlayer.Volume = value;
                 Log.Item(EventLogEntryType.Information, "Set volume libvlc player: {0}", value);
             }
         }
@@ -107,35 +61,18 @@ namespace ZonePlayer
         /// <summary>
         /// Gets the playing status of the player
         /// </summary>
-        public bool IsPlaying
+        public override bool IsPlaying
         {
             get
             {
-                return this.Player.IsPlaying;
+                return this.NativePlayer.IsPlaying;
             }
-        }
-
-        /// <summary>
-        /// Gets the media factory the player object
-        /// </summary>
-        public MediaPlayerFactory MediaFactory
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Initialize the player context
-        /// </summary>
-        /// <param name="settings">Dictionary of settings for the player</param>
-        public static void InitializePlayer(string settings)
-        {
         }
 
         /// <summary>
         /// Play the current item in the playlist
         /// </summary>
-        public void Play()
+        public override void Play()
         {
             Checks.NotNull<ZonePlaylist>("CurrentPlayList", this.CurrentPlayList);
             ZonePlaylistItem item = null;
@@ -145,91 +82,52 @@ namespace ZonePlayer
                 item = this.CurrentPlayList.PlayList.First();
             }
 
-
             item = Checks.NotNull<ZonePlaylistItem>("CurrentItem", this.CurrentPlayList.CurrentItem);
             Log.Item(EventLogEntryType.Information, "Play: {0}", this.CurrentPlayList.CurrentItem.ItemUri);
             IMedia media = this.MediaFactory.CreateMedia<IMedia>(item.ItemUri.ToString());
-            this.Player = this.MediaFactory.CreatePlayer<IVideoPlayer>();
-            this.Player.Open(media);
+            this.NativePlayer = this.MediaFactory.CreatePlayer<IVideoPlayer>();
+            this.NativePlayer.Open(media);
             media.Parse(true);
-            this.Player.Play();
-        }
-
-        /// <summary>
-        /// Play the current item in the playlist
-        /// </summary>
-        public void Play(ZonePlaylistItem item)
-        {
-            Checks.NotNull<ZonePlaylistItem>("item", item);
-            this.CurrentPlayList = PlaylistManager.Create(item.ItemUri, false);
-            this.Play();
-        }
-
-        /// <summary>
-        /// Load the playlist
-        /// </summary>
-        /// <param name="listUri">Uri to the item</param>
-        /// <param name="listName">Name of the playlist item</param>
-        /// <param name="randomize">True when playlist needs to be randomized</param>
-        /// <returns>The load playlist</returns>
-        public ZonePlaylist LoadPlayList(Uri listUri, string listName = null, bool randomize = true)
-        {
-            if (PlaylistManager.IsM3u(listUri))
-            {
-                this.CurrentPlayList = new M3uPlayList().Read(listUri, listName, randomize);
-            }
-            else
-            {
-                if (PlaylistManager.IsAsx(listUri))
-                {
-                    this.CurrentPlayList = new AsxPlayList().Read(listUri, listName, randomize);
-                }
-
-                else
-                {
-                    Log.Item(EventLogEntryType.Error, "Playlst not recognized: {0}", listUri);
-                    throw new PlaylistNotFoundException(string.Format("Playlst not recognized: {0}", listUri));
-                }
-            }
-
-            return this.CurrentPlayList;
+            this.NativePlayer.Play();
         }
 
         /// <summary>
         /// Stop playing
         /// </summary>
-        public void Stop()
+        public override void Stop()
         {
             Log.Item(EventLogEntryType.Information, "Stop libvlc");
-            this.Player.Stop();
+            this.NativePlayer.Stop();
         }
 
+ 
         /// <summary>
-        /// Play next item in playlist
+        /// Gets the media factory the player object
         /// </summary>
-        public void Next()
-        {
-            Log.Item(EventLogEntryType.Information, "Next libvlc");
-            this.CurrentPlayList.NextItem();
-            this.Play();
-        }
-
-        /// <summary>
-        /// Gets or sets the playlist for the player
-        /// </summary>
-        private ZonePlaylist CurrentPlayList
+        private MediaPlayerFactory MediaFactory
         {
             get;
             set;
         }
 
         /// <summary>
-        /// Gets or sets the current volume for the player
+        /// Gets the native implemention of the payer
         /// </summary>
-        private int CurrentVolume
+        private IVideoPlayer NativePlayer
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Set handle to panel if not yet initialized
+        /// </summary>
+        private void SetNativePlayer()
+        {
+            this.MediaFactory = new MediaPlayerFactory(this.AudioDevice, true); 
+            this.NativePlayer = (IVideoPlayer)this.MediaFactory.CreatePlayer<IVideoPlayer>();
+            WpfPanel.PanelControl panel = new WpfPanel.PanelControl();
+           //this.NativePlayer.WindowHandle = panel.h.HostPanel.Handle;
         }
     }
 }

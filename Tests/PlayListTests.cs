@@ -13,23 +13,21 @@ namespace Tests
     [TestClass]
     public class PlayListTests
     {
-        /// <summary>
-        /// Reference playlist for tests
-        /// </summary>
-        private const string SamplePlaylist = @".\SamplePlaylists\internet.asx";
 
         [TestMethod]
         public void Player_OK_LoadPlayList()
         {
-            ZonePlaylist playlist = LoadPlaylist(SamplePlaylist,true, "Test", false);
-            Assert.AreEqual<int>(playlist.PlayList.Count, 3);
+            ZonePlaylist playlist1 = LoadPlaylist(TestReferences.SamplePlaylist1, true, "Test1", true);
+            ZonePlaylist playlist2 = LoadPlaylist(TestReferences.SamplePlaylist2, true, "Test2", true);
+            Assert.AreEqual<int>(playlist1.PlayList.Count, TestReferences.SamplePlaylistCount1);
+            Assert.AreEqual<int>(playlist2.PlayList.Count, TestReferences.SamplePlaylistCount2);
         }
 
         [TestMethod]
         public void Player_OK_Play()
         {
             // Setup
-            ZonePlaylist playlist = LoadPlaylist(SamplePlaylist, true, "Test", false);
+            ZonePlaylist playlist = LoadPlaylist(TestReferences.SamplePlaylist1, true, "Test", false);
 
             // Act
             MusicZone musicZone = new MusicZone("MyZone", PlayerType.wmp);

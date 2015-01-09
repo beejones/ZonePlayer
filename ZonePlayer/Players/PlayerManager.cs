@@ -12,17 +12,17 @@ using System.Diagnostics;
 namespace ZonePlayer
 {
     /// <summary>
-    /// Implementation of <see cref="PlayertManager"/> for creating instances of <see cref="IPlayer"/>
+    /// Implementation of <see cref="PlayertManager"/> for creating instances of <see cref="Player"/>
     /// </summary>    
     public static class PlayerManager
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="IPlayer"/> class.
+        /// Initializes a new instance of the <see cref="Player"/> class.
         /// </summary>
         /// <param name="playerType">Type of player to create</param>
         /// <param name="audioDevice">Audio device used for audio</param>
-        /// <returns>New <see cref="IPlayer"/> instance</returns>
-        public static IPlayer Create(PlayerType playerType, string audioDevice = null)
+        /// <returns>New <see cref="Player"/> instance</returns>
+        public static ZonePlayer Create(PlayerType playerType, string audioDevice = null)
         {
             switch (playerType)
             {

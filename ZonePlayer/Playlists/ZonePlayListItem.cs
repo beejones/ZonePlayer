@@ -67,7 +67,7 @@ namespace ZonePlayer
         }
 
         /// <summary>
-        /// Gets the the <see cref=" PlayerType"/> that needs to render this item/>
+        /// Gets or sets the the <see cref=" PlayerType"/> that needs to render this item/>
         /// </summary>
         public PlayerType? PlayerType
         {

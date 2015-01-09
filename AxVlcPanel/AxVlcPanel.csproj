@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{57D1C962-4D06-41B8-88CB-6BD75DC63BAF}</ProjectGuid>
+    <ProjectGuid>{F4A76387-9F87-4EB8-8AEB-5032D57262AC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AxVlcPanel</RootNamespace>

@@ -23,7 +23,7 @@ namespace ZonePlayerWpf
         /// <summary>
         /// Name for control variable zone player
         /// </summary>
-        private const string ZonePlayer = "zonePlayer";
+        private const string ZonePlayer = "zonePlayerPanel";
 
         /// <summary>
         /// Name for control variable zone name
@@ -34,6 +34,11 @@ namespace ZonePlayerWpf
         /// Name for control variable zone audio device
         /// </summary>
         private const string ZoneAudioDevice = "zoneAudioDevice";
+
+        /// <summary>
+        /// Name for control variable zone Player device
+        /// </summary>
+        private const string ZonePlayerDevice = "zonePlayerDevice";
 
         /// <summary>
         /// Item playing in the zone
@@ -72,6 +77,7 @@ namespace ZonePlayerWpf
         {
             this.ZoneNames = JsonConvert.DeserializeObject<List<string>>(zoneNames);
             this.InitizalizeAudioDevices();
+            this.InitizalizePlayerDevices();
             this.InitizalizeZoneNamesOnGui();
             this.InitizalizeMusicZones(guiDefaultPlayLists, guiZonePlaylistContent);
             this.InitializeVolumeControls(Properties.Settings.Default.VolumeControl);
@@ -180,7 +186,20 @@ namespace ZonePlayerWpf
             List<string> devices = JsonConvert.DeserializeObject<List<string>>(Properties.Settings.Default.AudioDevices);
             for (int inx = 0; inx < this.NumberOfPlayers; inx++)
             {
-                this.GuiAudioDevice(inx,  devices[inx]);
+                this.GuiAudioDevice(inx, devices[inx]);
+            }
+        }
+
+        /// <summary>
+        /// Set the Player devices on the machine
+        /// </summary>
+        private void InitizalizePlayerDevices()
+        {
+            this.PlayerDevices = PlayerTypeHelper.GetPlayerTypes().Where(p => p.CompareTo("None") != 0).ToList();
+
+            for (int inx = 0; inx < this.NumberOfPlayers; inx++)
+            {
+                this.GuiPlayerDevice(inx, this.PlayerDevices[inx]);
             }
         }
 
@@ -297,6 +316,21 @@ namespace ZonePlayerWpf
         }
         #endregion
 
+        #region Player Device
+        /// <summary>
+        /// Update the Player device of a player
+        /// </summary>
+        /// <param name="playerIndex">Index for the player</param>
+        /// <param name="device">New device</param>
+        public void UpdatePlayerDevice(int playerIndex, string device)
+        {
+            this.Players[playerIndex] = new MusicZone(this.ZoneNames[playerIndex], PlayerTypeHelper.GetType(device));
+
+            //TODO only initialize selected player
+            this.InitizalizeMusicZones(this.DefaultPlaylists.GuiDefaultPlayLists, this.DefaultPlaylists.GuZonePlaylistContent);
+        }
+        #endregion
+
         /// <summary>
         /// Set the volume of the current playing item
         /// </summary>
@@ -380,6 +414,17 @@ namespace ZonePlayerWpf
         }
 
         /// <summary>
+        /// Set the name of the Player device associated with zone
+        /// </summary>
+        /// <param name="zone">Index of zone</param>
+        /// <param name="device">Name of the device</param>
+        /// <returns>Name of device</returns>
+        public void GuiPlayerDevice(int zone, string device)
+        {
+            this.MainWindow.Dispatcher.BeginInvoke((Action)(() => (this.GetControl(zone, ZonePlayerDevice) as Button).Content = device));
+        }
+
+        /// <summary>
         /// Gets the volume input
         /// </summary>
         /// <param name="zone">Index of zone</param>
@@ -449,6 +494,15 @@ namespace ZonePlayerWpf
         ///  Gets thee audio devics in the current system
         /// </summary>
         public List<string> AudioDevices
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        ///  Gets thee Player devics in the current system
+        /// </summary>
+        public List<string> PlayerDevices
         {
             get;
             set;

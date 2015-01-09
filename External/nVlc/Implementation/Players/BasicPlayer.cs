@@ -24,7 +24,7 @@ using Implementation.Events;
 
 namespace Implementation.Players
 {
-    internal class BasicPlayer : DisposableBase, IPlayer, IEventProvider, IReferenceCount, INativePointer
+    internal class BasicPlayer : DisposableBase, Player, IEventProvider, IReferenceCount, INativePointer
     {
         protected IntPtr m_hMediaPlayer;
         protected IntPtr m_hMediaLib;
@@ -40,7 +40,7 @@ namespace Implementation.Players
             m_events = new EventBroker(this);
         }
 
-        #region IPlayer Members
+        #region Player Members
 
         public virtual void Open(IMedia media)
         {
@@ -162,9 +162,9 @@ namespace Implementation.Players
 
         #endregion
 
-        #region IEqualityComparer<IPlayer> Members
+        #region IEqualityComparer<Player> Members
 
-        public bool Equals(IPlayer x, IPlayer y)
+        public bool Equals(Player x, Player y)
         {
             INativePointer x1 = (INativePointer)x;
             INativePointer y1 = (INativePointer)y;
@@ -172,7 +172,7 @@ namespace Implementation.Players
             return x1.Pointer == y1.Pointer;
         }
 
-        public int GetHashCode(IPlayer obj)
+        public int GetHashCode(Player obj)
         {
             return ((INativePointer)obj).Pointer.GetHashCode();
         }
@@ -190,7 +190,7 @@ namespace Implementation.Players
 
         public override bool Equals(object obj)
         {
-            return this.Equals((IPlayer)obj, this);
+            return this.Equals((Player)obj, this);
         }
 
         public override int GetHashCode()

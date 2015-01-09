@@ -46,6 +46,22 @@ namespace ZonePlayer
     public static class PlayerTypeHelper
     {
         /// <summary>
+        ///  Return all items of <see cref="PlayerType"/>
+        /// </summary>
+        /// <returns>All items in player type</returns>
+        public static List<string> GetPlayerTypes()
+        {
+            var allPlayerTypes = Enum.GetValues(typeof(PlayerType));
+            List<string> types = new List<string>();
+            foreach (var player in allPlayerTypes)
+            {
+                types.Add(player.ToString());
+            }
+
+            return types;
+        }
+
+        /// <summary>
         ///  Convert the string representation of the player to <see cref="PlayerType"/>
         /// </summary>
         /// <param name="playerType">Name of player</param>
@@ -58,14 +74,14 @@ namespace ZonePlayer
             }
 
             playerType = playerType.ToLower();
-            string[] allPlayerTypes = (string[])Enum.GetValues(typeof(PlayerType));
+            List<string> allPlayerTypes = GetPlayerTypes();
             string foundPlayerType = allPlayerTypes.Where(t => t.ToLower().CompareTo(playerType) == 0).FirstOrDefault();
             if (string.IsNullOrWhiteSpace(foundPlayerType))
             {
                 return PlayerType.None;
             }
 
-            return (PlayerType) Enum.Parse(typeof(PlayerType), playerType, true);
+            return (PlayerType)Enum.Parse(typeof(PlayerType), playerType, true);
         }
     }
 }

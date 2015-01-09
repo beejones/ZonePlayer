@@ -196,7 +196,7 @@ namespace Implementation
         /// </summary>
         /// <typeparam name="T">Type of the player to create</typeparam>
         /// <returns>Newly created player</returns>
-        public T CreatePlayer<T>() where T : IPlayer
+        public T CreatePlayer<T>() where T : Player
         {
             return ObjectFactory.Build<T>(m_hMediaLib);
         }
@@ -307,7 +307,7 @@ namespace Implementation
                 objectMap.Add(typeof(IMediaFromFile), typeof(MediaFromFile));
                 objectMap.Add(typeof(IVideoInputMedia), typeof(VideoInputMedia));
                 objectMap.Add(typeof(IScreenCaptureMedia), typeof(ScreenCaptureMedia));
-                objectMap.Add(typeof(IPlayer), typeof(BasicPlayer));
+                objectMap.Add(typeof(Player), typeof(BasicPlayer));
                 objectMap.Add(typeof(IAudioPlayer), typeof(AudioPlayer));
                 objectMap.Add(typeof(IVideoPlayer), typeof(VideoPlayer));
                 objectMap.Add(typeof(IDiskPlayer), typeof(DiskPlayer));

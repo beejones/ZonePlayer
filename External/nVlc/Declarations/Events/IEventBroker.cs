@@ -23,7 +23,7 @@ using Declarations.Events;
 namespace Declarations.Events
 {
    /// <summary>
-   /// Events raised by the IPlayer object
+   /// Events raised by the Player object
    /// </summary>
    public interface IEventBroker
    {

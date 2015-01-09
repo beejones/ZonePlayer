@@ -96,10 +96,10 @@
     <Compile Include="Players\WmpAxPlayer.cs" />
     <Compile Include="MusicZone.cs" />
     <Compile Include="MusicZoneAudioChannel.cs" />
-    <Compile Include="Players\IPlayer.cs" />
+    <Compile Include="Players\ZonePlayer.cs" />
     <Compile Include="Players\LibVlcPlayer.cs" />
     <Compile Include="Players\VlcAxPlayer.cs" />
-    <Compile Include="Players\Wmpplayer.cs" />
+    <Compile Include="Players\WmpPlayer.cs" />
     <Compile Include="Players\PlayerType.cs" />
     <Compile Include="Playlists\AsxItem.cs" />
     <Compile Include="Playlists\AsxPlayList.cs" />
@@ -114,10 +114,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AxVlcPanel\AxVlcPanel.csproj">
-      <Project>{57d1c962-4d06-41b8-88cb-6bd75dc63baf}</Project>
-      <Name>AxVlcPanel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AxWmpPanel\AxWmpPanel.csproj">
       <Project>{042da724-20fd-43ce-850e-ef51532c4bef}</Project>
       <Name>AxWmpPanel</Name>
@@ -138,9 +134,9 @@
       <Project>{57f08087-b175-4c96-be36-83fbc4a21065}</Project>
       <Name>nVLC.LibVlcWrapper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowPanel\WindowPanel.csproj">
-      <Project>{195534b8-3ea8-4e96-b7cc-c9e371acd2f5}</Project>
-      <Name>WindowPanel</Name>
+    <ProjectReference Include="..\WpfPanel\WpfPanel.csproj">
+      <Project>{6fe22ffc-167f-4916-a661-35e6ff644d0e}</Project>
+      <Name>WpfPanel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

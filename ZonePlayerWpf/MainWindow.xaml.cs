@@ -34,6 +34,12 @@ namespace ZonePlayerWpf
             {
                 this.AudioDeviceCounters.Add(0);
             }
+
+            this.PlayerDeviceCounters = new List<int>();
+            for (int inx = 0; inx < GuiHelpers.PlayerDevices.Count; inx++)
+            {
+                this.PlayerDeviceCounters.Add(0);
+            }
         }
         #endregion
 
@@ -129,6 +135,23 @@ namespace ZonePlayerWpf
         }
 
         /// <summary>
+        /// Select new Player device for player
+        /// </summary>
+        /// <param name="sender">Button pressed</param>
+        /// <param name="e">Event arguments</param>
+        private void Next_PlayerDeviceSelect(object sender, RoutedEventArgs e)
+        {
+            int playerIndex = this.GetPlayerIndex(sender as Button);
+            string device = this.UpdatePlayerDeviceCounter(playerIndex);
+            Log.Item(System.Diagnostics.EventLogEntryType.Information, "Update device on player: {0}, {1}", playerIndex, device);
+
+            (sender as Button).Content = device;
+
+            // Update player
+            this.GuiHelpers.UpdatePlayerDevice(playerIndex, device);
+        }
+
+        /// <summary>
         /// Volume changed
         /// </summary>
         /// <param name="sender">Textbox changed</param>
@@ -140,6 +163,7 @@ namespace ZonePlayerWpf
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Set volume on player: {0}, {1}", playerIndex, input);
             this.GuiHelpers.UpdateVolume(playerIndex, input);
         }
+
         /// <summary>
         /// Counter used for the audio device selections
         /// </summary>
@@ -155,12 +179,37 @@ namespace ZonePlayerWpf
 
             return this.GuiHelpers.AudioDevices[AudioDeviceCounters[playerIndex]];
         }
+
+        /// <summary>
+        /// Counter used for the Player device selections
+        /// </summary>
+        /// <param name="playerIndex">Player number</param>
+        /// <returns>Name of selected Player device</returns>
+        private string UpdatePlayerDeviceCounter(int playerIndex)
+        {
+            this.PlayerDeviceCounters[playerIndex]++;
+            if (PlayerDeviceCounters[playerIndex] >= this.GuiHelpers.PlayerDevices.Count)
+            {
+                PlayerDeviceCounters[playerIndex] = 0;
+            }
+
+            return this.GuiHelpers.PlayerDevices[PlayerDeviceCounters[playerIndex]];
+        }
         #endregion
 
         /// <summary>
         /// Gets or sets the counter used to switch the device on the swtich audio device button
         /// </summary>
         private List<int> AudioDeviceCounters
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the counter used to switch the device on the swtich Player device button
+        /// </summary>
+        private List<int> PlayerDeviceCounters
         {
             get;
             set;

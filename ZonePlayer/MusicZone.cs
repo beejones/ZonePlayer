@@ -10,7 +10,7 @@ namespace ZonePlayer
 {
     /// <summary>
     /// Implementation of <see cref="MusicZone"/> for defining a music zone
-    /// A music zone is linked to one audio channel and can play different <see cref="IPlayer" players/>
+    /// A music zone is linked to one audio channel and can play different <see cref="Player" players/>
     /// </summary>    
     public sealed class MusicZone
     {
@@ -18,18 +18,26 @@ namespace ZonePlayer
         /// Initializes a new instance of the <see cref="MusicZone"/> class.
         /// </summary>
         /// <param name="zoneName">Set name for the zone/></param>
-        /// <param name="playerType">Set player <see cref="IPlayer" for this instance/></param>
-        public MusicZone(string zoneName, PlayerType playerType) 
+        public MusicZone(string zoneName)
         {
             this.ZoneName = zoneName;
-            DefaultPlayer = this.CurrentPlayer = PlayerManager.Create(playerType);
             this.CurrentPlaylistItem = 0;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicZone"/> class.
+        /// </summary>
+        /// <param name="zoneName">Set name for the zone/></param>
+        /// <param name="playerType">Set player <see cref="Player" for this instance/></param>
+        public MusicZone(string zoneName, PlayerType playerType) : this(zoneName)
+        {
+            DefaultPlayer = this.CurrentPlayer = PlayerManager.Create(playerType);
         }
 
         /// <summary>
         /// Gets or sets the current player for this music zone
         /// </summary>
-        public IPlayer CurrentPlayer
+        public ZonePlayer CurrentPlayer
         {
             get;
             set;
@@ -38,7 +46,7 @@ namespace ZonePlayer
         /// <summary>
         /// Gets or sets the default player for this music zone
         /// </summary>
-        public IPlayer DefaultPlayer
+        public ZonePlayer DefaultPlayer
         {
             get;
             set;
@@ -105,6 +113,24 @@ namespace ZonePlayer
         }
 
         /// <summary>
+        /// Gets or sets the audio device
+        /// </summary>
+        public string AudioDevice
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the Player device
+        /// </summary>
+        public string PlayerDevice
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Initialization of the differernt players
         /// </summary>
         /// <param name="vlcSettings">Settings for vlc</param>
@@ -132,11 +158,17 @@ namespace ZonePlayer
         /// </summary>
         public void Play()
         {
-            Checks.NotNull<IPlayer>("CurrentPlayer", this.CurrentPlayer);
+            this.Stop();
             if (this.CurrentPlaylist != null)
             {
-                this.Stop();
-                this.CurrentPlayer.Play(this.CurrentPlaylist.CurrentItem);
+                ZonePlaylistItem item = this.CurrentPlaylist.CurrentItem;
+                if(item.PlayerType.HasValue && item.PlayerType.Value != PlayerType.None)
+                {
+                    // Select player in playlist
+                    this.CurrentPlayer = PlayerManager.Create(item.PlayerType.Value, this.AudioDevice);
+                }
+
+                this.CurrentPlayer.Play(item);
             }
         }
 
@@ -146,7 +178,7 @@ namespace ZonePlayer
         /// <param name="device">Audio device</param>
         public void SetAudioDevice(string device)
         {
-            this.CurrentPlayer.AudioDevice =device;
+            this.AudioDevice = this.CurrentPlayer.AudioDevice = device;
         }
 
         /// <summary>
@@ -165,7 +197,10 @@ namespace ZonePlayer
         /// </summary>
         public void Stop()
         {
-            this.CurrentPlayer.Stop();
+            if (this.CurrentPlayer != null)
+            {
+                this.CurrentPlayer.Stop();
+            }
         }
 
         /// <summary>

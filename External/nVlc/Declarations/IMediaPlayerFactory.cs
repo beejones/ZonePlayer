@@ -36,7 +36,7 @@ namespace Declarations
         /// </summary>
         /// <typeparam name="T">Type of the player to create</typeparam>
         /// <returns>Newly created player</returns>
-        T CreatePlayer<T>() where T : IPlayer;
+        T CreatePlayer<T>() where T : Player;
 
         /// <summary>
         /// Creates new instance of media.

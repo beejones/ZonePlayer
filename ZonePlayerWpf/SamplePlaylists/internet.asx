@@ -5,13 +5,16 @@
    <ENTRY>
       <TITLE>Radio1</TITLE>
       <REF HREF = "http://mp3.streampower.be/radio1-mid" />
+	   <PARAM NAME="Player" VALUE="vlc" />
    </ENTRY>
    <ENTRY>
       <TITLE>Radio2</TITLE>
       <REF HREF = "http://mp3.streampower.be/ra2vlb-mid" />
+	   <PARAM NAME="Player" VALUE="vlc" />
    </ENTRY>
    <ENTRY>
-      <TITLE>Nostalgie</TITLE>
-      <REF HREF = "http://www.nostalgie.eu/content/assets/player/wmp.wax" />
+      <TITLE>Youtube</TITLE>
+      <REF HREF = "http://youtu.be/l9_KDzS__dc"/>
+	   <PARAM NAME="Player" VALUE="vlc" />
    </ENTRY>
 </ASX>

@@ -25,7 +25,7 @@ namespace Declarations.Players
     /// <summary>
     /// Player for audio only media
     /// </summary>
-    public interface IAudioPlayer : IPlayer
+    public interface IAudioPlayer : Player
     {
         /// <summary>
         /// Gets or sets the volume (0-100) of the player.

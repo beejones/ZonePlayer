@@ -25,7 +25,7 @@ namespace Declarations.Players
    /// <summary>
    /// Player used for IMediaList playback.
    /// </summary>
-   public interface IMediaListPlayer : IPlayer
+   public interface IMediaListPlayer : Player
    {
       /// <summary>
       /// Plays next item in the media list.

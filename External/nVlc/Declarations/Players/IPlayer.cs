@@ -26,7 +26,7 @@ namespace Declarations.Players
     /// <summary>
     /// Represents basic media player functionality.
     /// </summary>
-    public interface IPlayer : IDisposable, IEqualityComparer<IPlayer>
+    public interface Player : IDisposable, IEqualityComparer<Player>
     {
         /// <summary>
         /// Opens new media item.

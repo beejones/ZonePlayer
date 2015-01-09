@@ -29,34 +29,34 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AxWmpPlayer));
-            this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
-            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
+            this.axWmp = new AxWMPLib.AxWindowsMediaPlayer();
+            ((System.ComponentModel.ISupportInitialize)(this.axWmp)).BeginInit();
             this.SuspendLayout();
             // 
-            // axWindowsMediaPlayer1
+            // axWmp
             // 
-            this.axWindowsMediaPlayer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axWindowsMediaPlayer1.Enabled = true;
-            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(0, 0);
-            this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
-            this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
-            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(150, 150);
-            this.axWindowsMediaPlayer1.TabIndex = 0;
+            this.axWmp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axWmp.Enabled = true;
+            this.axWmp.Location = new System.Drawing.Point(0, 0);
+            this.axWmp.Name = "axWmp";
+            this.axWmp.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWmp.OcxState")));
+            this.axWmp.Size = new System.Drawing.Size(150, 150);
+            this.axWmp.TabIndex = 0;
             // 
-            // UserControl1
+            // AxWmpPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.axWindowsMediaPlayer1);
-            this.Name = "UserControl1";
-            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
+            this.Controls.Add(this.axWmp);
+            this.Name = "AxWmpPlayer";
+            ((System.ComponentModel.ISupportInitialize)(this.axWmp)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        public AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
+        public AxWMPLib.AxWindowsMediaPlayer axWmp;
         
     }
 }

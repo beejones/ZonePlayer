@@ -29,33 +29,33 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AxVlcPlayer));
-            this.axVLCPlugin21 = new AxAXVLC.AxVLCPlugin2();
-            ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).BeginInit();
+            this.axVlc = new AxAXVLC.AxVLCPlugin2();
+            ((System.ComponentModel.ISupportInitialize)(this.axVlc)).BeginInit();
             this.SuspendLayout();
             // 
-            // axVLCPlugin21
+            // axVlc
             // 
-            this.axVLCPlugin21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axVLCPlugin21.Enabled = true;
-            this.axVLCPlugin21.Location = new System.Drawing.Point(0, 0);
-            this.axVLCPlugin21.Name = "axVLCPlugin21";
-            this.axVLCPlugin21.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axVLCPlugin21.OcxState")));
-            this.axVLCPlugin21.Size = new System.Drawing.Size(150, 150);
-            this.axVLCPlugin21.TabIndex = 0;
+            this.axVlc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axVlc.Enabled = true;
+            this.axVlc.Location = new System.Drawing.Point(0, 0);
+            this.axVlc.Name = "axVlc";
+            this.axVlc.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axVlc.OcxState")));
+            this.axVlc.Size = new System.Drawing.Size(150, 150);
+            this.axVlc.TabIndex = 0;
             // 
             // AxVlcPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.axVLCPlugin21);
+            this.Controls.Add(this.axVlc);
             this.Name = "AxVlcPlayer";
-            ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axVlc)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        public AxAXVLC.AxVLCPlugin2 axVLCPlugin21;
+        public AxAXVLC.AxVLCPlugin2 axVlc;
     }
 }
