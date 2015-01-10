@@ -144,17 +144,13 @@ namespace ZonePlayerWpf
         {
             bool showvideo = Properties.Settings.Default.ShowVideo;
             this.Players = new List<MusicZone>();
-            for (int inx = 0; inx < this.NumberOfPlayers; inx++)
-            {
-                string device = GuiAudioDevice(inx);
-                this.Players.Add(
-                    new MusicZone(
-                        this.ZoneNames[inx],
-                        PlayerType.vlc)
-                    );
-            }
 
             this.InitizalizeDefaultPlaylists(guiDefaultPlayLists, guiZonePlaylistContent);
+            for (int inx = 0; inx < this.NumberOfPlayers; inx++)
+            {
+                this.Players.Add(null);
+                this.SetPlayer(inx);
+            }
         }
 
         /// <summary>
@@ -183,10 +179,17 @@ namespace ZonePlayerWpf
         private void InitizalizeAudioDevices()
         {
             this.AudioDevices = HardwareDevices.AudioDevices;
+            this.ButtonContentAudioDevices = new List<string>();
             List<string> devices = JsonConvert.DeserializeObject<List<string>>(Properties.Settings.Default.AudioDevices);
             for (int inx = 0; inx < this.NumberOfPlayers; inx++)
             {
-                this.GuiAudioDevice(inx, devices[inx]);
+                string device = devices[inx];
+                if (!this.AudioDevices.Contains(device))
+                {
+                    device =  this.AudioDevices[0];
+                }
+                this.ButtonContentAudioDevices.Add(device);        
+                this.GuiAudioDevice(inx, device);
             }
         }
 
@@ -196,10 +199,12 @@ namespace ZonePlayerWpf
         private void InitizalizePlayerDevices()
         {
             this.PlayerDevices = PlayerTypeHelper.GetPlayerTypes().Where(p => p.CompareTo("None") != 0).ToList();
+            this.ButtonContentPlayerDevices = new List<string>();
 
             for (int inx = 0; inx < this.NumberOfPlayers; inx++)
             {
-                this.GuiPlayerDevice(inx, this.PlayerDevices[inx]);
+                this.ButtonContentPlayerDevices.Add("");
+                this.GuiPlayerDevice(inx, this.PlayerDevices[0]);
             }
         }
 
@@ -210,7 +215,6 @@ namespace ZonePlayerWpf
         {
             this.DefaultPlaylists = new DefaultPlaylists(Properties.Settings.Default.DefaultPlaylists, defaultPlaylists, defaultPlaylistsContent);
             this.DefaultPlaylists.SelectFirstElement();
-            this.LoadDefaultPlaylist();
         }
         #endregion
 
@@ -223,6 +227,8 @@ namespace ZonePlayerWpf
         public void Play(int playerIndex, int indexInPlaylist)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Start on player: {0}", playerIndex);
+            this.Players[playerIndex].Stop();
+            this.SetPlayer(playerIndex);
             this.Players[playerIndex].PlayItem(indexInPlaylist);
             this.ShowIsPlaying(playerIndex, false);
         }
@@ -245,6 +251,7 @@ namespace ZonePlayerWpf
         public void Next(int playerIndex)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Next on player: {0}", playerIndex);
+            this.Players[playerIndex].Stop();
             this.Players[playerIndex].Next();
             this.ShowIsPlaying(playerIndex);
         }
@@ -258,7 +265,7 @@ namespace ZonePlayerWpf
             this.DefaultPlaylists.ChangeDefaultPlaylist(NewDefaultPlaylist);
 
             // Load new default playlist in different zones
-            this.LoadDefaultPlaylist();
+            //this.LoadDefaultPlaylistInAllPlayers();
         }
         #endregion
 
@@ -275,14 +282,48 @@ namespace ZonePlayerWpf
         }
 
         /// <summary>
-        /// Load the default playlist into the different players
+        /// Set a new player
         /// </summary>
-        private void LoadDefaultPlaylist()
+        /// <param name="playerIndex">The index of the player</param>
+        /// <param name="playerType">The player type</param>
+        private void SetPlayer(int playerIndex)
+        {
+            string audioDevice = this.GuiAudioDevice(playerIndex);
+            string playerDevice = this.GuiPlayerDevice(playerIndex);
+            PlayerType playerType = PlayerTypeHelper.GetType(playerDevice);
+            if (this.Players[playerIndex] != null)
+            {
+                // Make sure the old player is stopped
+                this.Players[playerIndex].Stop(); 
+            }
+
+            this.Players[playerIndex] =
+                new MusicZone(
+                    this.ZoneNames[playerIndex],
+                    playerType,
+                    this.GuiPlayerWindowHandle(playerIndex),
+                    audioDevice);
+            this.LoadDefaultPlaylist(playerIndex);
+        }
+
+        /// <summary>
+        /// Load the default playlist into the  player
+        /// </summary>
+        /// <param name="playerIndex">The index of the player</param>
+        private void LoadDefaultPlaylist(int playerIndex)
         {
             ZonePlaylist list = this.DefaultPlaylists.SelectedDefaultPlaylist;
+            this.Players[playerIndex].LoadPlayList(list.ListUri, list.ListName, false);
+        }
+
+        /// <summary>
+        /// Load the default playlist into the different players
+        /// </summary>
+        private void LoadDefaultPlaylistInAllPlayers()
+        {
             for (int inx = 0; inx < this.NumberOfPlayers; inx++)
             {
-                this.Players[inx].LoadPlayList(list.ListUri, list.ListName, false);
+                this.LoadDefaultPlaylist(inx);
             }
         }
 
@@ -309,10 +350,7 @@ namespace ZonePlayerWpf
         /// <param name="device">New device</param>
         public void UpdateAudioDevice(int playerIndex, string device)
         {
-            this.Players[playerIndex].SetAudioDevice(device);
-
-            //TODO only initialize selected player
-            this.InitizalizeMusicZones(this.DefaultPlaylists.GuiDefaultPlayLists, this.DefaultPlaylists.GuZonePlaylistContent);
+            this.GuiAudioDevice(playerIndex, device);
         }
         #endregion
 
@@ -321,13 +359,10 @@ namespace ZonePlayerWpf
         /// Update the Player device of a player
         /// </summary>
         /// <param name="playerIndex">Index for the player</param>
-        /// <param name="device">New device</param>
-        public void UpdatePlayerDevice(int playerIndex, string device)
+        /// <param name="playerDevice">New device</param>
+        public void UpdatePlayerDevice(int playerIndex, string playerDevice)
         {
-            this.Players[playerIndex] = new MusicZone(this.ZoneNames[playerIndex], PlayerTypeHelper.GetType(device));
-
-            //TODO only initialize selected player
-            this.InitizalizeMusicZones(this.DefaultPlaylists.GuiDefaultPlayLists, this.DefaultPlaylists.GuZonePlaylistContent);
+            this.GuiPlayerDevice(playerIndex, playerDevice);
         }
         #endregion
 
@@ -399,7 +434,8 @@ namespace ZonePlayerWpf
         /// <returns>Name of device</returns>
         public string GuiAudioDevice(int zone)
         {
-            return (string)(this.GetControl(zone, ZoneAudioDevice) as Button).Content;
+            return this.ButtonContentAudioDevices[zone];
+            //return (string)(this.GetControl(zone, ZoneAudioDevice) as Button).Content;
         }
 
         /// <summary>
@@ -410,7 +446,29 @@ namespace ZonePlayerWpf
         /// <returns>Name of device</returns>
         public void GuiAudioDevice(int zone, string device)
         {
+            this.ButtonContentAudioDevices[zone] = device;
             this.MainWindow.Dispatcher.BeginInvoke((Action)(() => (this.GetControl(zone, ZoneAudioDevice) as Button).Content = device));
+        }
+
+        /// <summary>
+        /// Get the handle to the windows panel for the zone player
+        /// </summary>
+        /// <param name="zone">Index of zone</param>
+        /// <returns>Name of device</returns>
+        public WpfPanel.PanelControl GuiPlayerWindowHandle(int zone)
+        {
+            return this.GetControl(zone, ZonePlayer) as WpfPanel.PanelControl;
+        }
+
+        /// <summary>
+        /// Get the name of the Player device associated with zone
+        /// </summary>
+        /// <param name="zone">Index of zone</param>
+        /// <returns>Name of device</returns>
+        public string GuiPlayerDevice(int zone)
+        {
+            return this.ButtonContentPlayerDevices[zone]; 
+            //return (string)(this.GetControl(zone, ZonePlayerDevice) as Button).Content;
         }
 
         /// <summary>
@@ -421,6 +479,7 @@ namespace ZonePlayerWpf
         /// <returns>Name of device</returns>
         public void GuiPlayerDevice(int zone, string device)
         {
+            this.ButtonContentPlayerDevices[zone] = device;
             this.MainWindow.Dispatcher.BeginInvoke((Action)(() => (this.GetControl(zone, ZonePlayerDevice) as Button).Content = device));
         }
 
@@ -491,9 +550,18 @@ namespace ZonePlayerWpf
 
         #region Properties
         /// <summary>
-        ///  Gets thee audio devics in the current system
+        ///  Gets the audio devics in the current system
         /// </summary>
         public List<string> AudioDevices
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        ///  Gets the audio device selected on the different buttons
+        /// </summary>
+        public List<string> ButtonContentAudioDevices
         {
             get;
             set;
@@ -503,6 +571,15 @@ namespace ZonePlayerWpf
         ///  Gets thee Player devics in the current system
         /// </summary>
         public List<string> PlayerDevices
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        ///  Gets the Player device selected on the different buttons
+        /// </summary>
+        public List<string> ButtonContentPlayerDevices
         {
             get;
             set;

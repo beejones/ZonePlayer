@@ -23,53 +23,69 @@ namespace WpfPanel
         public PanelControl()
         {
             InitializeComponent();
+            this.HostPanel = new System.Windows.Forms.Panel();
+            this.wpfForm.Child = this.HostPanel;
         }
 
-        public AxAXVLC.AxVLCPlugin2 axVlcPlayer
+        public System.Windows.Forms.Panel HostPanel
+        {
+            get;
+            private set;
+        }
+
+        private AxAXVLC.AxVLCPlugin2 axVlcPlayer
         {
             get
             {
                 return InitializeVlc();
-
             }
         }
 
-        public AxWMPLib.AxWindowsMediaPlayer axWmpPlayer
+        private AxWMPLib.AxWindowsMediaPlayer axWmpPlayer
         {
             get
             {
                 return InitializeWmp();
-
             }
         }
 
         /// <summary>
         /// Initialize the vlc activeX control
         /// </summary>
+        /// <returns>Reference to the activex control</returns>
         public AxAXVLC.AxVLCPlugin2 InitializeVlc()
         {
             this.axVlc = new AxVlcPanel.AxVlcPlayer();
-            this.wpfForm.Child = this.axVlc;
+            this.HostPanel.Controls.Clear();
+            this.HostPanel.Controls.Add(this.axVlc.axVlc);
             return this.axVlc.axVlc;
         }
 
         /// <summary>
         /// Initialize the wmp activeX control
         /// </summary>
+        /// <returns>Reference to the activex control</returns>
         public AxWMPLib.AxWindowsMediaPlayer InitializeWmp()
         {
             this.axWmp = new AxWmpPanel.AxWmpPlayer();
-            this.wpfForm.Child = this.axWmp;
+            this.HostPanel.Controls.Clear();
+            this.HostPanel.Controls.Add(this.axWmp.axWmp);
             return this.axWmp.axWmp;
         }
 
-        private AxVlcPanel.AxVlcPlayer axVlc
+        /// <summary>
+        /// Gets or sets the Vlc wrapper
+        /// </summary>
+        public AxVlcPanel.AxVlcPlayer axVlc
         {
             get;
             set;
         }
 
-        private AxWmpPanel.AxWmpPlayer axWmp
+        /// <summary>
+        /// Gets or sets the Wmp wrapper
+        /// </summary>
+        public AxWmpPanel.AxWmpPlayer axWmp
         {
             get;
             set;

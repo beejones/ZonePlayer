@@ -114,6 +114,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AxVlcPanel\AxVlcPanel.csproj">
+      <Project>{f4a76387-9f87-4eb8-8aeb-5032d57262ac}</Project>
+      <Name>AxVlcPanel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AxWmpPanel\AxWmpPanel.csproj">
       <Project>{042da724-20fd-43ce-850e-ef51532c4bef}</Project>
       <Name>AxWmpPanel</Name>

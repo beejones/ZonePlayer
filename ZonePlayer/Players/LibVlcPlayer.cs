@@ -21,13 +21,13 @@ namespace ZonePlayer
         /// <summary>
         /// Initializes a new instance of the <see cref="LibVlcPlayer"/> class.
         /// </summary>
-        /// <param name="handle">Handle to rendering panel</param>
         /// <param name="audioDevice">Audio device for the player</param>
-        public LibVlcPlayer(string audioDevice)
+        /// <param name="handle">Handle to rendering panel</param>
+        public LibVlcPlayer(string audioDevice, WpfPanel.PanelControl handle)
         {
             Log.Item(EventLogEntryType.Information, "Initialize libvlc player for device: {0}", audioDevice);
-            SetNativePlayer();
             this.AudioDevice = audioDevice ?? "a";
+            SetNativePlayer(handle);
         }
 
         /// <summary>
@@ -85,7 +85,6 @@ namespace ZonePlayer
             item = Checks.NotNull<ZonePlaylistItem>("CurrentItem", this.CurrentPlayList.CurrentItem);
             Log.Item(EventLogEntryType.Information, "Play: {0}", this.CurrentPlayList.CurrentItem.ItemUri);
             IMedia media = this.MediaFactory.CreateMedia<IMedia>(item.ItemUri.ToString());
-            this.NativePlayer = this.MediaFactory.CreatePlayer<IVideoPlayer>();
             this.NativePlayer.Open(media);
             media.Parse(true);
             this.NativePlayer.Play();
@@ -122,12 +121,24 @@ namespace ZonePlayer
         /// <summary>
         /// Set handle to panel if not yet initialized
         /// </summary>
-        private void SetNativePlayer()
+        /// <param name="handle">Handle to rendering panel</param>
+        private void SetNativePlayer(WpfPanel.PanelControl handle)
         {
-            this.MediaFactory = new MediaPlayerFactory(this.AudioDevice, true); 
+            try
+            {
+                // use lib in output directory
+                this.MediaFactory = new MediaPlayerFactory(this.AudioDevice, false); 
+
+            }
+            catch (Exception)
+            {
+                // use vlc player
+                this.MediaFactory = new MediaPlayerFactory(this.AudioDevice, true); 
+
+            }
+
             this.NativePlayer = (IVideoPlayer)this.MediaFactory.CreatePlayer<IVideoPlayer>();
-            WpfPanel.PanelControl panel = new WpfPanel.PanelControl();
-           //this.NativePlayer.WindowHandle = panel.h.HostPanel.Handle;
+            this.NativePlayer.WindowHandle = handle != null ? handle.HostPanel.Handle : (IntPtr)0;
         }
     }
 }

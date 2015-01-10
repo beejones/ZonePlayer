@@ -29,9 +29,22 @@ namespace ZonePlayer
         /// </summary>
         /// <param name="zoneName">Set name for the zone/></param>
         /// <param name="playerType">Set player <see cref="Player" for this instance/></param>
-        public MusicZone(string zoneName, PlayerType playerType) : this(zoneName)
+        /// <param name="handle">Handle to rendering panel</param>
+        /// <param name="audioDevice">Device used to render the media</param>
+        public MusicZone(string zoneName, PlayerType playerType, WpfPanel.PanelControl handle, string audioDevice)
+            : this(zoneName)
         {
-            DefaultPlayer = this.CurrentPlayer = PlayerManager.Create(playerType);
+            this.DefaultPlayer = this.CurrentPlayer = PlayerManager.Create(playerType, handle, audioDevice);
+            this.PlayerWindowHandle = handle;
+        }
+
+        /// <summary>
+        /// Gets or sets the windows handler for the player
+        /// </summary>
+        public WpfPanel.PanelControl PlayerWindowHandle
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -131,26 +144,20 @@ namespace ZonePlayer
         }
 
         /// <summary>
-        /// Initialization of the differernt players
-        /// </summary>
-        /// <param name="vlcSettings">Settings for vlc</param>
-        public static void InitializePlayers(string vlcSettings)
-        {
-            //VlcPlayer.InitializePlayer(vlcSettings);
-        }
-
-        /// <summary>
         /// Play the selected item in the playlist
         /// </summary>
         /// <param name="index">Index of element to play</param>
         public void PlayItem(int index)
-        {            
+        {
             this.Stop();
 
-            // Get the item from the current playlist
-            this.CurrentPlaylistItem = index;
-            ZonePlaylistItem item = this.CurrentPlaylist.PlayList[index];
-            this.CurrentPlayer.Play(item);
+            if (this.CurrentPlaylist != null)
+            {
+                // Get the item from the current playlist
+                this.CurrentPlaylistItem = index;
+                ZonePlaylistItem item = this.CurrentPlaylist.PlayList[index];
+                this.CurrentPlayer.Play(item);
+            }
         }
 
         /// <summary>
@@ -158,14 +165,14 @@ namespace ZonePlayer
         /// </summary>
         public void Play()
         {
-            this.Stop();
             if (this.CurrentPlaylist != null)
             {
                 ZonePlaylistItem item = this.CurrentPlaylist.CurrentItem;
                 if(item.PlayerType.HasValue && item.PlayerType.Value != PlayerType.None)
                 {
                     // Select player in playlist
-                    this.CurrentPlayer = PlayerManager.Create(item.PlayerType.Value, this.AudioDevice);
+                    this.CurrentPlayer = PlayerManager.Create(item.PlayerType.Value, this.PlayerWindowHandle, this.AudioDevice);
+                    this.CurrentPlayer.LoadPlayList(this.CurrentPlaylist.ListUri, this.CurrentPlaylist.ListName, this.CurrentPlaylist.Randomized);
                 }
 
                 this.CurrentPlayer.Play(item);

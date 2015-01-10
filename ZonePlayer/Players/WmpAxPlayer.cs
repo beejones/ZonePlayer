@@ -23,9 +23,15 @@ namespace ZonePlayer
         /// <summary>
         /// Initializes a new instance of the <see cref="WmpAxPlayer"/> class.
         /// </summary>
-        public WmpAxPlayer()
+        /// <param name="handle">Handle to rendering panel</param>
+        public WmpAxPlayer(WpfPanel.PanelControl handle)
         {
-            this.Panel = (UserControl)new WpfPanel.PanelControl();
+            Log.Item(EventLogEntryType.Information, "Initialize WmpAxPlayer player for device");
+            this.Panel = (UserControl)handle;
+            if (handle != null)
+            {
+                this.NativePlayerInitialized = (this.Panel as WpfPanel.PanelControl).InitializeWmp();
+            }
         }
 
         /// <summary>
@@ -100,19 +106,14 @@ namespace ZonePlayer
         {
             get
             {
-                if (this.NativePlayerStore == null)
-                {
-                    this.NativePlayerStore = (this.Panel as WpfPanel.PanelControl).InitializeWmp();
-                }
-
-                return this.NativePlayerStore;
+                return this.NativePlayerInitialized;
             }
         }
 
         /// <summary>
-        /// Gets the native implemention of the payer
+        /// Gets the vlc activex control
         /// </summary>
-        private AxWMPLib.AxWindowsMediaPlayer NativePlayerStore
+        private AxWMPLib.AxWindowsMediaPlayer NativePlayerInitialized
         {
             get;
             set;

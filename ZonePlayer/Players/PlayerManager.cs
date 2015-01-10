@@ -22,16 +22,16 @@ namespace ZonePlayer
         /// <param name="playerType">Type of player to create</param>
         /// <param name="audioDevice">Audio device used for audio</param>
         /// <returns>New <see cref="Player"/> instance</returns>
-        public static ZonePlayer Create(PlayerType playerType, string audioDevice = null)
+        public static ZonePlayer Create(PlayerType playerType, WpfPanel.PanelControl handle, string audioDevice = null)
         {
             switch (playerType)
             {
                 case PlayerType.axVlc:
-                    return new VlcAxPlayer();
+                    return new VlcAxPlayer(audioDevice, handle);
                 case PlayerType.axWmp:
-                    return new WmpAxPlayer();
+                    return new WmpAxPlayer(handle);
                 case PlayerType.vlc:
-                    return new LibVlcPlayer(audioDevice);
+                    return new LibVlcPlayer(audioDevice, handle);
                 case PlayerType.wmp:
                     return new WmpPlayer();
             }

@@ -25,16 +25,18 @@ namespace ZonePlayerWpf
         public MainWindow()
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Start initialization");
-            MusicZone.InitializePlayers(Properties.Settings.Default.VlcSettings);
             InitializeComponent();
             this.GuiHelpers = new ZonePlayerGuiHelpers(this);
             this.GuiHelpers.InitializeZones(Properties.Settings.Default.ZoneNames, defaultPlaylists, defaultPlaylistsContent);
+            
+            // Used to keep track of the current selected audio device. The audio device can be switched by selecting the audio device button
             this.AudioDeviceCounters = new List<int>();
             for (int inx = 0; inx < GuiHelpers.AudioDevices.Count; inx++)
             {
                 this.AudioDeviceCounters.Add(0);
             }
 
+            // Used to keep track of the current selected player device. The player device can be switched by selecting the player device button
             this.PlayerDeviceCounters = new List<int>();
             for (int inx = 0; inx < GuiHelpers.PlayerDevices.Count; inx++)
             {
@@ -122,16 +124,15 @@ namespace ZonePlayerWpf
             string device = this.UpdateAudioDeviceCounter(playerIndex);
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Update device on player: {0}, {1}", playerIndex, device);
 
-            (sender as Button).Content = device;
+            // Set new device on button
+            this.GuiHelpers.GuiAudioDevice(playerIndex, device);
+
             List<string> devices = JsonConvert.DeserializeObject<List<string>>(Properties.Settings.Default.AudioDevices);
             devices[playerIndex] = device;
 
             // Save default device in configuration
             Properties.Settings.Default.AudioDevices = JsonConvert.SerializeObject(devices);
             Properties.Settings.Default.Save();
-
-            // Update player
-            this.GuiHelpers.UpdateAudioDevice(playerIndex, device);
         }
 
         /// <summary>

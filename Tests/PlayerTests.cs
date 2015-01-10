@@ -17,7 +17,7 @@ namespace Tests
         public void Switch_Player_based_on_playlist_OK_Play()
         {
             // Setup
-            MusicZone musicZone = new MusicZone("MyZone");
+            MusicZone musicZone = new MusicZone("MyZone", PlayerType.wmp, new WpfPanel.PanelControl(), null);
             musicZone.LoadPlayList(new Uri(PlaylistManager.AbsolutePaths(TestReferences.SamplePlaylist1)), "Test", true);
             ZonePlaylist items = musicZone.CurrentPlaylist;
             List<string> allPlayers = PlayerTypeHelper.GetPlayerTypes();

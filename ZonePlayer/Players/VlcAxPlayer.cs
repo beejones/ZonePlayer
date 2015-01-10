@@ -24,9 +24,17 @@ namespace ZonePlayer
         /// <summary>
         /// Initializes a new instance of the <see cref="VlcAxPlayer"/> class.
         /// </summary>
-        public VlcAxPlayer()
+        /// <param name="audioDevice">Audio device for the player</param>
+        /// <param name="handle">Handle to rendering panel</param>
+        public VlcAxPlayer(string audioDevice, WpfPanel.PanelControl handle)
         {
-            this.Panel = (UserControl)new WpfPanel.PanelControl();
+            Log.Item(EventLogEntryType.Information, "Initialize VlcAxPlayer player for device: {0}", audioDevice);
+            this.AudioDevice = audioDevice ?? "a";
+            this.Panel = (UserControl)handle;
+            if (handle != null)
+            {
+                this.NativePlayerInitialized = (this.Panel as WpfPanel.PanelControl).InitializeVlc();
+            }
         }
 
         /// <summary>
@@ -94,14 +102,29 @@ namespace ZonePlayer
         }
 
         /// <summary>
-        /// Gets the native implemention of the payer
+        /// Gets the vlc activex control
         /// </summary>
         private AxAXVLC.AxVLCPlugin2 NativePlayer
         {
             get
             {
-                return (this.Panel as WpfPanel.PanelControl).InitializeVlc();
+                if (this.NativePlayerInitialized == null && this.Panel != null)
+                {
+                    this.NativePlayerInitialized = (this.Panel as WpfPanel.PanelControl).InitializeVlc();
+                    (this.Panel as WpfPanel.PanelControl).axVlc.axVlc = this.NativePlayerInitialized;
+                }
+
+                return this.NativePlayerInitialized;
             }
+        }
+
+        /// <summary>
+        /// Gets the vlc activex control
+        /// </summary>
+        private AxAXVLC.AxVLCPlugin2 NativePlayerInitialized
+        {
+            get;
+            set;
         }
     }
 }

@@ -15,6 +15,16 @@ namespace ZonePlayer
     public enum PlayerType
     {
         /// <summary>
+        /// vlc player
+        /// </summary>
+        vlc = 1,
+
+        /// <summary>
+        /// vlc player activeX control
+        /// </summary>
+        axVlc,
+
+        /// <summary>
         /// wmp player
         /// </summary>
         wmp,
@@ -23,16 +33,6 @@ namespace ZonePlayer
         /// wmp player activeX control
         /// </summary>
         axWmp,
-
-        /// <summary>
-        /// vlc player
-        /// </summary>
-        vlc,
-
-        /// <summary>
-        /// vlc player activeX control
-        /// </summary>
-        axVlc,
 
         /// <summary>
         /// No player specified

@@ -1,4 +1,5 @@
-﻿namespace AxVlcPanel
+﻿using System.Runtime.InteropServices;
+namespace AxVlcPanel
 {
     partial class AxVlcPlayer
     {
@@ -49,9 +50,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.axVlc);
             this.Name = "AxVlcPlayer";
-            ((System.ComponentModel.ISupportInitialize)(this.axVlc)).EndInit();
-            this.ResumeLayout(false);
+            try
+            {
+                ((System.ComponentModel.ISupportInitialize)(this.axVlc)).EndInit();
+            }
+            catch (COMException e)
+            {
+                //No activex installed
+                this.axVlc = null;
+                return;
+            }
 
+            this.ResumeLayout(false);
         }
 
         #endregion

@@ -111,6 +111,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AxVlcPanel\AxVlcPanel.csproj">
+      <Project>{f4a76387-9f87-4eb8-8aeb-5032d57262ac}</Project>
+      <Name>AxVlcPanel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AxWmpPanel\AxWmpPanel.csproj">
+      <Project>{042da724-20fd-43ce-850e-ef51532c4bef}</Project>
+      <Name>AxWmpPanel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WpfPanel\WpfPanel.csproj">
+      <Project>{6fe22ffc-167f-4916-a661-35e6ff644d0e}</Project>
+      <Name>WpfPanel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZonePlayer\ZonePlayer.csproj">
       <Project>{e73b9f56-ea16-47a4-8b0b-8579a306b43d}</Project>
       <Name>ZonePlayer</Name>
