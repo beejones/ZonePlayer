@@ -24,6 +24,18 @@ namespace ZonePlayer
         /// <returns>New <see cref="Player"/> instance</returns>
         public static ZonePlayer Create(PlayerType playerType, WpfPanel.PanelControl handle, string audioDevice = null)
         {
+            var createPlayer = new Func<ZonePlayer>(() => CreateInstance(playerType, handle, audioDevice));             
+            return handle.Dispatcher.Invoke(createPlayer);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Player"/> class.
+        /// </summary>
+        /// <param name="playerType">Type of player to create</param>
+        /// <param name="audioDevice">Audio device used for audio</param>
+        /// <returns>New <see cref="Player"/> instance</returns>
+        private static ZonePlayer CreateInstance(PlayerType playerType, WpfPanel.PanelControl handle, string audioDevice = null)
+        {
             switch (playerType)
             {
                 case PlayerType.axVlc:

@@ -20,7 +20,7 @@ namespace Tests
             MusicZone musicZone = new MusicZone("MyZone", PlayerType.wmp, new WpfPanel.PanelControl(), null);
             musicZone.LoadPlayList(new Uri(PlaylistManager.AbsolutePaths(TestReferences.SamplePlaylist1)), "Test", true);
             ZonePlaylist items = musicZone.CurrentPlaylist;
-            List<string> allPlayers = PlayerTypeHelper.GetPlayerTypes();
+            List<string> allPlayers = PlayerTypeHelpers.GetPlayerTypes();
             
             // Add each player type to the playlist and try to play it.
             // Test whether the playlist type is being used as player
@@ -36,7 +36,7 @@ namespace Tests
                 // Set play type in playlist
                 foreach(var i in items.PlayList)
                 {
-                    playerType =  PlayerTypeHelper.GetType(p);
+                    playerType = PlayerTypeHelpers.GetType(p);
                     i.PlayerType = playerType;
                 }
 

@@ -19,12 +19,17 @@ namespace ZonePlayerWpf
     public sealed class DefaultPlaylists
     {
         /// <summary>
+        /// Delegate to obtain a listbox
+        /// </summary>
+        public delegate ListBox GetListBox();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultPlaylists"/> class.
         /// </summary>    
         /// <param name="settings">Configuration for the default playlist</param>
         /// <param name="listBox">Default playlist</param>
         /// <param name="playlistBox">Playlist content</param>
-        public DefaultPlaylists(string settings, ListBox listBox, ListBox playlistBox)
+        public DefaultPlaylists(string settings, GetListBox listBox, GetListBox playlistBox)
         {
             Dictionary<string, string> playlists = JsonConvert.DeserializeObject<Dictionary<string, string>>(settings);
             playlists = this.AbsolutePaths(playlists);
@@ -52,13 +57,14 @@ namespace ZonePlayerWpf
 
         /// <summary>
         /// Gets the current selected item in the content list
+        /// Return first element when nothing was selected
         /// </summary>
         public int CurrentSelectedItem
         {
             get
             {
-                int index = this.GuZonePlaylistContent.SelectedIndex;
-                return (index < 0) ? 0 : index;
+                return this.GuiZonePlaylistContent().Dispatcher.Invoke(
+                    new Func<int>(() => (int)(this.GuiZonePlaylistContent().SelectedIndex < 0 ? 0 : this.GuiZonePlaylistContent().SelectedIndex)));
             }
         }
 
@@ -75,10 +81,10 @@ namespace ZonePlayerWpf
             this.PlayListContent = dummyPlayer.LoadPlayList(listUri, name, false);
 
             // Show content of new playlist
-            this.GuZonePlaylistContent.Items.Clear();
-            foreach(var item in this.PlayListContent.PlayList)
+            this.GuiClearListBox(this.GuiZonePlaylistContent);
+            foreach (var item in this.PlayListContent.PlayList)
             {
-                this.GuZonePlaylistContent.Items.Add(item.ItemName);
+                this.GuiAddItemToListBox(this.GuiZonePlaylistContent, item.ItemName);
             }
         }
 
@@ -89,7 +95,8 @@ namespace ZonePlayerWpf
         {
             get 
             {
-                int inx = this.GuiDefaultPlayLists.SelectedIndex;
+                int inx = GuiPlaylistSelectedItem(this.GuiDefaultPlayLists);
+
                 if (inx < this.PlayLists.Count)
                 {
                     return this.PlayLists[inx];
@@ -100,21 +107,9 @@ namespace ZonePlayerWpf
         }
 
         /// <summary>
-        /// Select first item in the default playlist
-        /// </summary>
-        public void SelectFirstElement()
-        {
-
-            if (this.GuiDefaultPlayLists.Items.Count > 0)
-            {
-                this.GuiDefaultPlayLists.SelectedIndex = 0;
-            }
-        }
-
-        /// <summary>
         /// Gets the gui element for the default playlists
         /// </summary>
-        public ListBox GuiDefaultPlayLists
+        public GetListBox GuiDefaultPlayLists
         {
             get;
             set;
@@ -123,10 +118,66 @@ namespace ZonePlayerWpf
         /// <summary>
         /// Gets the gui element for the playlist content
         /// </summary>
-        public ListBox GuZonePlaylistContent
+        public GetListBox GuiZonePlaylistContent
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Select first item in listbox
+        /// </summary>
+        /// <param name="listbox">Listbox to select</param>
+        public  void GuiSelectFirstElement(GetListBox listbox)
+        {
+            listbox().Dispatcher.BeginInvoke((Action)(() =>
+            {
+                int count = listbox().Items.Count;
+                if (count > 0)
+                {
+                    listbox().SelectedIndex = 0;
+                }
+            }));
+        }
+
+        /// <summary>
+        /// Clear a listbox
+        /// </summary>
+        /// <param name="listbox">Listbox to clear</param>
+        private void GuiClearListBox(GetListBox listbox)
+        {
+            listbox().Dispatcher.BeginInvoke((Action)(() => 
+            { 
+                listbox().Items.Clear(); 
+            } ));
+        }
+        
+        /// <summary>
+        /// Add item to a listbox
+        /// </summary>
+        /// <param name="listbox">Add item to this listbox</param>
+        /// <param name="item">Item to add</param>
+        private void GuiAddItemToListBox(GetListBox listbox, string item)
+        {
+            listbox().Dispatcher.BeginInvoke((Action)(() => 
+            { 
+                listbox().Items.Add(item); 
+            } ));
+        }
+
+
+        /// <summary>
+        /// Gets the selected item in default playlist
+        /// </summary>
+        /// <returns>The index of the selected item</returns>
+        /// <param name="listbox">Selected listbox</param>
+        public int GuiPlaylistSelectedItem(GetListBox listbox)
+        {
+            return listbox().Dispatcher.Invoke(
+                new Func<int>(() =>
+                    {
+                        return listbox().SelectedIndex < 0 ? 0 : listbox().SelectedIndex;
+                    }));
         }
 
         /// <summary>
@@ -159,14 +210,13 @@ namespace ZonePlayerWpf
         /// </summary>
         /// <param name="listBox">Default playlist</param>
         /// <param name="playlistBox">Playlist content</param>
-        private void InitListBoxes(ListBox listBox, ListBox playlistBox)
+        private void InitListBoxes(GetListBox listBox, GetListBox playlistBox)
         {
             this.GuiDefaultPlayLists = listBox;
-            this.GuZonePlaylistContent = playlistBox;
-//            listBox.Items.Clear();
+            this.GuiZonePlaylistContent = playlistBox;
             foreach(var list in this.PlayLists)
             {
-                listBox.Items.Add(list.ListName);
+                this.GuiAddItemToListBox(listBox, list.ListName);
             }
         }
     }

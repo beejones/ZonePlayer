@@ -15,6 +15,13 @@ namespace ZonePlayer
     public sealed class MusicZone
     {
         /// <summary>
+        /// Delegate to report change of player
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void PlayerChangedEventHandler(object sender, PlayerChangedEventArgs e);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MusicZone"/> class.
         /// </summary>
         /// <param name="zoneName">Set name for the zone/></param>
@@ -37,6 +44,11 @@ namespace ZonePlayer
             this.DefaultPlayer = this.CurrentPlayer = PlayerManager.Create(playerType, handle, audioDevice);
             this.PlayerWindowHandle = handle;
         }
+
+        /// <summary>
+        /// Event to get notifications when the player changes
+        /// </summary>
+        public event PlayerChangedEventHandler PlayerChanged;
 
         /// <summary>
         /// Gets or sets the windows handler for the player
@@ -156,6 +168,7 @@ namespace ZonePlayer
                 // Get the item from the current playlist
                 this.CurrentPlaylistItem = index;
                 ZonePlaylistItem item = this.CurrentPlaylist.PlayList[index];
+                this.SwitchPlayerIfNeeded(item);
                 this.CurrentPlayer.Play(item);
             }
         }
@@ -168,13 +181,6 @@ namespace ZonePlayer
             if (this.CurrentPlaylist != null)
             {
                 ZonePlaylistItem item = this.CurrentPlaylist.CurrentItem;
-                if(item.PlayerType.HasValue && item.PlayerType.Value != PlayerType.None)
-                {
-                    // Select player in playlist
-                    this.CurrentPlayer = PlayerManager.Create(item.PlayerType.Value, this.PlayerWindowHandle, this.AudioDevice);
-                    this.CurrentPlayer.LoadPlayList(this.CurrentPlaylist.ListUri, this.CurrentPlaylist.ListName, this.CurrentPlaylist.Randomized);
-                }
-
                 this.CurrentPlayer.Play(item);
             }
         }
@@ -252,6 +258,28 @@ namespace ZonePlayer
                 }
 
                 return this.CurrentPlaylist.PlayList[CurrentPlaylistItem];
+            }
+        }
+
+        /// <summary>
+        /// Test whether the current item in the playlist requires switching player
+        /// Switch when needed and fire change event
+        /// </summary>
+        /// <param name="item">New item to play</param>
+        private void SwitchPlayerIfNeeded(ZonePlaylistItem item)
+        {
+            if (item.PlayerType.HasValue && item.PlayerType.Value != PlayerType.None)
+            {
+                // Select player in playlist
+                this.CurrentPlayer = PlayerManager.Create(item.PlayerType.Value, this.PlayerWindowHandle, this.AudioDevice);
+                this.CurrentPlayer.LoadPlayList(this.CurrentPlaylist.ListUri, this.CurrentPlaylist.ListName, this.CurrentPlaylist.Randomized);
+
+                // Fire player changed event
+
+                if (PlayerChanged != null)
+                {
+                    PlayerChanged(this, new PlayerChangedEventArgs(this.ZoneName, item.PlayerType.Value));
+                }
             }
         }
 

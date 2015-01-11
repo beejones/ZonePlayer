@@ -27,7 +27,7 @@ namespace ZonePlayerWpf
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Start initialization");
             InitializeComponent();
             this.GuiHelpers = new ZonePlayerGuiHelpers(this);
-            this.GuiHelpers.InitializeZones(Properties.Settings.Default.ZoneNames, defaultPlaylists, defaultPlaylistsContent);
+            this.GuiHelpers.InitializeZones(Properties.Settings.Default.ZoneNames, new DefaultPlaylists.GetListBox(this.GuiHelpers.GuiDefaultPlaylists), new DefaultPlaylists.GetListBox(this.GuiHelpers.GuiDefaultPlaylistsContent));
             
             // Used to keep track of the current selected audio device. The audio device can be switched by selecting the audio device button
             this.AudioDeviceCounters = new List<int>();

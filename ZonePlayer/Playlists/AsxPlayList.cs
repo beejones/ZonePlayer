@@ -116,19 +116,19 @@ namespace ZonePlayer
                 string key = PlaylistManager.PlayListItemPlayerNameType.ToUpper();
                 if (param.ContainsKey(key))
                 {
-                    playerType = PlayerTypeHelper.GetType(param[key]);
+                    playerType = PlayerTypeHelpers.GetType(param[key]);
                 }
 
                 key = PlaylistManager.PlayListItemPlayerNameType.ToLower();
                 if (param.ContainsKey(key))
                 {
-                    playerType = PlayerTypeHelper.GetType(param[key]);
+                    playerType = PlayerTypeHelpers.GetType(param[key]);
                 }
 
                 key = PlaylistManager.PlayListItemPlayerNameType;
                 if (param.ContainsKey(key))
                 {
-                    playerType = PlayerTypeHelper.GetType(param[key]);
+                    playerType = PlayerTypeHelpers.GetType(param[key]);
                 }
 
                 Uri refTag = new Uri(PlaylistManager.AbsolutePaths(reference));

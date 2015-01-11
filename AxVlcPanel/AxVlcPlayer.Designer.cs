@@ -40,7 +40,19 @@ namespace AxVlcPanel
             this.axVlc.Enabled = true;
             this.axVlc.Location = new System.Drawing.Point(0, 0);
             this.axVlc.Name = "axVlc";
-            this.axVlc.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axVlc.OcxState")));
+
+            try
+            {
+
+                this.axVlc.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axVlc.OcxState")));
+            }
+            catch (COMException)
+            {
+                // Fires when vlc is not installed
+                this.axVlc = null;
+                return;
+            }
+
             this.axVlc.Size = new System.Drawing.Size(150, 150);
             this.axVlc.TabIndex = 0;
             // 

@@ -92,7 +92,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlayerChangedEventArgs.cs" />
     <Compile Include="Players\PlayerManager.cs" />
+    <Compile Include="Players\PlayerTypeHelpers.cs" />
     <Compile Include="Players\WmpAxPlayer.cs" />
     <Compile Include="MusicZone.cs" />
     <Compile Include="MusicZoneAudioChannel.cs" />

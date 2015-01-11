@@ -1,4 +1,5 @@
-﻿namespace AxWmpPanel
+﻿using System.Runtime.InteropServices;
+namespace AxWmpPanel
 {
     partial class AxWmpPlayer
     {
@@ -39,7 +40,19 @@
             this.axWmp.Enabled = true;
             this.axWmp.Location = new System.Drawing.Point(0, 0);
             this.axWmp.Name = "axWmp";
-            this.axWmp.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWmp.OcxState")));
+
+            try
+            {
+
+                this.axWmp.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWmp.OcxState")));
+            }
+            catch (COMException)
+            {
+                // Fires when wmp is not installed
+                this.axWmp = null;
+                return;
+            }
+
             this.axWmp.Size = new System.Drawing.Size(150, 150);
             this.axWmp.TabIndex = 0;
             // 
