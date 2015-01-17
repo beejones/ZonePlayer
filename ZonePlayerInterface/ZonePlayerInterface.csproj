@@ -78,14 +78,14 @@
     <Compile Include="Wcf\ZonePlayerService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Diagnostics\Diagnostics.csproj">
       <Project>{7a732387-f7cf-447f-9a07-d4c3d6110d6b}</Project>
       <Name>Diagnostics</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
