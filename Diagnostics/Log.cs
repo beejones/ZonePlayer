@@ -1,4 +1,5 @@
-﻿//---------------------------------------------------------------
+﻿using System;
+//---------------------------------------------------------------
 // The MIT License. Beejones 
 //---------------------------------------------------------------
 using System.Diagnostics;
@@ -35,6 +36,7 @@ namespace Diagnostics
 
             // Write an informational entry to the event log.    
             myLog.WriteEntry(string.Format(CultureInfo.CurrentCulture, message, pars), EventLogEntryType.Warning);
+            Console.WriteLine(string.Format("{0}: {1}", level, message), pars);
         }
     }
 }

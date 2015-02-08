@@ -28,12 +28,13 @@ namespace ZonePlayer
         /// <param name="handle">Handle to rendering panel</param>
         public VlcAxPlayer(string audioDevice, WpfPanel.PanelControl handle)
         {
-            Log.Item(EventLogEntryType.Information, "Initialize VlcAxPlayer player for device: {0}", audioDevice);
+            Log.Item(EventLogEntryType.Information, "Initialize VlcAxPlayer player");
             this.AudioDevice = audioDevice ?? "a";
             this.Panel = (UserControl)handle;
             if (handle != null)
             {
-                this.NativePlayerInitialized = (this.Panel as WpfPanel.PanelControl).InitializeVlc();
+                this.NativePlayerControl = (this.Panel as WpfPanel.PanelControl).InitializeVlc();
+                handle.Content = new WpfPanel.PanelControl(this.NativePlayerControl);
             }
         }
 
@@ -102,26 +103,36 @@ namespace ZonePlayer
         }
 
         /// <summary>
+        /// Check whether player can render item
+        /// </summary>
+        /// <param name="item">Item to test</param>
+        /// <returns>True if player can render item</returns>
+        public override bool CanPlayItem(Uri item)
+        {
+            return true;
+        }
+
+        /// <summary>
         /// Gets the vlc activex control
         /// </summary>
         private AxAXVLC.AxVLCPlugin2 NativePlayer
         {
             get
             {
-                if (this.NativePlayerInitialized == null && this.Panel != null)
+                if (this.NativePlayerControl == null && this.Panel != null)
                 {
-                    this.NativePlayerInitialized = (this.Panel as WpfPanel.PanelControl).InitializeVlc();
-                    (this.Panel as WpfPanel.PanelControl).axVlc.axVlc = this.NativePlayerInitialized;
+                    this.NativePlayerControl = (this.Panel as WpfPanel.PanelControl).InitializeVlc();
+                    (this.Panel as WpfPanel.PanelControl).axVlc.axVlc = this.NativePlayerControl;
                 }
 
-                return this.NativePlayerInitialized;
+                return this.NativePlayerControl;
             }
         }
 
         /// <summary>
         /// Gets the vlc activex control
         /// </summary>
-        private AxAXVLC.AxVLCPlugin2 NativePlayerInitialized
+        private AxAXVLC.AxVLCPlugin2 NativePlayerControl
         {
             get;
             set;

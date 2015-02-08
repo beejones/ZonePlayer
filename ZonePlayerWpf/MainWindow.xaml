@@ -1,9 +1,10 @@
-﻿<Window x:Class="ZonePlayerWpf.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:panel="clr-namespace:WpfPanel;assembly=WpfPanel" 
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" 
         xmlns:ZonePlayer="clr-namespace:ZonePlayer;assembly=ZonePlayer" 
+        xmlns:awe="http://schemas.awesomium.com/winfx" x:Class="ZonePlayerWpf.MainWindow" 
         Title="ZonePlayer" Height="800" Width="800" Background="#FF990707">
     <Grid Background="Tomato">
         <Grid.ColumnDefinitions>
@@ -29,18 +30,18 @@
                 <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
-            <Button Content="Play" Name="playButton0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Start_Click"/>
-            <Button Content="Stop" Name="stopButton0" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Stop_Click"/>
-            <Button Content="Next" Name="nextButton0" Grid.Column="1" Grid.Row="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
-            <Button Content="Default" Name="defaultButton0" Grid.Column="1" Grid.Row="4"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
-            <Button Content="AudioDevice" Name="zoneAudioDevice0" Grid.Column="0" Grid.Row="4"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_AudioDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
-            <Button Content="Player" Name="zonePlayerDevice0" Grid.Column="0" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_PlayerDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
+            <Button Content="Play" x:Name="playButton0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Start_Click"/>
+            <Button Content="Stop" x:Name="stopButton0" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Stop_Click"/>
+            <Button Content="Next" x:Name="nextButton0" Grid.Column="1" Grid.Row="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
+            <Button Content="Default" x:Name="defaultButton0" Grid.Column="1" Grid.Row="4"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
+            <Button Content="AudioDevice" x:Name="zoneAudioDevice0" Grid.Column="0" Grid.Row="4"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_AudioDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
+            <Button Content="Player" x:Name="zonePlayerDevice0" Grid.Column="0" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_PlayerDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
 
-            <Label  Content="" Name="zoneName0"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="20" Foreground="#FFE6C911" />
-            <Label  Content="" Name="zonePlayingName0" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="20" Foreground="#FFE6C911" />
-            <TextBlock  Text="" TextWrapping="Wrap" Name="zonePlayingUri0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="11" Foreground="#FFE6C911"  />
-            <TextBox  Text="" Name="zoneVolume0" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" HorizontalAlignment="Center"  Margin="0,5,0,5"  FontSize="20" Foreground="#FFE6C911"  TextChanged="zoneVolume_TextChanged" />
-            <panel:PanelControl Grid.Column="2" Grid.RowSpan="3" Name="zonePlayerPanel0" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" />
+            <Label  Content="" x:Name="zoneName0"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="20" Foreground="#FFE6C911" />
+            <Label  Content="" x:Name="zonePlayingName0" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="20" Foreground="#FFE6C911" />
+            <TextBlock  Text="" TextWrapping="Wrap" x:Name="zonePlayingUri0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="11" Foreground="#FFE6C911"  />
+            <TextBox  Text="" x:Name="zoneVolume0" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" HorizontalAlignment="Center"  Margin="0,5,0,5"  FontSize="20" Foreground="#FFE6C911"  TextChanged="zoneVolume_TextChanged" />
+            <panel:PanelControl Grid.Column="2" Grid.RowSpan="5" x:Name="zonePlayerPanel0" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch"/>
         </Grid>
         <Grid Background="Red" Grid.Row="1"  Margin="0,1,0,1">
             <Grid.ColumnDefinitions>
@@ -56,18 +57,18 @@
                 <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
-            <Button Content="Play"  Name="playButton1" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Start_Click"/>
-            <Button Content="Stop"  Name="stopButton1" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Stop_Click"/>
-            <Button Content="Next"  Name="nextButton1" Grid.Column="1" Grid.Row="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
-            <Button Content="Default"  Name="defaultButton1" Grid.Column="1" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
-            <Button Content="AudioDevice" Name="zoneAudioDevice1" Grid.Column="0" Grid.Row="4"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_AudioDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
-            <Button Content="Player" Name="zonePlayerDevice1" Grid.Column="0" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_PlayerDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
+            <Button Content="Play"  x:Name="playButton1" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Start_Click"/>
+            <Button Content="Stop"  x:Name="stopButton1" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Stop_Click"/>
+            <Button Content="Next"  x:Name="nextButton1" Grid.Column="1" Grid.Row="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
+            <Button Content="Default"  x:Name="defaultButton1" Grid.Column="1" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
+            <Button Content="AudioDevice" x:Name="zoneAudioDevice1" Grid.Column="0" Grid.Row="4"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_AudioDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
+            <Button Content="Player" x:Name="zonePlayerDevice1" Grid.Column="0" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_PlayerDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
 
-            <Label  Content="" Name="zoneName1"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="20" Foreground="#FFE6C911" />
-            <Label  Content="" Name="zonePlayingName1" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="20" Foreground="#FFE6C911" />
-            <TextBlock  Text="" TextWrapping="Wrap" Name="zonePlayingUri1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="11" Foreground="#FFE6C911"  />
-            <TextBox  Text="" Name="zoneVolume1" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" HorizontalAlignment="Center"  Margin="0,5,0,5"  FontSize="20" Foreground="#FFE6C911"  TextChanged="zoneVolume_TextChanged" />
-            <panel:PanelControl Grid.Column="2" Grid.RowSpan="3" Name="zonePlayerPanel1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            <Label  Content="" x:Name="zoneName1"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="20" Foreground="#FFE6C911" />
+            <Label  Content="" x:Name="zonePlayingName1" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="20" Foreground="#FFE6C911" />
+            <TextBlock  Text="" TextWrapping="Wrap" x:Name="zonePlayingUri1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="11" Foreground="#FFE6C911"  />
+            <TextBox  Text="" x:Name="zoneVolume1" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" HorizontalAlignment="Center"  Margin="0,5,0,5"  FontSize="20" Foreground="#FFE6C911"  TextChanged="zoneVolume_TextChanged" />
+            <panel:PanelControl Grid.Column="2" Grid.RowSpan="3" x:Name="zonePlayerPanel1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         </Grid>
 
         <Grid Background="Red" Grid.Row="2"  Margin="0,2,0,0">
@@ -84,22 +85,22 @@
                 <RowDefinition Height="100*"/>
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
-            <Button Content="Play"  Name="playButton2" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Start_Click"/>
-            <Button Content="Stop"  Name="stopButton2" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Stop_Click"/>
-            <Button Content="Next"  Name="nextButton2" Grid.Column="1" Grid.Row="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
-            <Button Content="Default"  Name="defaultButton2" Grid.Column="1" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
-            <Button Content="AudioDevice" Name="zoneAudioDevice2" Grid.Column="0" Grid.Row="4"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_AudioDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
-            <Button Content="Player" Name="zonePlayerDevice2" Grid.Column="0" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_PlayerDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
+            <Button Content="Play"  x:Name="playButton2" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Start_Click"/>
+            <Button Content="Stop"  x:Name="stopButton2" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Stop_Click"/>
+            <Button Content="Next"  x:Name="nextButton2" Grid.Column="1" Grid.Row="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
+            <Button Content="Default"  x:Name="defaultButton2" Grid.Column="1" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="75" Click="Next_Click"/>
+            <Button Content="AudioDevice" x:Name="zoneAudioDevice2" Grid.Column="0" Grid.Row="4"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_AudioDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
+            <Button Content="Player" x:Name="zonePlayerDevice2" Grid.Column="0" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="169" Click="Next_PlayerDeviceSelect" Margin="4,1,3,1" RenderTransformOrigin="0.5,0.5" Height="40"/>
 
-            <Label  Content="" Name="zoneName2"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="20" Foreground="#FFE6C911" />
-            <Label  Content="" Name="zonePlayingName2" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="20" Foreground="#FFE6C911" />
-            <TextBlock  Text="" TextWrapping="Wrap" Name="zonePlayingUri2" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="11" Foreground="#FFE6C911"  />
-            <TextBox  Text="" Name="zoneVolume2" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" HorizontalAlignment="Center"  Margin="0,5,0,5"  FontSize="20" Foreground="#FFE6C911"  TextChanged="zoneVolume_TextChanged" />
-            <panel:PanelControl Grid.Column="2" Grid.RowSpan="2" Name="zonePlayerPanel2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Label  Content="" x:Name="zoneName2"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="20" Foreground="#FFE6C911" />
+            <Label  Content="" x:Name="zonePlayingName2" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="20" Foreground="#FFE6C911" />
+            <TextBlock  Text="" TextWrapping="Wrap" x:Name="zonePlayingUri2" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" HorizontalAlignment="Left" Margin="0,0,0,0"  FontSize="11" Foreground="#FFE6C911"  />
+            <TextBox  Text="" x:Name="zoneVolume2" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" HorizontalAlignment="Center"  Margin="0,5,0,5"  FontSize="20" Foreground="#FFE6C911"  TextChanged="zoneVolume_TextChanged" />
+            <panel:PanelControl Grid.Column="2" Grid.RowSpan="2" x:Name="zonePlayerPanel2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
 
-        <ListBox  Grid.Column="1" Grid.Row="0" Name="defaultPlaylists" HorizontalAlignment="Left"  VerticalAlignment="Top"  SelectionChanged="defaultPlaylists_SelectionChanged"/>
-        <ListBox  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Name="defaultPlaylistsContent" HorizontalAlignment="Left"  VerticalAlignment="Top" SelectionChanged="defaultPlaylistsContent_SelectionChanged" />
+        <ListBox  Grid.Column="1" Grid.Row="0" x:Name="defaultPlaylists" HorizontalAlignment="Left"  VerticalAlignment="Top"  SelectionChanged="defaultPlaylists_SelectionChanged"/>
+        <ListBox  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" x:Name="defaultPlaylistsContent" HorizontalAlignment="Left"  VerticalAlignment="Top" SelectionChanged="defaultPlaylistsContent_SelectionChanged" />
 
     </Grid>
 </Window>

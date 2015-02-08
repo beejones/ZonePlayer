@@ -315,6 +315,11 @@ namespace ZonePlayerWpf
             {
                 // Make sure the old player is stopped
                 this.Players[playerIndex].Stop(); 
+                if (this.Players[playerIndex].CurrentPlayer.PlayerType == playerType)
+                {
+                    // No need to load new player
+                    return;
+                }
             }
 
             MusicZone musicZone = new MusicZone(
@@ -720,7 +725,7 @@ namespace ZonePlayerWpf
         /// <summary>
         /// Gets or sets the handle to all controls
         /// </summary>
-        private Window MainWindow
+        public Window MainWindow
         {
             get;
             set;

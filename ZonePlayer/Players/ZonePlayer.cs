@@ -93,7 +93,7 @@ namespace ZonePlayer
         /// <summary>
         /// Gets or sets the audio volume for the player
         /// </summary>
-        public abstract int Volume {get; set;}
+        public abstract int Volume { get; set; }
 
         /// <summary>
         /// Gets the playing status of the player
@@ -114,7 +114,14 @@ namespace ZonePlayer
         /// Stop playing
         /// </summary>
         public abstract void Stop();
-         
+
+        /// <summary>
+        /// Check whether player can render item
+        /// </summary>
+        /// <param name="item">Item to test</param>
+        /// <returns>True if player can render item</returns>
+        public abstract bool CanPlayItem(Uri item);
+
         /// <summary> 
         /// Play the current item in the playlist 
         /// </summary> 
@@ -122,7 +129,14 @@ namespace ZonePlayer
         {
             Checks.NotNull<ZonePlaylistItem>("item", item);
             this.CurrentPlayList = PlaylistManager.Create(item.ItemUri, false);
-            this.Play();
+            if (this.CanPlayItem(item.ItemUri))
+            {
+                this.Play();
+            }
+            else
+            {
+                Log.Item(EventLogEntryType.Warning, "Player can not render item: {0}", item.ItemUri);
+            }
         }
 
         /// <summary>

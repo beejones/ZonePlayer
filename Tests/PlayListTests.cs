@@ -30,7 +30,7 @@ namespace Tests
             ZonePlaylist playlist = LoadPlaylist(TestReferences.SamplePlaylist1, true, "Test", false);
 
             // Act
-            MusicZone musicZone = new MusicZone("MyZone", PlayerType.wmp, null, null);
+            MusicZone musicZone = new MusicZone("MyZone", PlayerType.wmp, new WpfPanel.PanelControl(), null);
             musicZone.LoadPlayList(playlist.ListUri, "Test", true);
             musicZone.Play();
 

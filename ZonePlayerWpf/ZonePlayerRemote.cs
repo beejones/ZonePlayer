@@ -64,9 +64,9 @@ namespace ZonePlayerWpf
         public async Task<IZonePlayerInterface> ConsumeMessage()
         {
             IZonePlayerInterface item = (IZonePlayerInterface)await this.Service.GetNextElement();
-            item = this.ProcessCommands(item);
-            this.Service.SetResponse(item);
-            return item;
+                item = this.ProcessCommands(item);
+                this.Service.SetResponse(item);
+                return item;
         }
 
         /// <summary>
@@ -80,8 +80,7 @@ namespace ZonePlayerWpf
             switch (item.Command)
             {
                 case Commands.Play:
-                    int inx = this.Players[playerIndex].CurrentPlaylistItem;
-                    this.GuiHelpers.Play(playerIndex, inx);
+                    this.GuiHelpers.Play(playerIndex, Convert.ToInt32(item.Item));
                     break;
                 case Commands.Stop:
                     this.GuiHelpers.Stop(playerIndex);

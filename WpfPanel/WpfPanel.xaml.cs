@@ -20,11 +20,34 @@ namespace WpfPanel
     /// </summary>
     public partial class PanelControl : System.Windows.Controls.UserControl
     {
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="PanelControl"/> class.
+        /// </summary>
         public PanelControl()
         {
             InitializeComponent();
             this.HostPanel = new System.Windows.Forms.Panel();
             this.wpfForm.Child = this.HostPanel;
+        }
+
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="PanelControl"/> class.
+        /// </summary>
+        public PanelControl(AxWMPLib.AxWindowsMediaPlayer axWmpPlayer)
+            : this()
+        {
+            this.HostPanel.Controls.Clear();
+            this.HostPanel.Controls.Add(axWmpPlayer);
+        }
+
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="PanelControl"/> class.
+        /// </summary>
+        public PanelControl(AxAXVLC.AxVLCPlugin2 axVlcPlayer)
+            : this()
+        {
+            this.HostPanel.Controls.Clear();
+            this.HostPanel.Controls.Add(axVlcPlayer);
         }
 
         public System.Windows.Forms.Panel HostPanel

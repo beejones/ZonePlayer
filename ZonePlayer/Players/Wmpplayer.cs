@@ -95,6 +95,16 @@ namespace ZonePlayer
         }
 
         /// <summary>
+        /// Check whether player can render item
+        /// </summary>
+        /// <param name="item">Item to test</param>
+        /// <returns>True if player can render item</returns>
+        public override bool CanPlayItem(Uri item)
+        {
+            return true;
+        }
+
+        /// <summary>
         /// Gets or sets the native implemention of the payer
         /// </summary>
         private WindowsMediaPlayer NativePlayer

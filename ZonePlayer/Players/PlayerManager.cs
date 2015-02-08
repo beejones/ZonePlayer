@@ -46,6 +46,8 @@ namespace ZonePlayer
                     return new LibVlcPlayer(audioDevice, handle);
                 case PlayerType.wmp:
                     return new WmpPlayer();
+                case PlayerType.youtube:
+                    return new YoutubePlayer(audioDevice, handle);
             }
 
             Log.Item(EventLogEntryType.Error, "Don't knwo player {0}", playerType);

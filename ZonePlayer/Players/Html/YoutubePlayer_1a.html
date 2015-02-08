@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Youtube Player</title>
+    <script src='https://www.youtube.com/iframe_api'></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.3.min.js"></script>
+    <style>
+        .player {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            visibility: visible;
+        }
+    </style>
+
+</head>
+<body>
+    <!--
+        Base on 
+        http://apiblog.youtube.com/2011/01/introducing-javascript-player-api-for.html
+        https://developers.google.com/youtube/iframe_api_reference
+        https://developers.google.com/youtube/player_parameters
+    -->
+    <!-- The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player" class="player"></div>
+
+    <script>
+    var done = false;
+    var player = null;
+    var toPlay = null;
+
+    $(document).ready(function () {
+
+        $('#player').html('Started');
+    });
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '390',
+            width: '640',
+            videoId: toPlay,
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    // Player ready
+    function onPlayerReady(evt) {
+        if (toPlay != null) {
+            evt.target.playVideo();
+        }
+    }
+
+    function onPlayerStateChange(evt) {
+        if (evt.data == YT.PlayerState.PLAYING && !done) {
+            done = true;
+        }
+    }
+
+    // Start new video playing
+    function start(video) {
+        toPlay = video;
+        player.loadVideoById(video);
+        return video;
+    }
+
+    // Continue playing
+    function play() {
+        player.playVideo();
+        return true;
+    }
+
+    // Stop video playing
+    function stop() {
+        player.stopVideo();
+        //$('#player').html('cool');
+        return true;
+    }
+
+    // Is video playing?
+    function isPlaying() {
+        if (player !== null) {
+            return player.getPlayerState();
+        }
+
+        return -1;
+    }
+    </script>
+
+</body>
+</html>

@@ -17,7 +17,7 @@ namespace ZonePlayer
         /// <summary>
         /// vlc player
         /// </summary>
-        vlc = 1,
+        vlc,
 
         /// <summary>
         /// vlc player activeX control
@@ -33,6 +33,11 @@ namespace ZonePlayer
         /// wmp player activeX control
         /// </summary>
         axWmp,
+
+        /// <summary>
+        /// browser activeX control
+        /// </summary>
+        youtube,
 
         /// <summary>
         /// No player specified

@@ -181,6 +181,7 @@ namespace ZonePlayer
             if (this.CurrentPlaylist != null)
             {
                 ZonePlaylistItem item = this.CurrentPlaylist.CurrentItem;
+                this.SwitchPlayerIfNeeded(item);
                 this.CurrentPlayer.Play(item);
             }
         }
@@ -268,7 +269,8 @@ namespace ZonePlayer
         /// <param name="item">New item to play</param>
         private void SwitchPlayerIfNeeded(ZonePlaylistItem item)
         {
-            if (item.PlayerType.HasValue && item.PlayerType.Value != PlayerType.None)
+            PlayerType newPlayerType = (item.PlayerType.HasValue) ? item.PlayerType.Value : this.CurrentPlayer.PlayerType;
+            if (newPlayerType !=  this.CurrentPlayer.PlayerType)
             {
                 // Select player in playlist
                 this.CurrentPlayer = PlayerManager.Create(item.PlayerType.Value, this.PlayerWindowHandle, this.AudioDevice);

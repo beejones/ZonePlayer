@@ -81,12 +81,6 @@ namespace ZonePlayer
         {
             XDocument asx = OpenPlayList(resource);
 
-            /*
-            IEnumerable<XAttribute> xmlRefs =
-                from record in asx.Descendants("REF")
-                select record.Attribute("HREF");
-            List<string> refs = xmlRefs.Select(r => r.Value).ToList();
-            */
             IEnumerable<XElement> xmlEntry =
                 from record in asx.Descendants("ENTRY")
                 select record;
@@ -129,6 +123,11 @@ namespace ZonePlayer
                 if (param.ContainsKey(key))
                 {
                     playerType = PlayerTypeHelpers.GetType(param[key]);
+                }
+
+                if (reference.Trim().ToLower().StartsWith("<iframe"))
+                {
+                    ;
                 }
 
                 Uri refTag = new Uri(PlaylistManager.AbsolutePaths(reference));
