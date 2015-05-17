@@ -136,13 +136,13 @@ namespace ZonePlayer
             try
             {
                 // use lib in output directory
-                this.MediaFactory = new MediaPlayerFactory(this.AudioDevice, true); 
+                this.MediaFactory = new MediaPlayerFactory(this.AudioDevice, false); 
 
             }
             catch (Exception)
             {
                 // use vlc player
-                this.MediaFactory = new MediaPlayerFactory(this.AudioDevice, true); 
+                this.MediaFactory = new MediaPlayerFactory(this.AudioDevice, false); 
 
             }
 
