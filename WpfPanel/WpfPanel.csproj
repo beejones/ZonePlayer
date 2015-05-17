@@ -75,23 +75,6 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-    <COMReference Include="AxAXVLC">
-      <Guid>{DF2BBE39-40A8-433B-A279-073F48DA94B6}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>aximp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
-    <COMReference Include="AXVLC">
-      <Guid>{DF2BBE39-40A8-433B-A279-073F48DA94B6}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -142,10 +125,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AxVlcPanel\AxVlcPanel.csproj">
-      <Project>{f4a76387-9f87-4eb8-8aeb-5032d57262ac}</Project>
-      <Name>AxVlcPanel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AxWmpPanel\AxWmpPanel.csproj">
       <Project>{042da724-20fd-43ce-850e-ef51532c4bef}</Project>
       <Name>AxWmpPanel</Name>

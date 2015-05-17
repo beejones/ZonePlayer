@@ -106,6 +106,7 @@ namespace WpfPanel
             return this.axWmp.axWmp;
         }
 
+#if VlcIsInstalled
         /// <summary>
         /// Gets or sets the Vlc wrapper
         /// </summary>
@@ -114,6 +115,7 @@ namespace WpfPanel
             get;
             set;
         }
+#endif
 
         /// <summary>
         /// Gets or sets the Wmp wrapper
