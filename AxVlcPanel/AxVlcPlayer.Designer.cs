@@ -1,4 +1,10 @@
-﻿using System.Runtime.InteropServices;
+﻿#undef VlcIsInstalled   //Define for support of vlc activex. The vlc activeX needs to be installed.
+
+using System;
+using System.Resources;
+using System.Runtime.InteropServices;
+
+
 namespace AxVlcPanel
 {
     partial class AxVlcPlayer
@@ -29,6 +35,7 @@ namespace AxVlcPanel
         /// </summary>
         private void InitializeComponent()
         {
+#if VlcIsInstalled
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AxVlcPlayer));
             this.axVlc = new AxAXVLC.AxVLCPlugin2();
             ((System.ComponentModel.ISupportInitialize)(this.axVlc)).BeginInit();
@@ -66,7 +73,7 @@ namespace AxVlcPanel
             {
                 ((System.ComponentModel.ISupportInitialize)(this.axVlc)).EndInit();
             }
-            catch (COMException e)
+            catch (Exception e)
             {
                 //No activex installed
                 this.axVlc = null;
@@ -74,10 +81,15 @@ namespace AxVlcPanel
             }
 
             this.ResumeLayout(false);
+#else
+            return;
+#endif
         }
 
         #endregion
 
+#if VlcIsInstalled
         public AxAXVLC.AxVLCPlugin2 axVlc;
+#endif
     }
 }

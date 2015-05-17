@@ -40,15 +40,20 @@ namespace WpfPanel
             this.HostPanel.Controls.Add(axWmpPlayer);
         }
 
+#if VlcIsInstalled
         /// <summary>
         ///  Initializes a new instance of the <see cref="PanelControl"/> class.
         /// </summary>
         public PanelControl(AxAXVLC.AxVLCPlugin2 axVlcPlayer)
             : this()
         {
-            this.HostPanel.Controls.Clear();
-            this.HostPanel.Controls.Add(axVlcPlayer);
+            if (axVlcPlayer != null)
+            {
+                this.HostPanel.Controls.Clear();
+                this.HostPanel.Controls.Add(axVlcPlayer);
+            }
         }
+#endif
 
         public System.Windows.Forms.Panel HostPanel
         {
@@ -56,6 +61,7 @@ namespace WpfPanel
             private set;
         }
 
+#if VlcIsInstalled
         private AxAXVLC.AxVLCPlugin2 axVlcPlayer
         {
             get
@@ -63,6 +69,7 @@ namespace WpfPanel
                 return InitializeVlc();
             }
         }
+#endif
 
         private AxWMPLib.AxWindowsMediaPlayer axWmpPlayer
         {
@@ -71,6 +78,8 @@ namespace WpfPanel
                 return InitializeWmp();
             }
         }
+
+#if VlcIsInstalled
 
         /// <summary>
         /// Initialize the vlc activeX control
@@ -83,6 +92,7 @@ namespace WpfPanel
             this.HostPanel.Controls.Add(this.axVlc.axVlc);
             return this.axVlc.axVlc;
         }
+#endif
 
         /// <summary>
         /// Initialize the wmp activeX control

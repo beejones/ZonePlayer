@@ -44,12 +44,14 @@ namespace ZonePlayer
                 }
             }
 
+#if VlcIsInstalled
             // Check whether the active X players are installed
             if (new WpfPanel.PanelControl().InitializeVlc() == null)
             {
                 // Vlc not installed. Remove activex
                 PlayerTypeNames = PlayerTypeNames.Where(t => t != PlayerType.axVlc.ToString()).ToList();
             }
+#endif
 
             if (new WpfPanel.PanelControl().InitializeWmp() == null)
             {

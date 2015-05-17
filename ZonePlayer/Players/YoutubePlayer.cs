@@ -36,6 +36,11 @@ namespace ZonePlayer
         private const string CmdPlay = "window.start('{0}');";
 
         /// <summary>
+        /// Constant defining test command
+        /// </summary>
+        private const string CmdTest = "window;";
+
+        /// <summary>
         /// Constant defining stop command
         /// </summary>
         private const string CmdStop = "window.stop();";
@@ -73,7 +78,7 @@ namespace ZonePlayer
         {
             this.NativePlayer.Dispose();
         }
-        
+
         /// <summary>
         /// Gets the type of the player
         /// </summary>
@@ -113,8 +118,8 @@ namespace ZonePlayer
                     return false;
                 }
 
-                JSValue result = this.JavascriptCommand(CmdIsPlaying);
-                if (result.IsUndefined)
+                JSValue result = this.JavascriptCommand(CmdIsPlaying, null);
+                if (result == null)
                 {
                     return false;
                 }
@@ -188,6 +193,24 @@ namespace ZonePlayer
         }
 
         /// <summary>
+        /// Gets or sets the Indicate main frame is loaded
+        /// </summary>
+        private bool MainFrameLoaded
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the application timer
+        /// </summary>
+        private Timer PollingTimer
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Queue to cache commands
         /// </summary>
         private List<CommandQueueItem> Queue
@@ -199,11 +222,13 @@ namespace ZonePlayer
         /// <summary>
         /// Gets or sets the windows handle
         /// </summary>
-        WpfPanel.PanelControl Handle
+        private WpfPanel.PanelControl Handle
         {
             get;
             set;
         }
+
+
 
         /// <summary>
         /// Play the current item in the playlist
@@ -231,7 +256,7 @@ namespace ZonePlayer
 
             bool isPlaying = this.IsPlaying;
             string cmd = string.Format(CmdPlay, videoId);
-            JSValue result = this.JavascriptCommand(cmd);
+            JSValue result = this.JavascriptCommand(cmd, new CommandQueueItem(Commands.Play, item));
         }
 
         /// <summary>
@@ -297,7 +322,7 @@ namespace ZonePlayer
         private bool PlayerReadyForCommand(Commands command, ZonePlaylistItem item)
         {
             bool ready = this.ReadyForJavascript();
-            if (!ready)
+            if (!ready || this.JavascriptCommand(CmdTest, null) == null)
             {
                 Log.Item(EventLogEntryType.Warning, "Youtube player not ready");
                 AddToQueue(command, item);
@@ -313,7 +338,7 @@ namespace ZonePlayer
         /// <returns></returns>
         private bool ReadyForJavascript()
         {
-            bool ready = this.NativePlayer.IsLive && this.NativePlayer.IsLoaded && this.NativePlayer.IsDocumentReady; // && !this.NativePlayer.IsNavigating;
+            bool ready = this.NativePlayer.IsLive && this.NativePlayer.IsLoaded && this.NativePlayer.IsDocumentReady && !this.NativePlayer.IsNavigating && this.MainFrameLoaded;
             return ready;
         }
 
@@ -322,16 +347,18 @@ namespace ZonePlayer
         /// </summary>
         /// <param name="command">player command</param>
         /// <returns>Value from javascript funcrion</returns>
-        private JSValue JavascriptCommand(string command)
+        private JSValue JavascriptCommand(string command, CommandQueueItem item)
         {
             if (this.ReadyForJavascript())
             {
                 JSValue jsResult = this.NativePlayer.ExecuteJavascriptWithResult(command);
                 Error lastError = NativePlayer.GetLastError();
+                bool errorOccured = true;
                 switch (lastError)
                 {
                     case Error.None:
                         Log.Item(EventLogEntryType.Information, "{0} executed", command);
+                        errorOccured = false;
                         break;
                     case Error.TimedOut:
                         Log.Item(EventLogEntryType.Error, "Cause of failure was TimedOut");
@@ -356,7 +383,22 @@ namespace ZonePlayer
                         break;
                 }
 
-                return jsResult;
+                if (errorOccured)
+                {
+                    if (command != CmdTest && item != null)
+                    {
+                        // Add command back into queue
+                        Queue.Insert(0, item);
+                    }
+
+                    Log.Item(EventLogEntryType.Error, "Failed command: {0}", command);
+                    return null;
+                }
+                else
+                {
+                    Log.Item(EventLogEntryType.Information, "Success command: {0}", command);
+                    return jsResult;
+                }
             }
             else
             {
@@ -364,6 +406,39 @@ namespace ZonePlayer
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Polling for command while player is in setup mode.
+        /// </summary>
+        /// <param name="o"></param>
+        private void TimerPoll(Object o)
+        {
+            if (Queue.Count <= 0)
+            {
+                return;
+            }
+
+            this.NativePlayer.Dispatcher.BeginInvoke((Action)(() => 
+                {
+                    if (this.ReadyForJavascript() && this.MainFrameLoaded && this.JavascriptCommand(CmdTest, null) != null)
+                    {
+                        CommandQueueItem queueItem = this.GetItemFromQueue();
+
+                        Log.Item(EventLogEntryType.Information, "DocumentReady: ready to process javascript: {0}", queueItem.Command);
+                            switch (queueItem.Command)
+                            {
+                                case Commands.Play:
+                                    this.PlayItem(queueItem.Item);
+                                    break;
+                                case Commands.Stop:
+                                    this.Stop();
+                                    break;
+                                default:
+                                    throw new NotImplementedException("Command not supported in youtube player");
+                            }
+                        }
+                }));
         }
 
 
@@ -397,13 +472,14 @@ namespace ZonePlayer
         /// <param name="handle">Handle to rendering panel</param>
         private void SetNativePlayer(WpfPanel.PanelControl handle)
         {
+            this.MainFrameLoaded = false;
             this.Handle = handle;
             this.Queue = new List<CommandQueueItem>();
             this.NativePlayer = new WebControl();
             this.Handle.Content = this.NativePlayer;
 
             // Find html player
-            string url = string.Format("file://{0}/{1}", Directory.GetCurrentDirectory(), PlayerFile); 
+            string url = string.Format("file://{0}/{1}", Directory.GetCurrentDirectory(), PlayerFile);
             Uri toPlay;
             if (this.TryCreateUri(url, out toPlay))
             {
@@ -414,46 +490,32 @@ namespace ZonePlayer
                 url = string.Format("file://{0}/Players/Html/{1}", Directory.GetCurrentDirectory(), PlayerFile);
                 if (this.TryCreateUri(url, out toPlay))
                 {
-                    this.NativePlayerReference = toPlay.ToString();  
+                    this.NativePlayerReference = toPlay.ToString();
                 }
-            }            
+            }
+
+            this.NativePlayer.LoadingFrameComplete += (s, e) =>
+            {
+                if (this.MainFrameLoaded)
+                {
+                    return;
+                }
+
+                this.MainFrameLoaded = e.IsMainFrame;
+                if (this.MainFrameLoaded)
+                {
+                    Log.Item(EventLogEntryType.Information, "LoadingFrameComplete: Main frame loaded");
+                }
+            };
 
             // Setup the player
             this.NativePlayer.DocumentReady += (s, e) =>
                 {
-                    int cnt = 50;
-                    while (cnt >= 0 && Queue.Count > 0)
-                    {
-                        if (this.ReadyForJavascript())
-                        {
-                            CommandQueueItem queueItem = GetItemFromQueue();
-                            switch (queueItem.Command)
-                            {
-                                case Commands.Play:
-                                    this.PlayItem(queueItem.Item);
-                                    break;
-                                case Commands.Stop:
-                                    this.Stop();
-                                    break;
-                                default:
-                                    throw new NotImplementedException("Command not supported in youtube player");
-                            }
-                        }
-                        else
-                        {
-                            cnt--;
-                            Thread.Sleep(100);
-                        }
-                    }
-
-                    if (cnt <= 0)
-                    {
-                        Log.Item(EventLogEntryType.Warning, "Not ready to send javascript commands");
-                        bool test = this.ReadyForJavascript();
-                    }
+                    Log.Item(EventLogEntryType.Information, "DocumentReady : {0}", this.ReadyForJavascript());
                 };
 
             this.NativePlayer.Source = new Uri(this.NativePlayerReference);
+            this.PollingTimer = new Timer(TimerPoll, null, 500, 500);
         }
     }
 }

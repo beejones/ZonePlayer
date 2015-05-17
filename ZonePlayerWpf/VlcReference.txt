@@ -1,0 +1,5 @@
+﻿The VLC version included in this solutions is vlc 2.0.0.
+
+http://download.videolan.org/pub/videolan/vlc/2.0.0/
+
+ZonePlayer will work with later versions but this version is the last one that works with the multi audio feature. Later versions seem to have a bug and don't support the switching of audio channeles.

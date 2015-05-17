@@ -1,0 +1,65 @@
+body {
+  font-family: 'Droid Sans TV', helvetica, arial;
+}
+
+#feedDiv {
+  margin-bottom: 25px;
+}
+
+#title {
+  margin-left: 140px;
+  font-size: 1.5em;
+  width: 640px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#player {
+  float: left;
+}
+
+.thumbnailDiv {
+  width: 120px;
+  float: left;
+  margin: 10px;
+}
+
+.thumbnail {
+  width: 120px;
+  height: 90px;
+  cursor: pointer;
+}
+
+#controlDiv {
+  clear: left;
+  width: 640px;
+  margin-left: 140px;
+}
+
+#seekDiv {
+  float: left;
+}
+
+#playPauseDiv {
+  position: absolute;
+  left: 450px;
+}
+
+#volumeDiv {
+  float: right;
+}
+
+#volume {
+  width: 100px;
+}
+
+svg[disabled=false] {
+  cursor: pointer;
+  fill: black;
+}
+
+svg[disabled=true] {
+  cursor: auto;
+  fill: #DDD;
+}

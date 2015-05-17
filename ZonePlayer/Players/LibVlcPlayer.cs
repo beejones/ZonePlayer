@@ -136,7 +136,7 @@ namespace ZonePlayer
             try
             {
                 // use lib in output directory
-                this.MediaFactory = new MediaPlayerFactory(this.AudioDevice, false); 
+                this.MediaFactory = new MediaPlayerFactory(this.AudioDevice, true); 
 
             }
             catch (Exception)

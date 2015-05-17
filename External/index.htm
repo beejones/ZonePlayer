@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>iframe Player Example</title>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans+TV' rel='stylesheet' type='text/css'>
+    <link type='text/css' href='index.css' rel='stylesheet'>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js'></script>
+    <script type='text/javascript' src='index.js'></script>
+  </head>
+  
+  <body>
+    <div id='feedDiv'>
+      <form>
+        http://gdata.youtube.com/feeds/api/ <input type='text' id='feedPath' size='40'></input>
+        <input type='submit' id='loadFeed' value='Load Feed'></input>
+      </form>
+    </div>
+    <div id='playerDiv'>
+      <div id='displayDiv'>
+        <div id='title'></div>
+        <div class='thumbnailDiv'>
+          <img id='previousThumbnail' class='thumbnail'></img>
+        </div>
+        <div id='player'></div>
+        <div class='thumbnailDiv'>
+          <img id='nextThumbnail' class='thumbnail'></img>
+        </div>
+      </div>
+      <div id='controlDiv'>
+        <div id='seekDiv'>
+          <span id='currentTime'>0:00</span> / <span id='duration'>0:00</span>
+          <input type='range' id='seek' title="Seek" min='0' max='0' step='1' value='0'></input>
+        </div>
+        <div id='playPauseDiv'>
+          <svg id='pause' width='25px' height='25px' xmlns='http://www.w3.org/2000/svg' version='1.1'>
+            <g>
+              <title>Pause</title>
+              <rect x='2' y='1' width='8px' height='23px'></rect>
+              <rect x='15' y='1' width='8px' height='23px'></rect>
+            </g>
+          </svg>
+          <svg id='play' width='25px' height='25px' xmlns='http://www.w3.org/2000/svg' version='1.1'>
+            <g>
+              <title>Play</title>
+              <polygon points='1,1 1,24 20,13'/></polygon>
+            </g>
+          </svg>
+        </div>
+        <div id='volumeDiv'>
+          <label for='volume'>Volume</label>
+          <input type='range' id='volume' title="Volume" min='0' max='100' step='1' value='100'></input>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

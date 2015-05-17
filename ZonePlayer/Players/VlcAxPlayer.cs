@@ -28,6 +28,7 @@ namespace ZonePlayer
         /// <param name="handle">Handle to rendering panel</param>
         public VlcAxPlayer(string audioDevice, WpfPanel.PanelControl handle)
         {
+#if VlcIsInstalled
             Log.Item(EventLogEntryType.Information, "Initialize VlcAxPlayer player");
             this.AudioDevice = audioDevice ?? "a";
             this.Panel = (UserControl)handle;
@@ -36,6 +37,7 @@ namespace ZonePlayer
                 this.NativePlayerControl = (this.Panel as WpfPanel.PanelControl).InitializeVlc();
                 handle.Content = new WpfPanel.PanelControl(this.NativePlayerControl);
             }
+#endif
         }
 
         /// <summary>
@@ -60,7 +62,11 @@ namespace ZonePlayer
             }
             set
             {
+#if VlcIsInstalled
                 this.NativePlayer.Volume = this.CurrentVolume = value;
+#else
+                this.CurrentVolume = value;
+#endif
             }
         }
 
@@ -71,7 +77,11 @@ namespace ZonePlayer
         {
             get
             {
+#if VlcIsInstalled
                 return this.NativePlayer.playlist.isPlaying;
+#else
+                return false;
+#endif
             }
         }
 
@@ -80,6 +90,7 @@ namespace ZonePlayer
         /// </summary>
         public override void Play()  
         {
+#if VlcIsInstalled
             Checks.NotNull<ZonePlaylist>("CurrentPlayList", CurrentPlayList);
             ZonePlaylistItem item = null;
 
@@ -92,6 +103,7 @@ namespace ZonePlayer
             Log.Item(EventLogEntryType.Information, "Play: {0}", this.CurrentPlayList.CurrentItem.ItemUri);
             this.NativePlayer.playlist.add(item.ItemUri.ToString(), item.ItemName);
             this.NativePlayer.playlist.play();
+#endif
         }
 
         /// <summary>
@@ -99,7 +111,9 @@ namespace ZonePlayer
         /// </summary>
         public override void Stop()
         {
+#if VlcIsInstalled
             this.NativePlayer.playlist.stop();
+#endif
         }
 
         /// <summary>
@@ -112,6 +126,7 @@ namespace ZonePlayer
             return true;
         }
 
+#if VlcIsInstalled
         /// <summary>
         /// Gets the vlc activex control
         /// </summary>
@@ -137,5 +152,6 @@ namespace ZonePlayer
             get;
             set;
         }
+#endif
     }
 }
