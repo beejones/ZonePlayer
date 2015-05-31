@@ -44,5 +44,15 @@ namespace ZonePlayerInterface
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the name of the playlist
+        /// </summary>
+        [DataMember]
+        public string PlayListName
+        {
+            get;
+            set;
+        }
     }
 }

@@ -60,7 +60,10 @@ namespace ZonePlayer
                     return new AsxPlayList(listUri, name, randomize);
 
                 default:
-                    throw new PlaylistNotFoundException(string.Format("Playlist {0} not recognized", listUri.ToString()));
+                    // Try to add the item to a playlist and try to play it.
+                    List<ZonePlaylistItem> list = new List<ZonePlaylistItem>();
+                    list.Add(new M3uItem(listUri.ToString(), listUri, PlayListType.m3u, null, null));
+                    return new M3uPlayList(list, listUri.ToString());
             }
         }
 

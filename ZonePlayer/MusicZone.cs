@@ -3,6 +3,7 @@
 //---------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Diagnostics;
 
@@ -28,7 +29,7 @@ namespace ZonePlayer
         public MusicZone(string zoneName)
         {
             this.ZoneName = zoneName;
-            this.CurrentPlaylistItem = 0;
+            this.SetItem(0);
         }
 
         /// <summary>
@@ -156,6 +157,48 @@ namespace ZonePlayer
         }
 
         /// <summary>
+        /// Select the item in the playlist
+        /// </summary>
+        /// <param name="itemName">Name of element to select</param>
+        public void SetItem(string itemName)
+        {
+            if (this.CurrentPlaylist != null)
+            {
+                int index = 0;
+                for ( ; index < this.CurrentPlaylist.PlayList.Count; index++)
+                {
+                    ZonePlaylistItem playListItem = this.CurrentPlaylist.PlayList[index];
+                    if (playListItem.ItemName.ToLower().CompareTo(itemName.ToLower()) == 0)
+                    {
+                        break;
+                    }
+                }
+
+                if (index ==  this.CurrentPlaylist.PlayList.Count)
+                {
+                    // Item not found
+                    return;
+                }
+                
+                // Set the item from the current playlist
+                this.SetItem(index);
+            }
+        }
+
+        /// <summary>
+        /// Select the item in the playlist
+        /// </summary>
+        /// <param name="index">Index of element to select</param>
+        public void SetItem(int index)
+        {
+            if (this.CurrentPlaylist != null)
+            {
+                // Get the item from the current playlist
+                this.CurrentPlaylistItem = index;
+            }
+        }
+
+        /// <summary>
         /// Play the selected item in the playlist
         /// </summary>
         /// <param name="index">Index of element to play</param>
@@ -166,7 +209,7 @@ namespace ZonePlayer
             if (this.CurrentPlaylist != null)
             {
                 // Get the item from the current playlist
-                this.CurrentPlaylistItem = index;
+                this.SetItem(index);
                 ZonePlaylistItem item = this.CurrentPlaylist.PlayList[index];
                 this.SwitchPlayerIfNeeded(item);
                 this.CurrentPlayer.Play(item);
@@ -258,7 +301,7 @@ namespace ZonePlayer
                     return null;
                 }
 
-                return this.CurrentPlaylist.PlayList[CurrentPlaylistItem];
+                return this.CurrentPlaylist.PlayList[this.CurrentPlaylistItem];
             }
         }
 

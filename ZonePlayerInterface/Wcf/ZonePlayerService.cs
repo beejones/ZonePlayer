@@ -45,6 +45,7 @@ namespace ZonePlayerInterface
         {
             // Create the ServiceHost.
             Host = new ServiceHost(typeof(ZonePlayerService), baseAddress);
+
             // Enable metadata publishing.
             ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
             smb.HttpGetEnabled = true;
@@ -74,8 +75,9 @@ namespace ZonePlayerInterface
         /// <param name="command">The command</param>
         /// <param name="zoneName">Name of the zone</param>
         /// <param name="playableItem">Name of the item to play</param>
+        /// <param name="playListName">Name of the playlist</param>
         /// <returns>Result of the operation</returns>
-        public async Task<string> Remote(string command, string zoneName, string playableItem = null)
+        public async Task<object> Remote(string command, string zoneName, string playableItem = null, string playListName = null)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "New command received: {0}", command);
             
@@ -101,6 +103,7 @@ namespace ZonePlayerInterface
             {
                 Command = receivedCommand,
                 Item = playableItem,
+                PlayListName = playListName,
                 ZoneName = zoneName,
                 Response = null
             };
@@ -174,43 +177,14 @@ namespace ZonePlayerInterface
         /// <returns>True if command could be decoded</returns>
         private bool TryGetCommand(string input, out Commands command)
         {
-            switch (input.ToLower())
+            Commands? receivedCommand = ZonePlayerInterfaceHelpers.GetCommand(input);
+            command = Commands.None;
+            if (receivedCommand == null)
             {
-                case "play":
-                    command = Commands.Play;
-                    break;
-                case "playdefault":
-                    command = Commands.PlayDefault;
-                    break;
-                case "stop":
-                    command = Commands.Stop;
-                    break;
-                case "next":
-                    command = Commands.Next;
-                    break;
-                case "first":
-                    command = Commands.First;
-                    break;
-                case "volup":
-                    command = Commands.VolUp;
-                    break;
-                case "voldown":
-                    command = Commands.VolDown;
-                    break;
-                case "volget":
-                    command = Commands.VolGet;
-                    break;
-                case "volset":
-                    command = Commands.VolSet;
-                    break;
-                case "playerstatus":
-                    command = Commands.PlayerStatus;
-                    break;
-                default:
-                    command = Commands.None;
-                    return false;
+                return false;
             }
 
+            command = receivedCommand.Value;
             return true;
         }
 

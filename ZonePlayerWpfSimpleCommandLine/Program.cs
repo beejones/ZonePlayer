@@ -47,6 +47,11 @@ namespace ZonePlayerWpfSimpleCommandLine
                 ShowUsage();
                 return;
             }
+            else
+            {
+                string message = string.Format("Command '{0}'", command.Value);
+                ShowMessage(message);
+            }
 
             // Connect to interface
             Uri endpoint = null;
@@ -60,8 +65,9 @@ namespace ZonePlayerWpfSimpleCommandLine
             IZonePlayerService client = Connect<IZonePlayerService>.GetClient(endpoint);
             try
             {
-                Task<string> task = client.Remote(command.ToString(), args[1], args.Length > 2 ? args[2] : null);
-                string result = task.Result;
+                Task<object> task = client.Remote(command.ToString(), args[1], GetArgument(args, 2), GetArgument(args, 3));
+                string result = DoTask(task).Result as string;
+                ShowMessage(result);
             }
             catch 
             {
@@ -69,6 +75,27 @@ namespace ZonePlayerWpfSimpleCommandLine
                 ShowMessage(message);
                 return;
             }
+        }
+
+        /// <summary>
+        /// Return the argument index by nr
+        /// </summary>
+        /// <param name="args">Array of arguments</param>
+        /// <param name="nr">Request item</param>
+        /// <returns>Item index by nr or null if not present</returns>
+        private static string GetArgument(string[] args, int nr)
+        {
+            return args.Length > nr ? args[nr] : null;
+        }
+
+        /// <summary>
+        /// Get result from task
+        /// </summary>
+        /// <param name="task">The task returned from the remote command</param>
+        /// <returns></returns>
+        private static async Task<object> DoTask(Task<object> task)
+        {
+            return await task;
         }
 
         /// <summary>

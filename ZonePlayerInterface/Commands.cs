@@ -54,15 +54,21 @@ namespace ZonePlayerInterface
         /// </summary>
         PlayerStatus,
         /// <summary>
+        /// Play resource referenced by the uri
+        /// </summary>
+        PlayUri,
+        /// <summary>
+        /// Select item to play
+        /// </summary>
+        SelectItemToPlay,
+        /// <summary>
         /// Command not available
         /// </summary>
         None
         /*
-                            SelectChannel,
                             Test,
                             FetchChannels,
                             IsPlayingItem,
-                            PlayUrl,
                             None
                  */
     }

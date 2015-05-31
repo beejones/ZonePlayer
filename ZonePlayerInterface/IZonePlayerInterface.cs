@@ -29,8 +29,13 @@ namespace ZonePlayerInterface
         string Item { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the playlist
+        /// </summary>
+        string PlayListName { get; set; }
+
+        /// <summary>
         /// Gets or sets the response
         /// </summary>
-        string Response { get; set; }
+        object Response { get; set; }
     }
 }

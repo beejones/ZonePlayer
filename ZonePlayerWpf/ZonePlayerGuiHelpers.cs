@@ -230,6 +230,50 @@ namespace ZonePlayerWpf
 
         #region Gui
         /// <summary>
+        /// Select the item in the provided playlist
+        /// </summary>
+        /// <param name="playerIndex">Index for player</param>
+        /// <param name="itemName">Name of the resource to play</param>
+        /// <param name="playListName">Name of the playlist to select</param>
+        public void SelectItemToPlay(int playerIndex, string itemName, string playListName)
+        {
+            Log.Item(System.Diagnostics.EventLogEntryType.Information, "Select item '{0}' from playlist '{1}' on player: {2}", itemName, playListName, playerIndex);
+            MainWindow.Dispatcher.Invoke(
+              System.Windows.Threading.DispatcherPriority.Normal,
+              new Action(
+                  delegate()
+                  {
+                      this.SetPlayer(playerIndex);
+                      this.NewDefaultPlaylist(playListName);
+                      this.Players[playerIndex].SetItem(itemName);
+                      this.ShowIsPlaying(playerIndex, false);
+                  }
+              ));
+        }
+
+        /// <summary>
+        /// Start playing the resource referenced by the uri
+        /// </summary>
+        /// <param name="playerIndex">Index for player</param>
+        /// <param name="resouce"><see cref="Uri"/> to resource to play</param>
+        public void PlayUri(int playerIndex, Uri resource)
+        {
+            Log.Item(System.Diagnostics.EventLogEntryType.Information, "Start on player: {0}", playerIndex);
+            MainWindow.Dispatcher.Invoke(
+              System.Windows.Threading.DispatcherPriority.Normal,
+              new Action(
+                  delegate()
+                  {
+                      this.Players[playerIndex].Stop();
+                      this.SetPlayer(playerIndex);
+                      this.Players[playerIndex].LoadPlayList(resource);
+                      this.Players[playerIndex].Play();
+                      this.ShowIsPlaying(playerIndex, false);
+                  }
+              ));
+        }
+
+        /// <summary>
         /// Start playing
         /// </summary>
         /// <param name="playerIndex">Index for player</param>
@@ -237,10 +281,37 @@ namespace ZonePlayerWpf
         public void Play(int playerIndex, int indexInPlaylist)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Start on player: {0}", playerIndex);
-            this.Players[playerIndex].Stop();
-            this.SetPlayer(playerIndex);
-            this.Players[playerIndex].PlayItem(indexInPlaylist);
-            this.ShowIsPlaying(playerIndex, false);
+            MainWindow.Dispatcher.Invoke(
+              System.Windows.Threading.DispatcherPriority.Normal,
+              new Action(
+                  delegate()
+                  {
+                      this.Players[playerIndex].Stop();
+                      this.SetPlayer(playerIndex);
+                      this.Players[playerIndex].PlayItem(indexInPlaylist);
+                      this.ShowIsPlaying(playerIndex, false);
+                  }
+              ));
+        }
+
+        /// <summary>
+        /// Start playing
+        /// </summary>
+        /// <param name="playerIndex">Index for player</param>
+        public void Play(int playerIndex)
+        {
+            Log.Item(System.Diagnostics.EventLogEntryType.Information, "Start on player: {0}", playerIndex);
+            MainWindow.Dispatcher.Invoke(
+              System.Windows.Threading.DispatcherPriority.Normal,
+              new Action(
+                  delegate()
+                  {
+                      this.Players[playerIndex].Stop();
+                      this.SetPlayer(playerIndex);
+                      this.Players[playerIndex].Play();
+                      this.ShowIsPlaying(playerIndex, false);
+                  }
+              ));
         }
 
         /// <summary>
@@ -250,8 +321,15 @@ namespace ZonePlayerWpf
         public void Stop(int playerIndex)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Stop on player: {0}", playerIndex);
-            this.Players[playerIndex].Stop();
-            this.ShowIsPlaying(playerIndex, true);
+            MainWindow.Dispatcher.Invoke(
+              System.Windows.Threading.DispatcherPriority.Normal,
+              new Action(
+                  delegate()
+                  {
+                      this.Players[playerIndex].Stop();
+                      this.ShowIsPlaying(playerIndex, true);
+                  }
+              ));
         }
 
         /// <summary>
@@ -261,21 +339,16 @@ namespace ZonePlayerWpf
         public void Next(int playerIndex)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Next on player: {0}", playerIndex);
-            this.Players[playerIndex].Stop();
-            this.Players[playerIndex].Next();
-            this.ShowIsPlaying(playerIndex);
-        }
-
-        /// <summary>
-        /// New default playlist
-        /// </summary>
-        /// <param name="playlistName">Name of new playlist</param>
-        public void NewDefaultPlaylist(string NewDefaultPlaylist)
-        {
-            this.DefaultPlaylists.ChangeDefaultPlaylist(NewDefaultPlaylist);
-
-            // Load new default playlist in different zones
-            //this.LoadDefaultPlaylistInAllPlayers();
+            MainWindow.Dispatcher.Invoke(
+              System.Windows.Threading.DispatcherPriority.Normal,
+              new Action(
+                  delegate()
+                  {
+                      this.Players[playerIndex].Stop();
+                      this.Players[playerIndex].Next();
+                      this.ShowIsPlaying(playerIndex);
+                  }
+              ));
         }
         #endregion
 
@@ -403,7 +476,48 @@ namespace ZonePlayerWpf
         {
             this.GuiAudioDevice(playerIndex, device);
         }
+
+        /// <summary>
+        /// Get the name of the audio device associated with zone
+        /// </summary>
+        /// <param name="zone">Index of zone</param>
+        /// <returns>Name of device</returns>
+        public string GuiAudioDevice(int zone)
+        {
+            return this.ButtonContentAudioDevices[zone];
+            //return (string)(this.GetControl(zone, ZoneAudioDevice) as Button).Content;
+        }
+
+        /// <summary>
+        /// Set the name of the audio device associated with zone
+        /// </summary>
+        /// <param name="zone">Index of zone</param>
+        /// <param name="device">Name of the device</param>
+        /// <returns>Name of device</returns>
+        public void GuiAudioDevice(int zone, string device)
+        {
+            this.ButtonContentAudioDevices[zone] = device;
+            this.MainWindow.Dispatcher.BeginInvoke((Action)(() => (this.GetControl(zone, ZoneAudioDevice) as Button).Content = device));
+        }
         #endregion
+
+
+        /// <summary>
+        /// New default playlist
+        /// </summary>
+        /// <param name="playlistName">Name of new playlist</param>
+        public void NewDefaultPlaylist(string NewDefaultPlaylist)
+        {
+          MainWindow.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(
+                delegate()
+                {
+                    this.DefaultPlaylists.ChangeDefaultPlaylist(NewDefaultPlaylist);
+                }
+            ));
+        }
+
 
         #region Player Device
         /// <summary>
@@ -417,20 +531,28 @@ namespace ZonePlayerWpf
         }
         #endregion
 
+        #region Volume
         /// <summary>
         /// Set the volume of the current playing item
         /// </summary>
         /// <param name="playerIndex">Index for the player</param>
         /// <param name="newVolume">New volume value</param>
-        #region Volume
         public void UpdateVolume(int playerIndex, string newVolume)
         {
-            int volume;
-            if (int.TryParse(newVolume, out volume))
-            {
-                this.SetVolumeForPlayingItem(playerIndex, volume);
-                this.RetrieveAndShowVolumeForPlayingItem(playerIndex);
-            }
+            Log.Item(System.Diagnostics.EventLogEntryType.Information, "SUpdate volume: player {0}, volume: {1}", playerIndex, newVolume);
+            MainWindow.Dispatcher.Invoke(
+              System.Windows.Threading.DispatcherPriority.Normal,
+              new Action(
+                  delegate()
+                  {
+                      int volume;
+                      if (int.TryParse(newVolume, out volume))
+                      {
+                          this.SetVolumeForPlayingItem(playerIndex, volume);
+                          this.RetrieveAndShowVolumeForPlayingItem(playerIndex);
+                      }
+                  }
+              ));
         }
 
         /// <summary>
@@ -477,29 +599,6 @@ namespace ZonePlayerWpf
             this.Players[playerIndex].CurrentPlayer.Volume = volume;
         }
         #endregion
-
-        /// <summary>
-        /// Get the name of the audio device associated with zone
-        /// </summary>
-        /// <param name="zone">Index of zone</param>
-        /// <returns>Name of device</returns>
-        public string GuiAudioDevice(int zone)
-        {
-            return this.ButtonContentAudioDevices[zone];
-            //return (string)(this.GetControl(zone, ZoneAudioDevice) as Button).Content;
-        }
-
-        /// <summary>
-        /// Set the name of the audio device associated with zone
-        /// </summary>
-        /// <param name="zone">Index of zone</param>
-        /// <param name="device">Name of the device</param>
-        /// <returns>Name of device</returns>
-        public void GuiAudioDevice(int zone, string device)
-        {
-            this.ButtonContentAudioDevices[zone] = device;
-            this.MainWindow.Dispatcher.BeginInvoke((Action)(() => (this.GetControl(zone, ZoneAudioDevice) as Button).Content = device));
-        }
 
         /// <summary>
         /// Get the handle to the windows panel for the zone player

@@ -74,7 +74,7 @@ namespace ZonePlayerWpf
         /// <param name="list">Name of the new list</param>
         public void ChangeDefaultPlaylist(string list)
         {
-            var playlist = this.PlayLists.Where(l => string.Compare(l.ListName, list) == 0).FirstOrDefault();
+            var playlist = this.PlayLists.Where(l => string.Compare(l.ListName, list, true) == 0).FirstOrDefault();
             Uri listUri = playlist.ListUri;
             string name = playlist.ListName;
             WmpPlayer dummyPlayer = new WmpPlayer();

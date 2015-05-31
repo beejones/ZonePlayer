@@ -11,7 +11,7 @@ namespace ZonePlayerInterface
     /// <summary>
     /// Implementation of <see cref="Connect"/> to allow remote interface to connect to ZonePlayer
     /// </summary>    
-    public class Connect<T>
+    public class Connect<T> 
     {
         /// <summary>
         /// Get client to connect to ZonePlayer interface

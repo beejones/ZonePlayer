@@ -23,8 +23,9 @@ namespace ZonePlayerInterface
         /// <param name="command">The command</param>
         /// <param name="zoneName">Name of the zone</param>
         /// <param name="item">Name of the item to play</param>
+        /// <param name="playListName">Name of the playlist</param>
         /// <returns>Result of the operation</returns>
         [OperationContract]
-        Task<string> Remote(string command, string zoneName, string item = null);
+        Task<object> Remote(string command, string zoneName, string item = null, string playListName = null);
     }
 }
