@@ -241,6 +241,15 @@ namespace ZonePlayer
         /// <summary>
         /// Load the playlist
         /// </summary>
+        /// <param name="playlist">New playlist</param>
+        public void LoadPlayList(ZonePlaylist playlist)
+        {
+            this.CurrentPlaylist = playlist;
+        }
+
+        /// <summary>
+        /// Load the playlist
+        /// </summary>
         /// <param name="listUri">Uri to the item</param>
         /// <param name="listName">Name of the playlist item</param>
         /// <param name="randomize">True when playlist needs to be randomized</param>

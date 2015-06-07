@@ -80,15 +80,15 @@ namespace ZonePlayerWpf
         /// Main initialization
         /// </summary>
         /// <param name="zoneNames">Names of the different zones</param>
-        /// <param name="guiDefaultPlayLists">Default playlist control</param>
-        /// <param name="guiZonePlaylistContent">Default playlist content control</param>
-        public void InitializeZones(string zoneNames, DefaultPlaylists.GetListBox guiDefaultPlayLists, DefaultPlaylists.GetListBox guiZonePlaylistContent)
+        /// <param name="playlistController">Playlist control</param>
+        public void InitializeZones(string zoneNames, PlaylistController playlistController)
         {
+            this.PlaylistController = playlistController;
             this.ZoneNames = JsonConvert.DeserializeObject<List<string>>(zoneNames);
             this.InitizalizeAudioDevices();
             this.InitizalizePlayerDevices();
             this.InitizalizeZoneNamesOnGui();
-            this.InitizalizeMusicZones(guiDefaultPlayLists, guiZonePlaylistContent);
+            this.InitizalizeMusicZones();
             this.InitializeVolumeControls(Properties.Settings.Default.VolumeControl);
             this.InitializeRemote();
         }
@@ -147,14 +147,11 @@ namespace ZonePlayerWpf
         /// <summary>
         /// Set the different music zones
         /// </summary>
-        /// <param name="guiDefaultPlayLists">Default playlist control</param>
-        /// <param name="guiZonePlaylistContent">Default playlist content control</param>
-        private void InitizalizeMusicZones(DefaultPlaylists.GetListBox guiDefaultPlayLists, DefaultPlaylists.GetListBox guiZonePlaylistContent)
+        private void InitizalizeMusicZones()
         {
             bool showvideo = Properties.Settings.Default.ShowVideo;
             this.Players = new List<MusicZone>();
 
-            this.InitizalizeDefaultPlaylists(guiDefaultPlayLists, guiZonePlaylistContent);
             for (int inx = 0; inx < this.NumberOfPlayers; inx++)
             {
                 this.Players.Add(null);
@@ -216,15 +213,6 @@ namespace ZonePlayerWpf
                 this.GuiZonePlayerDevice(inx, this.PlayerDevices[0]);
             }
         }
-
-        /// <summary>
-        /// Set the default playlists
-        /// </summary>
-        private void InitizalizeDefaultPlaylists(DefaultPlaylists.GetListBox defaultPlaylists, DefaultPlaylists.GetListBox defaultPlaylistsContent)
-        {
-            this.DefaultPlaylists = new DefaultPlaylists(Properties.Settings.Default.DefaultPlaylists, defaultPlaylists, defaultPlaylistsContent);
-            this.DefaultPlaylists.GuiSelectFirstElement(defaultPlaylists);
-        }
         #endregion
 
         #region Gui
@@ -262,7 +250,7 @@ namespace ZonePlayerWpf
                   delegate()
                   {
                       this.SetPlayer(playerIndex);
-                      this.NewDefaultPlaylist(playListName);
+                      this.PlaylistController.SelectPlaylist(playListName);
                       this.Players[playerIndex].SetItem(itemName);
                       this.ShowIsPlaying(playerIndex, false);
                   }
@@ -306,6 +294,8 @@ namespace ZonePlayerWpf
                   {
                       this.Players[playerIndex].Stop();
                       this.SetPlayer(playerIndex);
+                      ZonePlaylist playlist = this.PlaylistController.SelectedPlaylist();
+                      this.Players[playerIndex].LoadPlayList(playlist);
                       this.Players[playerIndex].PlayItem(indexInPlaylist);
                       this.ShowIsPlaying(playerIndex, false);
                   }
@@ -454,7 +444,7 @@ namespace ZonePlayerWpf
         /// <param name="playerIndex">The index of the player</param>
         private void LoadDefaultPlaylist(int playerIndex)
         {
-            ZonePlaylist list = this.DefaultPlaylists.SelectedDefaultPlaylist;
+            ZonePlaylist list = this.PlaylistController.DefaultPlaylist;
             this.Players[playerIndex].LoadPlayList(list.ListUri, list.ListName, false);
         }
 
@@ -518,24 +508,6 @@ namespace ZonePlayerWpf
             this.MainWindow.Dispatcher.BeginInvoke((Action)(() => (this.GetControl(zone, ZoneAudioDevice) as Button).Content = device));
         }
         #endregion
-
-
-        /// <summary>
-        /// New default playlist
-        /// </summary>
-        /// <param name="playlistName">Name of new playlist</param>
-        public void NewDefaultPlaylist(string NewDefaultPlaylist)
-        {
-          MainWindow.Dispatcher.Invoke(
-            System.Windows.Threading.DispatcherPriority.Normal,
-            new Action(
-                delegate()
-                {
-                    this.DefaultPlaylists.ChangeDefaultPlaylist(NewDefaultPlaylist);
-                }
-            ));
-        }
-
 
         #region Player Device
         /// <summary>
@@ -718,26 +690,35 @@ namespace ZonePlayerWpf
         }
 
         /// <summary>
-        /// Gets the default playlist
+        /// Gets the playlist gui
         /// </summary>
-        /// <returns>The default playlist</returns>
-        public ListBox GuiDefaultPlaylists()
+        /// <returns>The playlist gui</returns>
+        public ListBox GuiPlaylists()
         {
             return this.MainWindow.Dispatcher.Invoke(
                 new Func<ListBox>(() => (ListBox)(this.GetControl(DefaultPlaylistName) as ListBox)));
         }
 
         /// <summary>
-        /// Gets the default playlist
+        /// Gets the playlist content gui
         /// </summary>
-        /// <returns>The default playlist</returns>
-        public ListBox GuiDefaultPlaylistsContent()
+        /// <returns>The playlist content gui</returns>
+        public ListBox GuiPlaylistsContent()
         {
             return this.MainWindow.Dispatcher.Invoke(
                 new Func<ListBox>(() => (ListBox)(this.GetControl(DefaultPlaylistContentName) as ListBox)));
         }
 
         #region Properties
+        /// <summary>
+        /// Controller for playlist gui
+        /// </summary>
+        public PlaylistController PlaylistController
+        {
+            get;
+            private set;
+        }
+
         /// <summary>
         ///  Gets the audio devics in the current system
         /// </summary>
@@ -769,15 +750,6 @@ namespace ZonePlayerWpf
         ///  Gets the Player device selected on the different buttons
         /// </summary>
         public List<string> ButtonContentPlayerDevices
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the default playlists
-        /// </summary>
-        private DefaultPlaylists DefaultPlaylists
         {
             get;
             set;

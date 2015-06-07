@@ -119,7 +119,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="LoadedPlaylists.cs" />
+    <Compile Include="Playlists\PlaylistController.cs" />
+    <Compile Include="Playlists\PlaylistModel.cs" />
+    <Compile Include="Playlists\PlaylistView.cs" />
     <Compile Include="VolumeControl.cs" />
     <Compile Include="ZonePlayerGuiHelpers.cs" />
     <Compile Include="ZonePlayerRemote.cs" />
@@ -138,7 +140,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultPlaylists.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

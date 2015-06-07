@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using Diagnostics;
 using Newtonsoft.Json;
 using ZonePlayerInterface;
+using System.IO;
+using ZonePlayer;
 
 namespace ZonePlayerWpf
 {
@@ -25,7 +27,9 @@ namespace ZonePlayerWpf
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Start initialization");
             InitializeComponent();
             this.GuiHelpers = new ZonePlayerGuiHelpers(this);
-            this.GuiHelpers.InitializeZones(Properties.Settings.Default.ZoneNames, new DefaultPlaylists.GetListBox(this.GuiHelpers.GuiDefaultPlaylists), new DefaultPlaylists.GetListBox(this.GuiHelpers.GuiDefaultPlaylistsContent));
+            this.PlaylistController = new PlaylistController(this.GuiHelpers.GuiPlaylists(), this.GuiHelpers.GuiPlaylistsContent());
+            this.DefaultPlaylists(Properties.Settings.Default.DefaultPlaylists, this.PlaylistController);
+            this.GuiHelpers.InitializeZones(Properties.Settings.Default.ZoneNames, this.PlaylistController);
             
             // Used to keep track of the current selected audio device. The audio device can be switched by selecting the audio device button
             this.AudioDeviceCounters = new List<int>();
@@ -42,6 +46,58 @@ namespace ZonePlayerWpf
             }
         }
         #endregion
+
+        /// <summary>
+        /// Controller for playlist gui
+        /// </summary>
+        public PlaylistController PlaylistController
+        { 
+            get; 
+            private set; 
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultPlaylists"/> class.
+        /// </summary>    
+        /// <param name="settings">Configuration for the default playlist</param>
+        /// <param name="listBox">Default playlist</param>
+        /// <param name="playlistBox">Playlist content</param>
+        private void DefaultPlaylists(string settings, PlaylistController playlistController)
+        {
+            // Get list of default playlists
+            Dictionary<string, string> playlists = JsonConvert.DeserializeObject<Dictionary<string, string>>(settings);
+            playlists = this.AbsolutePaths(playlists);
+
+            foreach (var list in playlists)
+            {
+                playlistController.Add(PlaylistManager.Create(new Uri(list.Value, UriKind.RelativeOrAbsolute), true, list.Key));
+            }
+        }
+
+        /// <summary>
+        /// Convert relative paths into absolute paths for the playlists
+        /// </summary>
+        /// <param name="playlists">Paths to playlists</param>
+        /// <returns></returns>
+        private Dictionary<string, string> AbsolutePaths(Dictionary<string, string> playlists)
+        {
+            string outPath = Directory.GetCurrentDirectory();
+            Dictionary<string, string> converted = new Dictionary<string, string>();
+            foreach (var item in playlists)
+            {
+                string path = item.Value.Trim();
+                if (path.StartsWith(".\\"))
+                {
+                    converted.Add(item.Key, outPath + path.Substring(1));
+                }
+                else
+                {
+                    converted.Add(item.Key, item.Value);
+                }
+            }
+
+            return converted;
+        }
 
         #region Helpers
         /// <summary>
@@ -66,7 +122,8 @@ namespace ZonePlayerWpf
         private void Start_Click(object sender, RoutedEventArgs e)
         {
             int playerIndex = this.GetPlayerIndex(sender as Button);
-            int index = (this.defaultPlaylistsContent.SelectedIndex < 0) ? 0 : this.defaultPlaylistsContent.SelectedIndex;
+            int index = this.PlaylistController.SelectedItem();
+
             this.GuiHelpers.Play(playerIndex, index);
         }
 
@@ -99,7 +156,7 @@ namespace ZonePlayerWpf
         /// <param name="e">Event arguments</param>
         private void defaultPlaylists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.GuiHelpers.NewDefaultPlaylist((string)e.AddedItems[0]);
+            this.PlaylistController.SelectPlaylist((string)e.AddedItems[0]);
         }
 
         /// <summary>
