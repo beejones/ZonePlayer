@@ -258,7 +258,7 @@ namespace ZonePlayerWpf
         public void SelectItemToPlay(int playerIndex, string itemName, string playListName)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Select item '{0}' from playlist '{1}' on player: {2}", itemName, playListName, playerIndex);
-            MainWindow.Dispatcher.Invoke(
+            MainWindow.Dispatcher.BeginInvoke(
               System.Windows.Threading.DispatcherPriority.Normal,
               new Action(
                   delegate()
@@ -279,7 +279,7 @@ namespace ZonePlayerWpf
         public void PlayUri(int playerIndex, Uri resource)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Start on player: {0}", playerIndex);
-            MainWindow.Dispatcher.Invoke(
+            MainWindow.Dispatcher.BeginInvoke(
               System.Windows.Threading.DispatcherPriority.Normal,
               new Action(
                   delegate()
@@ -301,7 +301,7 @@ namespace ZonePlayerWpf
         public void Play(int playerIndex, int indexInPlaylist)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Start on player: {0}", playerIndex);
-            MainWindow.Dispatcher.Invoke(
+            MainWindow.Dispatcher.BeginInvoke(
               System.Windows.Threading.DispatcherPriority.Normal,
               new Action(
                   delegate()
@@ -323,7 +323,7 @@ namespace ZonePlayerWpf
         public void Play(int playerIndex)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Start on player: {0}", playerIndex);
-            MainWindow.Dispatcher.Invoke(
+            MainWindow.Dispatcher.BeginInvoke(
               System.Windows.Threading.DispatcherPriority.Normal,
               new Action(
                   delegate()
@@ -343,7 +343,7 @@ namespace ZonePlayerWpf
         public void Stop(int playerIndex)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Stop on player: {0}", playerIndex);
-            MainWindow.Dispatcher.Invoke(
+            MainWindow.Dispatcher.BeginInvoke(
               System.Windows.Threading.DispatcherPriority.Normal,
               new Action(
                   delegate()
