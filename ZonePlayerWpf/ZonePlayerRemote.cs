@@ -112,6 +112,9 @@ namespace ZonePlayerWpf
                 case Commands.GetPlaylists:
                     List<Playlist> lists = this.GuiHelpers.GetPlayLists();
                     break;
+                case Commands.GetPlaylistItems:
+                    List<PlaylistItem> items = this.GuiHelpers.GetPlayListItems(item.Item);
+                    break;
             }
 
             item.Response = "OK";

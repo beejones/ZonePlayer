@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using ZonePlayer;
+using ZonePlayerInterface;
 
 namespace ZonePlayerWpf
 {
@@ -71,6 +72,33 @@ namespace ZonePlayerWpf
         {
             this.PlayLists.Add(list);
             this.PlayListsView.Add(list);
+        }
+
+        /// <summary>
+        /// Return a list of loaded playlists
+        /// </summary>
+        /// <returns>List of playlists</returns>
+        public List<Playlist> GetPlaylists()
+        {
+            List<Playlist> playlists = this.PlayLists.PlayLists.Select(p => new Playlist(p.ListName, p.ListUri)).ToList();
+            return playlists;
+        }
+
+        /// <summary>
+        /// Return a list of items in a playlist
+        /// </summary>
+        /// <param name="playlistName">Name of the playlist</param>
+        /// <returns>List of playlist items</returns>
+        public List<PlaylistItem> GetPlaylistItems(string playlistName)
+        {
+            ZonePlaylist playlist = this.PlayLists.GetItem(playlistName);
+            if (playlist == null)
+            {
+                return new List<PlaylistItem>();
+            }
+
+            List<PlaylistItem> playlistItems = playlist.PlayList.Select(i => new PlaylistItem(i.ItemName, i.ItemUri)).ToList();
+            return playlistItems;
         }
 
         /// <summary>

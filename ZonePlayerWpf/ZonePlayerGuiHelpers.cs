@@ -222,15 +222,29 @@ namespace ZonePlayerWpf
         /// <returns>List of playlists</returns>
         public List<Playlist> GetPlayLists()
         {
-            //return this.MainWindow.Dispatcher.Invoke(
-            //    new Func<WpfPanel.PanelControl>(() => this.GetControl(zone, ZonePlayer) as WpfPanel.PanelControl));
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "Retrieve all loaded playlist");
             return this.MainWindow.Dispatcher.Invoke<List<Playlist>>(
               new Func<List<Playlist>>(
                 delegate()
                 {
+                    return this.PlaylistController.GetPlaylists();
+                }
+              ));
+        }
 
-                    return new List<Playlist>();
+        /// <summary>
+        /// Retrieve the items of the playlist
+        /// </summary>
+        /// <param name="playlistName">Name of the playlist</param>
+        /// <returns>List of playlist items</returns>
+        public List<PlaylistItem> GetPlayListItems(string playlistName)
+        {
+            Log.Item(System.Diagnostics.EventLogEntryType.Information, "Retrieve all loaded playlist");
+            return this.MainWindow.Dispatcher.Invoke<List<PlaylistItem>>(
+              new Func<List<PlaylistItem>>(
+                delegate()
+                {
+                    return this.PlaylistController.GetPlaylistItems(playlistName);
                 }
               ));
         }

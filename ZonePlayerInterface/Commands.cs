@@ -66,6 +66,10 @@ namespace ZonePlayerInterface
         /// </summary>
         GetPlaylists,
         /// <summary>
+        /// Retrieve list of items in playlist
+        /// </summary>
+        GetPlaylistItems,
+        /// <summary>
         /// Command not available
         /// </summary>
         None
