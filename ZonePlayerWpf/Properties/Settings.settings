@@ -6,7 +6,7 @@
       <Value Profile="(Default)">["Device1", "Device2", "Device3", "Device4", "Device5", "Device6", "Device7", "Device8"]</Value>
     </Setting>
     <Setting Name="DefaultPlaylists" Type="System.String" Scope="User">
-      <Value Profile="(Default)">{"Internet":".\\SamplePlaylists\\internet.asx","Playlists":".\\SamplePlaylists\\internet.asx"}</Value>
+      <Value Profile="(Default)">{"Internet Vlaams":".\\SamplePlaylists\\internetvlaams.asx","Internet Themes":".\\SamplePlaylists\\internetthemes.asx"}</Value>
     </Setting>
     <Setting Name="ZoneNames" Type="System.String" Scope="User">
       <Value Profile="(Default)"> ["Zone1", "Zone2", "Zone3", "Zone4", "Zone5", "Zone6", "Zone7", "Zone8"]</Value>

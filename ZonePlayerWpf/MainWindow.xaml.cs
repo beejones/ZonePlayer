@@ -3,13 +3,11 @@
 //---------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Diagnostics;
 using Newtonsoft.Json;
-using ZonePlayer;
-using System.Threading.Tasks;
+using ZonePlayerInterface;
 
 namespace ZonePlayerWpf
 {

@@ -62,14 +62,12 @@ namespace ZonePlayerInterface
         /// </summary>
         SelectItemToPlay,
         /// <summary>
+        /// Retrieve list of loaded playlists
+        /// </summary>
+        GetPlaylists,
+        /// <summary>
         /// Command not available
         /// </summary>
         None
-        /*
-                            Test,
-                            FetchChannels,
-                            IsPlayingItem,
-                            None
-                 */
     }
 }

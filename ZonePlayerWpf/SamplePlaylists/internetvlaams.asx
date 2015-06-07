@@ -1,0 +1,65 @@
+<ASX version = "3.0">
+   <ABSTRACT>Internet vlaams playlist</ABSTRACT>
+   <TITLE>Internet vlaams playlist</TITLE>
+   <AUTHOR>beejones</AUTHOR>
+   <ENTRY>
+      <TITLE>Radio1</TITLE>
+      <REF HREF = "http://mp3.streampower.be/radio1-mid" />
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Radio2</TITLE>
+      <REF HREF = "http://mp3.streampower.be/ra2vlb-mid" />
+   </ENTRY>    
+   <ENTRY>
+      <TITLE>Nostalgie</TITLE>
+      <REF HREF = "http://nostalgiewhatafeeling.ice.infomaniak.ch/nostalgiewhatafeeling-128.mp3"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Joe.fm</TITLE>
+      <REF HREF = "http://icecast-qmusic.cdp.triple-it.nl/JOEfm_be_live_128.mp3"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Q-Music</TITLE>
+      <REF HREF = "http://icecast-qmusic.cdp.triple-it.nl/Qmusic_be_live_64.aac"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sporza</TITLE>
+      <REF HREF = "http://mp3.streampower.be/sporza-high"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>MNM</TITLE>
+      <REF HREF = "http://mp3.streampower.be/mnm-high.mp3"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Studio Brussel</TITLE>
+      <REF HREF = "http://mp3.streampower.be/stubru-high.mp3"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Humorzender</TITLE>
+      <REF HREF = "http://listen.radionomy.com/humorzender.m3u"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Nieuws</TITLE>
+      <REF HREF = "http://download.streampower.be/vrt/radio1/11_11niws-snip_hi.mp3"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Klara</TITLE>
+      <REF HREF = "http://mp3.streampower.be/klara-high.mp3"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Klara Continuo</TITLE>
+      <REF HREF = "http://mp3.streampower.be/klaracontinuo-high.mp3"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Minerva</TITLE>
+      <REF HREF = "http://www.radio-minerva.be/stream.php?ext=wax"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Top Radio</TITLE>
+      <REF HREF = "http://jwmp3.topradio.be/topradio.mp3"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Radio</TITLE>
+      <REF HREF = "http://static.myradio.nl/sounds/mysky/flv64/06EA07F7.flv"/>
+   </ENTRY>
+</ASX>

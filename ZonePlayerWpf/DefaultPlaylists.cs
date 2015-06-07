@@ -1,15 +1,14 @@
-﻿//---------------------------------------------------------------
+﻿using Newtonsoft.Json;
+//---------------------------------------------------------------
 // The MIT License. Beejones 
 //---------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Windows.Controls;
 using ZonePlayer;
-using System.IO;
+using ZonePlayerInterface;
 
 namespace ZonePlayerWpf
 {
@@ -31,8 +30,12 @@ namespace ZonePlayerWpf
         /// <param name="playlistBox">Playlist content</param>
         public DefaultPlaylists(string settings, GetListBox listBox, GetListBox playlistBox)
         {
+            this.SetupPlaylists();
+
+            // Get list of default playlists
             Dictionary<string, string> playlists = JsonConvert.DeserializeObject<Dictionary<string, string>>(settings);
             playlists = this.AbsolutePaths(playlists);
+
             this.PlayLists = playlists.Select(list => PlaylistManager.Create(new Uri(list.Value, UriKind.RelativeOrAbsolute), true, list.Key)).ToList();
             this.InitListBoxes(listBox, playlistBox);
         }
@@ -125,6 +128,15 @@ namespace ZonePlayerWpf
         }
 
         /// <summary>
+        /// Gets the list of loaded playlists
+        /// </summary>
+        public LoadedPlaylists Playlists
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Select first item in listbox
         /// </summary>
         /// <param name="listbox">Listbox to select</param>
@@ -138,6 +150,24 @@ namespace ZonePlayerWpf
                     listbox().SelectedIndex = 0;
                 }
             }));
+        }
+
+        /// <summary>
+        /// Initialized the list of loaded playlists
+        /// </summary>
+        private void SetupPlaylists()
+        {
+            this.Playlists = new LoadedPlaylists();
+            this.Playlists.AddNewPlaylist += Playlists_AddNewPlaylist;
+        }
+
+        /// <summary>
+        /// New playlist added to loaded playlist
+        /// </summary>
+        /// <param name="newPlaylist">The new playlist added</param>
+        private void Playlists_AddNewPlaylist(Playlist newPlaylist)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

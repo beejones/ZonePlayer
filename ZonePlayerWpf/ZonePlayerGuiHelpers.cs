@@ -1,16 +1,15 @@
 ﻿//---------------------------------------------------------------
 // The MIT License. Beejones 
 //---------------------------------------------------------------
-using Diagnostics;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Diagnostics;
+using Newtonsoft.Json;
 using ZonePlayer;
+using ZonePlayerInterface;
 
 namespace ZonePlayerWpf
 {
@@ -229,6 +228,25 @@ namespace ZonePlayerWpf
         #endregion
 
         #region Gui
+        /// <summary>
+        /// Retrieve the loaded playlists in ZonePlayer
+        /// </summary>
+        /// <returns>List of playlists</returns>
+        public List<Playlist> GetPlayLists()
+        {
+            //return this.MainWindow.Dispatcher.Invoke(
+            //    new Func<WpfPanel.PanelControl>(() => this.GetControl(zone, ZonePlayer) as WpfPanel.PanelControl));
+            Log.Item(System.Diagnostics.EventLogEntryType.Information, "Retrieve all loaded playlist");
+            return this.MainWindow.Dispatcher.Invoke<List<Playlist>>(
+              new Func<List<Playlist>>(
+                delegate()
+                {
+
+                    return new List<Playlist>();
+                }
+              ));
+        }
+
         /// <summary>
         /// Select the item in the provided playlist
         /// </summary>

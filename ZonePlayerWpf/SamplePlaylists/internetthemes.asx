@@ -1,0 +1,221 @@
+<ASX version = "3.0">
+   <ABSTRACT>Internet themes playlist</ABSTRACT>
+   <TITLE>Internet themes playlist</TITLE>
+   <AUTHOR>beejones</AUTHOR>
+   <ENTRY>
+      <TITLE>Arrow Classic Rock</TITLE>
+      <REF HREF = "http://www.garnierstreamingmedia.com/asx/streamerswitch.asp?stream=205" />
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Arrow Jazz</TITLE>
+      <REF HREF = "http://www.garnierstreamingmedia.com/asx/caz_audio_01.asp" />
+   </ENTRY>    
+   <ENTRY>
+      <TITLE>Sky Love Music</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/lovemusic.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Romantica</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/romantica.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Frans</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/cafedeparis.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky 90ties</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/hit90s.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky 80ties</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/the80s.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky 70ties</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/hit70s.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Top Hits</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/tophits.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Piano Jazz</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/pianojazz.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Mellow Jazz</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/mellowjazz.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Smooth Jazz</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/smoothjazz.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Smooth Jazz 24/7</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/smoothjazz247.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Vocal Smooth Jazz</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/vocalsmoothjazz.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Bossa Nova Jazz</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/bossanova.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Uptempo Smooth Jazz</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/uptemposmoothjazz.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Jazz Classics</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/jazzclassics.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Smooth Lounge</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/smoothlounge.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Da Tempo Lounge</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/datempolounge.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky New Age</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/newage.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Relaxation</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/relaxation.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Vocal New Age</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/vocalnewage.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Nature</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/nature.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Solo Piano</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/solopiano.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Classical</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/classical.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Classical Piano Trios</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/classicalpianotrios.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Classical Guitar</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/guitar.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky 80s Rock</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/80srock.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Pop Rock</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/poprock.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Modern Rock</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/modernrock.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Hard Rock</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/hardrock.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Metal</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/metal.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Classic Rock</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/classicrock.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Alternative Rock</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/altrock.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Indie Rock</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/indierock.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Compact Discoveries</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/compactdiscoveries.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Soundtracks</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/soundtracks.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Relaxing Excursions</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/relaxingexcursions.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Oldies</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/oldies.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Dreamscapes</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/dreamscapes.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Country</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/country.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Roots Reggae</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/rootsreggae.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Ska</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/ska.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Salsa</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/salsa.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky World</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/world.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Dancehits</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/urbanjamz.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Pop Punk</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/poppunk.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Classic Rap</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/classicrap.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Bebop</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/bebop.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky American Songbook</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/americansongbook.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Beatles</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/beatles.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Jpop</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/jpop.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Club Bollywood</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/clubbollywood.asx"/>
+   </ENTRY>
+   <ENTRY>
+      <TITLE>Sky Christian</TITLE>
+      <REF HREF = "http://listen.sky.fm/public3/christian.asx"/>
+   </ENTRY>
+</ASX>

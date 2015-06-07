@@ -11,7 +11,7 @@ using System.IO;
 namespace ZonePlayer
 {
     /// <summary>
-    /// Implementation of <see cref="PlaylisttManager"/> for creating instances of <see cref="ZonePlaylist"/>
+    /// Implementation of <see cref="PlaylistManager"/> for creating instances of <see cref="ZonePlaylist"/>
     /// </summary>    
     public static class PlaylistManager
     {
