@@ -17,7 +17,7 @@ namespace ZonePlayerInterface
         /// <summary>
         /// Gets or sets the the response
         /// </summary>
-        public object Response
+        public string Response
         {
             get;
             set;

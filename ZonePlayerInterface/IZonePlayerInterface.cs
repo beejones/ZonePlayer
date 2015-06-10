@@ -36,6 +36,6 @@ namespace ZonePlayerInterface
         /// <summary>
         /// Gets or sets the response
         /// </summary>
-        object Response { get; set; }
+        string Response { get; set; }
     }
 }

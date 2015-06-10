@@ -70,6 +70,14 @@ namespace ZonePlayerInterface
         /// </summary>
         GetPlaylistItems,
         /// <summary>
+        /// Basic interface test
+        /// </summary>
+        TestInterface,
+        /// <summary>
+        /// Test which will also test the player logic
+        /// </summary>
+        TestPlayer,
+        /// <summary>
         /// Command not available
         /// </summary>
         None

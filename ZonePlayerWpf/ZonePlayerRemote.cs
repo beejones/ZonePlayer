@@ -1,4 +1,6 @@
-﻿//---------------------------------------------------------------
+﻿using Diagnostics;
+using Newtonsoft.Json;
+//---------------------------------------------------------------
 // The MIT License. Beejones 
 //---------------------------------------------------------------
 using System;
@@ -46,12 +48,31 @@ namespace ZonePlayerWpf
             // Start command processor
             Task t = Task.Run(async () =>
             {
-                ZonePlayerRemote remote = new ZonePlayerRemote(guiHelper, address, players, volumeDelta);
+                ZonePlayerRemote remote = null;
+                try
+                {
+                    Log.Item(System.Diagnostics.EventLogEntryType.Information, "Open remote interface '{0}'", address.ToString());
+                    remote = new ZonePlayerRemote(guiHelper, address, players, volumeDelta);
+                }
+                catch (Exception e)
+                {
+                    Log.Item(System.Diagnostics.EventLogEntryType.Error, "Can't initialize remote interface: {0}", e.Message);
+                    return;
+                }
 
                 while (true)
                 {
-                    IZonePlayerInterface item = await remote.ConsumeMessage();
+                    try
+                    {
+                        IZonePlayerInterface item = await remote.ConsumeMessage();
+                        Log.Item(System.Diagnostics.EventLogEntryType.Information, "Command processed '{0}'", item.Command);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Item(System.Diagnostics.EventLogEntryType.Error, "Remote processor error: {0}", e.Message);
+                    }
                 }
+
             });
 
             return;
@@ -64,6 +85,8 @@ namespace ZonePlayerWpf
         public async Task<IZonePlayerInterface> ConsumeMessage()
         {
             IZonePlayerInterface item = (IZonePlayerInterface)await this.Service.GetNextElement();
+
+            Log.Item(System.Diagnostics.EventLogEntryType.Information, "New command: {0}", item.Command);
             item = this.ProcessCommands(item);
             this.Service.SetResponse(item);
             return item;
@@ -76,51 +99,71 @@ namespace ZonePlayerWpf
         /// <returns>Response message</returns>
         private IZonePlayerInterface ProcessCommands(IZonePlayerInterface item)
         {
-            int playerIndex = this.PlayerIndex(item);
-            switch (item.Command)
+            try
             {
-                case Commands.Play:
-                    this.GuiHelpers.Play(playerIndex);
-                    break;
-                case Commands.Stop:
-                    this.GuiHelpers.Stop(playerIndex);
-                    break;
-                case Commands.Next:
-                    this.GuiHelpers.Next(playerIndex);
-                    break;
-                case Commands.VolGet:
-                    int volume = this.Players[playerIndex].CurrentPlayer.Volume;
-                    item.Response = string.Format("{0}", volume);
-                    return item;
-                case Commands.VolSet:
-                    this.GuiHelpers.UpdateVolume(playerIndex, item.Item);
-                    break;
-                case Commands.VolUp:
-                    volume = this.Players[playerIndex].CurrentPlayer.Volume += this.VolumeDelta;
-                    this.GuiHelpers.UpdateVolume(playerIndex, volume.ToString());
-                    break;
-                case Commands.VolDown:
-                    volume = this.Players[playerIndex].CurrentPlayer.Volume = (this.Players[playerIndex].CurrentPlayer.Volume - this.VolumeDelta < 0) ? 0 : this.Players[playerIndex].CurrentPlayer.Volume - this.VolumeDelta;
-                    this.GuiHelpers.UpdateVolume(playerIndex, volume.ToString());
-                    break;
-                case Commands.PlayUri:
-                    this.GuiHelpers.PlayUri(playerIndex, new Uri(item.Item));
-                    break;
-                case Commands.SelectItemToPlay:
-                    this.GuiHelpers.SelectItemToPlay(playerIndex, item.Item, item.PlayListName);
-                    break;
-                case Commands.GetPlaylists:
-                    List<Playlist> lists = this.GuiHelpers.GetPlayLists();
-                    item.Response = lists;
-                    return item;
-                case Commands.GetPlaylistItems:
-                    List<PlaylistItem> items = this.GuiHelpers.GetPlayListItems(item.Item);
-                    item.Response = items;
-                    return item;
-            }
+                Log.Item(System.Diagnostics.EventLogEntryType.Information, "Received command: {0}", item.Command);
+                int playerIndex = this.PlayerIndex(item);
+                switch (item.Command)
+                {
+                    case Commands.Play:
+                        this.GuiHelpers.Play(playerIndex);
+                        break;
+                    case Commands.Stop:
+                        this.GuiHelpers.Stop(playerIndex);
+                        break;
+                    case Commands.Next:
+                        this.GuiHelpers.Next(playerIndex);
+                        break;
+                    case Commands.VolGet:
+                        int volume = this.Players[playerIndex].CurrentPlayer.Volume;
+                        item.Response = string.Format("{0}", volume);
+                        return item;
+                    case Commands.VolSet:
+                        this.GuiHelpers.UpdateVolume(playerIndex, item.Item);
+                        break;
+                    case Commands.VolUp:
+                        volume = this.Players[playerIndex].CurrentPlayer.Volume += this.VolumeDelta;
+                        this.GuiHelpers.UpdateVolume(playerIndex, volume.ToString());
+                        break;
+                    case Commands.VolDown:
+                        volume = this.Players[playerIndex].CurrentPlayer.Volume = (this.Players[playerIndex].CurrentPlayer.Volume - this.VolumeDelta < 0) ? 0 : this.Players[playerIndex].CurrentPlayer.Volume - this.VolumeDelta;
+                        this.GuiHelpers.UpdateVolume(playerIndex, volume.ToString());
+                        break;
+                    case Commands.PlayUri:
+                        this.GuiHelpers.PlayUri(playerIndex, new Uri(item.Item));
+                        break;
+                    case Commands.SelectItemToPlay:
+                        this.GuiHelpers.SelectItemToPlay(playerIndex, item.Item, item.PlayListName);
+                        break;
+                    case Commands.GetPlaylists:
+                        List<Playlist> lists = this.GuiHelpers.GetPlayLists();
+                        item.Response = JsonConvert.SerializeObject(lists);
+                        return item;
+                    case Commands.GetPlaylistItems:
+                        List<PlaylistItem> items = this.GuiHelpers.GetPlayListItems(item.Item);
+                        item.Response = JsonConvert.SerializeObject(items);
+                        return item;
+                    case Commands.TestPlayer:
+                        break;
+                }
 
-            item.Response = "OK";
-            return item;
+                item.Response = "OK";
+                return item;
+            }
+            catch (Exception e)
+            {
+                Log.Item(System.Diagnostics.EventLogEntryType.Error, "Error occured during processing command '{0}': {1}, {2}",
+                    item.Command,
+                    string.IsNullOrEmpty(e.Message) ? "null" : e.Message,
+                    string.IsNullOrEmpty(e.StackTrace) ? "null" : e.StackTrace);
+                throw;
+            }
+            finally
+            {
+                Log.Item(System.Diagnostics.EventLogEntryType.Information, "Ending command processing '{0}', result: {1}",
+                    item.Command,
+                    string.IsNullOrEmpty(item.Response) ? "null" : item.Response);
+            }
         }
 
         /// <summary>

@@ -57,11 +57,10 @@ namespace ZonePlayerWpf
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultPlaylists"/> class.
+        /// Set the default playlists as defined in config.
         /// </summary>    
         /// <param name="settings">Configuration for the default playlist</param>
-        /// <param name="listBox">Default playlist</param>
-        /// <param name="playlistBox">Playlist content</param>
+        /// <param name="playlistController">Playlist control</param>
         private void DefaultPlaylists(string settings, PlaylistController playlistController)
         {
             // Get list of default playlists

@@ -623,7 +623,6 @@ namespace ZonePlayerWpf
         public string GuiZonePlayerDevice(int zone)
         {
             return this.ButtonContentPlayerDevices[zone]; 
-            //return (string)(this.GetControl(zone, ZonePlayerDevice) as Button).Content;
         }
 
         /// <summary>

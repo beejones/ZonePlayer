@@ -20,8 +20,7 @@ namespace ZonePlayerInterface
         public static Commands? GetCommand(string argCommand)
         {
             string command = Checks.IsNullOrWhiteSpace("argCommand", argCommand).ToLower();
-            List<string> commands = Enum.GetValues(typeof(Commands)).Cast<Commands>().Select(v => v.ToString()).ToList();
-            foreach (var c in commands)
+            foreach (var c in GetCommands())
             {
                 if (c.ToLower().CompareTo(command) == 0)
                 {
@@ -36,6 +35,16 @@ namespace ZonePlayerInterface
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Return list of all commands
+        /// </summary>
+        /// <returns>List of all commands</returns>
+        public static List<string> GetCommands()
+        {
+            List<string> commands = Enum.GetValues(typeof(Commands)).Cast<Commands>().Select(v => v.ToString()).ToList();
+            return commands;            
         }
     }
 }

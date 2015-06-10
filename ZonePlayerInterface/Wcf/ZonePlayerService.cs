@@ -77,7 +77,7 @@ namespace ZonePlayerInterface
         /// <param name="playableItem">Name of the item to play</param>
         /// <param name="playListName">Name of the playlist</param>
         /// <returns>Result of the operation</returns>
-        public async Task<object> Remote(string command, string zoneName, string playableItem = null, string playListName = null)
+        public async Task<string> Remote(string command, string zoneName, string playableItem = null, string playListName = null)
         {
             Log.Item(System.Diagnostics.EventLogEntryType.Information, "New command received: {0}", command);
             
@@ -95,7 +95,12 @@ namespace ZonePlayerInterface
             {
                 string message = string.Format("ZoneName not available: {0}", zoneName);
                 Log.Item(System.Diagnostics.EventLogEntryType.Warning, message);
-                return message;
+            }
+
+            if (receivedCommand == Commands.TestInterface)
+            {
+                // Return ok to conclude the interface test
+                return "OK";
             }
 
             // Create input message
@@ -115,7 +120,7 @@ namespace ZonePlayerInterface
                 InputMessages.Post(item);
 
                 item = (QueueElement)await OutputMessages.ReceiveAsync();
-
+                Log.Item(System.Diagnostics.EventLogEntryType.Information, "New response '{0}' for command '{1}'", item.Response, item.Command);
                 return item.Response;
             }
             catch (Exception e)
@@ -142,6 +147,7 @@ namespace ZonePlayerInterface
         /// <returns>Response message</returns>
         public void SetResponse(IZonePlayerInterface item)
         {
+            Log.Item(System.Diagnostics.EventLogEntryType.Information, "New command in output queue: {0}", item.Command);
             OutputMessages.Post(item);
         }
 

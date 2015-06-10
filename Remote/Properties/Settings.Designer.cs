@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ZonePlayerWpfSimpleCommandLine.Properties {
+namespace Remote.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
